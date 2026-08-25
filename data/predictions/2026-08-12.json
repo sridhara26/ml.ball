@@ -1,0 +1,367 @@
+{
+  "date": "2026-08-12",
+  "generated_at_utc": "2026-08-13T03:07:33.175171+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "MIN",
+      "away": "BAL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5256556272506714,
+      "seed_std": 0.017307635372594388,
+      "home_sp": "Zebby Matthews",
+      "away_sp": "Shane Baz",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 7,
+        "away_score": 5,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "STL",
+      "away": "PHI",
+      "dh_game_number": 0,
+      "prob_home_win": 0.520336925983429,
+      "seed_std": 0.01193575849523499,
+      "home_sp": "Kyle Leahy",
+      "away_sp": "Zack Wheeler",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 7,
+        "away_score": 1,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "OAK",
+      "away": "TBR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.45076592862606046,
+      "seed_std": 0.02386127484432664,
+      "home_sp": "Jack Perkins",
+      "away_sp": "Drew Rasmussen",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": false,
+        "home_score": 4,
+        "away_score": 8,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "ARI",
+      "away": "COL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5981729805469513,
+      "seed_std": 0.01671615162775776,
+      "home_sp": "Merrill Kelly",
+      "away_sp": "Ryan Feltner",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": false,
+        "home_score": 4,
+        "away_score": 6,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "SFG",
+      "away": "HOU",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5447495877742767,
+      "seed_std": 0.022340881067497084,
+      "home_sp": "Adrian Houser",
+      "away_sp": "Bryan King",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": false,
+        "home_score": 1,
+        "away_score": 2,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "SDP",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5130911469459534,
+      "seed_std": 0.020843754505713203,
+      "home_sp": "Robbie Ray",
+      "away_sp": "Dustin May",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 4,
+        "away_score": 3,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "DET",
+      "away": "CLE",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5702864110469819,
+      "seed_std": 0.019697060356516322,
+      "home_sp": "Framber Valdez",
+      "away_sp": "Foster Griffin",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": false,
+        "home_score": 4,
+        "away_score": 6,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "MIA",
+      "away": "PIT",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5421277403831481,
+      "seed_std": 0.012208570967029552,
+      "home_sp": "Janson Junk",
+      "away_sp": "Carmen Mlodzinski",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 8,
+        "away_score": 2,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "WSN",
+      "away": "CHC",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4995662748813629,
+      "seed_std": 0.018508259802345505,
+      "home_sp": "Jackson Kent",
+      "away_sp": "David Peterson",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": false,
+        "home_score": 6,
+        "away_score": 12,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "NYY",
+      "away": "SEA",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5874886572360992,
+      "seed_std": 0.014708577239664154,
+      "home_sp": "Will Warren",
+      "away_sp": "Bryce Miller",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 10,
+        "away_score": 5,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "TOR",
+      "away": "BOS",
+      "dh_game_number": 0,
+      "prob_home_win": 0.48740021884441376,
+      "seed_std": 0.01585600605386801,
+      "home_sp": "Jose Soriano",
+      "away_sp": "Ranger Suarez",
+      "sp_status": {
+        "home": "cross_check_mismatch",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": true,
+      "result": {
+        "home_won": true,
+        "home_score": 6,
+        "away_score": 4,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "ATL",
+      "away": "NYM",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6092916846275329,
+      "seed_std": 0.014169805413364354,
+      "home_sp": "Tyler Mahle",
+      "away_sp": "Zac Thornton",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 6,
+        "away_score": 3,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "CHW",
+      "away": "CIN",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5640817701816558,
+      "seed_std": 0.01596018930205465,
+      "home_sp": "Luis Castillo",
+      "away_sp": "Rhett Lowder",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 5,
+        "away_score": 0,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "LAD",
+      "away": "KCR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6001801192760468,
+      "seed_std": 0.01971689741560247,
+      "home_sp": "Eric Lauer",
+      "away_sp": "Daniel Lynch IV",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 4,
+        "away_score": 2,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    },
+    {
+      "home": "LAA",
+      "away": "TEX",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5084225684404373,
+      "seed_std": 0.021423627056633268,
+      "home_sp": "George Klassen",
+      "away_sp": "Cal Quantrill",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 5,
+        "away_score": 2,
+        "graded_at_utc": "2026-08-13T14:43:49.491623+00:00"
+      }
+    }
+  ]
+}

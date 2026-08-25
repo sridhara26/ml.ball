@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Pre-commit gate: blocks a commit that would ship stale or missing asset
+# cache-busting stamps (see stamp_assets.sh). Opt-in per clone — this hook
+# only runs once you've set core.hooksPath to this directory; see
+# README.md's "Cache-busting assets" section for the one-time setup command
+# and for the known limitation that the underlying check hashes the
+# worktree, not the git index.
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+if ! ./stamp_assets.sh --check; then
+  echo >&2
+  echo "pre-commit: blocked — asset cache-busting stamps are stale or missing." >&2
+  echo "Fix with:" >&2
+  echo "  ./stamp_assets.sh && git add index.html game.html" >&2
+  echo "then commit again." >&2
+  exit 1
+fi

@@ -1,0 +1,87 @@
+{
+  "latest_date": "2026-08-25",
+  "dates": [
+    {
+      "date": "2026-08-12",
+      "n_games": 15,
+      "n_graded": 15,
+      "n_correct": 11
+    },
+    {
+      "date": "2026-08-13",
+      "n_games": 9,
+      "n_graded": 9,
+      "n_correct": 3
+    },
+    {
+      "date": "2026-08-14",
+      "n_games": 14,
+      "n_graded": 14,
+      "n_correct": 5
+    },
+    {
+      "date": "2026-08-15",
+      "n_games": 15,
+      "n_graded": 15,
+      "n_correct": 6
+    },
+    {
+      "date": "2026-08-16",
+      "n_games": 15,
+      "n_graded": 15,
+      "n_correct": 6
+    },
+    {
+      "date": "2026-08-17",
+      "n_games": 11,
+      "n_graded": 11,
+      "n_correct": 7
+    },
+    {
+      "date": "2026-08-18",
+      "n_games": 15,
+      "n_graded": 15,
+      "n_correct": 11
+    },
+    {
+      "date": "2026-08-19",
+      "n_games": 15,
+      "n_graded": 15,
+      "n_correct": 7
+    },
+    {
+      "date": "2026-08-20",
+      "n_games": 9,
+      "n_graded": 9,
+      "n_correct": 6
+    },
+    {
+      "date": "2026-08-21",
+      "n_games": 15,
+      "n_graded": 15,
+      "n_correct": 14
+    },
+    {
+      "date": "2026-08-22",
+      "n_games": 15,
+      "n_graded": 15,
+      "n_correct": 7
+    },
+    {
+      "date": "2026-08-23",
+      "n_games": 15,
+      "n_graded": 15,
+      "n_correct": 11
+    },
+    {
+      "date": "2026-08-25",
+      "n_games": 15,
+      "n_graded": 0,
+      "n_correct": 0
+    }
+  ],
+  "preview": {
+    "date": "2026-08-26",
+    "n_games": 15
+  }
+}

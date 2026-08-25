@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game — ml.ball</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚾</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css?v=aa67c86b" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="./">ml<span class="dot">.</span>ball</a>
+    <nav class="links">
+      <a href="./">Today</a>
+      <a href="https://github.com/sridhara26/ml.ball" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <main class="game-detail">
+    <div class="breadcrumb"><a href="./" id="crumb-home">ml.ball</a> / <span id="crumb">game</span></div>
+
+    <section id="game-header" class="game-header"></section>
+
+    <div id="game-sticky"></div>
+
+    <div id="detail-empty" class="detail-empty" style="display:none"></div>
+
+    <section id="lineups" class="detail-section"></section>
+    <section id="team-stats" class="detail-section"></section>
+    <section id="sp-detail" class="detail-section"></section>
+    <section id="recent-form" class="detail-section"></section>
+  </main>
+
+  <footer>
+    <div class="disclaimer">
+      Model output for research/entertainment — not betting advice. Win
+      probabilities are published before first pitch and never edited.
+    </div>
+    <div><a href="https://github.com/sridhara26/ml.ball" rel="noopener">Source</a></div>
+  </footer>
+
+  <script src="assets/app.js?v=d7456f41" data-root="."></script>
+</body>
+</html>
