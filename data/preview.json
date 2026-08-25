@@ -1,6 +1,6 @@
 {
   "date": "2026-08-26",
-  "generated_at_utc": "2026-08-25T06:14:05.984377+00:00",
+  "generated_at_utc": "2026-08-25T14:28:33.894963+00:00",
   "n_games": 15,
   "games": [
     {
@@ -249,12 +249,12 @@
       "series_game": 3,
       "series_of": 3,
       "away_record": {
-        "wins": 63,
+        "wins": 64,
         "losses": 69
       },
       "home_record": {
         "wins": 71,
-        "losses": 60
+        "losses": 61
       },
       "away_sp": {
         "name": "Bubba Chandler",
