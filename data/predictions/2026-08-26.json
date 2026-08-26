@@ -45,8 +45,10 @@
       },
       "low_confidence": true,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-26T19:12:39.587262+00:00"
+        "home_won": true,
+        "home_score": 2,
+        "away_score": 0,
+        "graded_at_utc": "2026-08-26T22:12:39.574802+00:00"
       }
     },
     {
@@ -153,7 +155,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T22:12:39.574802+00:00"
+      }
     },
     {
       "home": "WSN",
@@ -171,7 +177,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T22:12:39.574802+00:00"
+      }
     },
     {
       "home": "NYY",
@@ -189,7 +199,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T22:12:39.574802+00:00"
+      }
     },
     {
       "home": "TOR",
@@ -207,7 +221,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T22:12:39.574802+00:00"
+      }
     },
     {
       "home": "NYM",
@@ -225,7 +243,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T22:12:39.574802+00:00"
+      }
     },
     {
       "home": "ATL",
@@ -243,7 +265,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T22:12:39.574802+00:00"
+      }
     },
     {
       "home": "CHW",
@@ -261,7 +287,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T22:12:39.574802+00:00"
+      }
     },
     {
       "home": "STL",
@@ -279,7 +309,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T22:12:39.574802+00:00"
+      }
     },
     {
       "home": "OAK",
@@ -297,7 +331,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T22:12:39.574802+00:00"
+      }
     }
   ]
 }
