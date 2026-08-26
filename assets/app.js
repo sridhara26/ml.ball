@@ -40,16 +40,26 @@ function fmtPctVal(v) { return isFiniteNum(v) ? (v * 100).toFixed(1) + "%" : "�
 function fmtRate(v) { return isFiniteNum(v) ? v.toFixed(3).replace(/^(-?)0\./, "$1.") : "—"; }
 function fmtOrDash(v, fmtFn) { return v == null ? "—" : fmtFn(v); }
 
-function seedStdHtml(g) {
-  const s = g.seed_std;
-  if (typeof s !== "number" || !Number.isFinite(s)) return "";
-  return `<span class="seed-std" title="ensemble seed spread (10 models)">± ${(s * 100).toFixed(1)}%</span>`;
+/* "contested": the 10-model ensemble's seed spread around 0.5 is wide enough
+   that it straddles a coin flip — the favorite/underdog split itself isn't
+   reliable. Pure predicate shared by the chip and the legend gate below. */
+function isContestedGame(g) {
+  return isFiniteNum(g?.seed_std) && isFiniteNum(g?.prob_home_win)
+    && Math.abs(g.prob_home_win - 0.5) <= g.seed_std;
 }
 
-function seedStdLegendHtml(g) {
-  const s = g.seed_std;
-  if (typeof s !== "number" || !Number.isFinite(s)) return "";
-  return `<p class="stale-note prob-legend">± is the spread across the 10-model ensemble — larger means the models disagree more.</p>`;
+function contestedTagHtml(g) {
+  if (!isContestedGame(g)) return "";
+  return `<span class="contested-chip" title="the model's ten runs don't agree on a favorite — effectively a coin flip">toss-up</span>`;
+}
+
+/* index.html's minimal column-header row (#slate-head) sits above the games
+   list and must track #slate-note's own visibility exactly — hidden on
+   every empty/no-slate/preview state, shown whenever the slate itself is
+   shown. */
+function setSlateHeadVisible(visible) {
+  const el = document.getElementById("slate-head");
+  if (el) el.hidden = !visible;
 }
 
 const TEAM_META = Object.assign(Object.create(null), {
@@ -91,7 +101,7 @@ const TEAM_ALIASES = Object.assign(Object.create(null), {
 
 function teamColor(code) {
   const meta = TEAM_META[code] ?? TEAM_META[TEAM_ALIASES[code]];
-  return meta ? meta.color : "var(--violet)";
+  return meta ? meta.color : "var(--accent)";
 }
 
 function teamTagHtml(code) {
@@ -99,8 +109,8 @@ function teamTagHtml(code) {
 }
 
 const LINEUP_LABELS = {
-  announced: { cls: "good", text: "announced" },
-  projected_last_game: { cls: "", text: "projected" },
+  announced: { cls: "ok", text: "announced" },
+  projected_last_game: { cls: "warn", text: "projected" },
   league_avg: { cls: "warn", text: "unavailable" },
 };
 
@@ -131,7 +141,14 @@ function lineupFlags(g) {
   if (away != null && LINEUP_LABELS[away]) parts.push(`${escapeHtml(g.away)} ${LINEUP_LABELS[away].text}`);
   if (home != null && LINEUP_LABELS[home]) parts.push(`${escapeHtml(g.home)} ${LINEUP_LABELS[home].text}`);
   if (parts.length === 0) return [];
-  const worstCls = [home, away].some((s) => LINEUP_LABELS[s]?.cls === "warn") ? "warn" : "";
+  let worstCls;
+  if ([home, away].some((s) => LINEUP_LABELS[s]?.cls === "warn")) {
+    worstCls = "warn";
+  } else if ([home, away].every((s) => LINEUP_LABELS[s]?.cls === "ok")) {
+    worstCls = "ok";
+  } else {
+    worstCls = "quiet";
+  }
   return [`<span class="flag ${worstCls}">lineups: ${parts.join(" · ")}</span>`];
 }
 
@@ -154,7 +171,7 @@ function spFlags(g) {
 function resultFlagHtml(result, pHome) {
   if (!result) return "";
   if (result.status === "no_result") {
-    return '<span class="flag">no result</span>';
+    return "";
   }
   if (typeof result.home_won === "boolean") {
     const won = result.home_won === (pHome >= 0.5);
@@ -164,53 +181,128 @@ function resultFlagHtml(result, pHome) {
   return `<span class="flag">final (tie)${hasScores ? ` — ${result.away_score}–${result.home_score}` : ""}</span>`;
 }
 
-function probBarHtml(awayCode, homeCode, pAway, pHome) {
-  const a = escapeHtml(awayCode);
-  const h = escapeHtml(homeCode);
-  return `<div class="prob-bar" role="img" aria-label="${a} ${pct(pAway)} — ${h} ${pct(pHome)}">
-      <div class="away-fill" style="width:${pAway * 100}%"></div>
-      <div class="home-fill" style="width:${pHome * 100}%"></div>
-    </div>`;
-}
-
 /* ---------- predictions dashboard (index.html) ---------- */
 
-function gameCard(g) {
+/* First flags-row chip of a ledger row: the ✓/✗ correctness verdict,
+   mirroring resultFlagHtml's home_won === (pHome >= 0.5) check but as a bare
+   "correct"/"missed" chip (no inline score — the per-team FINAL columns
+   carry the score now). resultFlagHtml itself stays untouched — it still
+   backs the game-detail header's flags line. */
+function verdictChipHtml(result, pHome) {
+  if (!result) return "";
+  if (result.status === "no_result") {
+    return "";
+  }
+  if (typeof result.home_won === "boolean") {
+    const won = result.home_won === (pHome >= 0.5);
+    return `<span class="flag ${won ? "win" : "loss"}">${won ? "✓ correct" : "✗ missed"}</span>`;
+  }
+  return `<span class="flag">final (tie)</span>`;
+}
+
+/* One team's FINAL-column cell. Always renders the cell div (even with no
+   score) so the runs column keeps reading as a column down the whole slate
+   list — see .runs-cell's min-width in site.css. `result.home_won ===
+   isHome` doubles as the tie case (home_won null never strictly equals a
+   boolean), so a tie renders both sides muted for free. */
+function runsCellHtml(result, isHome, extraCls) {
+  const cls = extraCls ? `runs-cell ${extraCls}` : "runs-cell";
+  const score = result ? (isHome ? result.home_score : result.away_score) : null;
+  if (!isFiniteNum(score)) return `<div class="${cls}"></div>`;
+  const isWinner = result.home_won === isHome;
+  return `<div class="${cls}${isWinner ? "" : " muted"}">${fmt0(score)}</div>`;
+}
+
+/* True once a game actually has a final score to show (decisive result OR a
+   completed tie) — the gate for "show runs" vs. "show start time" in the
+   FINAL column. Deliberately NOT the same as the detail page's isGraded
+   (home_won strictly boolean): a completed tie has home_won: null but DOES
+   have real scores, and must keep showing them, not a start time. */
+function gameHasFinalScore(result) {
+  return !!result && (isFiniteNum(result.home_score) || isFiniteNum(result.away_score));
+}
+
+/* A team-cell's code line: just the team code (mcode) plus, for the home
+   team only, a sr-only " (home)" hint — the visual "@" home-team marker now
+   lives in the mid-line separator between the away/home rows (see
+   gameRowInnerHtml) instead of a fixed-width prefix slot here, so both
+   teams' codes start flush at the cell's left edge. Shared by the ledger
+   row (gameRowInnerHtml) and the next-day preview card (previewGameCard);
+   `mcodeAttrs` carries call-site-specific attributes (previewGameCard's
+   --team-color inline style) that go on the <span class="mcode"> itself. */
+function codeLineHtml(code, isHome, mcodeAttrs = "") {
+  const srHint = isHome ? '<span class="sr-only"> (home)</span>' : "";
+  return `<span class="code-line"><span class="mcode"${mcodeAttrs}>${code}</span>${srHint}</span>`;
+}
+
+/* The same "AWAY-HOME-DH" key the dashboard uses for game.html links and
+   game-details lookups (details JSON's games map, live_meta, etc.) —
+   shared here so the FINAL-column time lookup and the link-href key can
+   never drift apart from each other. */
+function gameDetailsKey(g) {
+  return `${g.away}-${g.home}-${g.dh_game_number ?? 0}`;
+}
+
+/* Mirrors game.html's fmtLocalDateTime: parse the ISO UTC instant with
+   Date, then let Intl do the timezone conversion (never hand-rolled offset
+   math). Unlike fmtLocalDateTime (which shows each visitor's own local
+   zone, matching the detail page's full first-pitch line), this forces
+   America/New_York and a literal "ET" suffix — MLB first-pitch times are
+   canonically reported in Eastern Time regardless of viewer location, and a
+   fixed zone keeps the compact slate string short and DST-abbreviation-free
+   ("1:35 PM ET", never "1:35 PM EDT"/"1:35 PM EST"). */
+function fmtShortGameTime(iso) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  const time = d.toLocaleString("en-US", { timeZone: "America/New_York", hour: "numeric", minute: "2-digit" });
+  return escapeHtml(`${time} ET`);
+}
+
+/* Looks up a game's first_pitch_utc in the (already-fetched) details JSON's
+   games map and formats it — null when the details file is absent, the
+   game isn't in it, or it carries no first_pitch_utc, so callers can fall
+   back to the plain empty-runs-cell rendering with no layout shift. */
+function gameStartTimeShort(detailsGames, g) {
+  if (!detailsGames) return null;
+  const iso = detailsGames[gameDetailsKey(g)]?.header?.first_pitch_utc;
+  return typeof iso === "string" ? fmtShortGameTime(iso) : null;
+}
+
+function gameRowInnerHtml(g, shortTime = null) {
   const pHome = g.prob_home_win;
   const pAway = 1 - pHome;
   const homeFav = pHome >= 0.5;
 
-  const flags = [];
-  const rf = resultFlagHtml(g.result, pHome);
-  if (rf) flags.push(rf);
-  flags.push(...lineupFlags(g));
-  flags.push(...spFlags(g));
-  if (g.low_confidence) flags.push('<span class="flag warn">low confidence</span>');
-  if (g.dh_game_number > 0) flags.push(`<span class="flag">DH game ${g.dh_game_number}</span>`);
+  const rowFlags = [];
+  rowFlags.push(verdictChipHtml(g.result, pHome));
+  rowFlags.push(...lineupFlags(g));
+  rowFlags.push(...spFlags(g));
+  if (g.low_confidence) rowFlags.push('<span class="flag warn">low confidence</span>');
+  if (g.dh_game_number > 0) rowFlags.push(`<span class="flag">DH game ${g.dh_game_number}</span>`);
+  rowFlags.push(contestedTagHtml(g));
+  const flagsHtml = rowFlags.filter(Boolean).join("");
 
   const awayCode = escapeHtml(g.away);
   const homeCode = escapeHtml(g.home);
   const awaySp = escapeHtml(g.away_sp ?? "TBD");
   const homeSp = escapeHtml(g.home_sp ?? "TBD");
 
+  const timeHtml = (!gameHasFinalScore(g.result) && shortTime) ? `<span class="game-time">${shortTime}</span>` : "";
+  const awayRunsHtml = runsCellHtml(g.result, false);
+  const homeRunsHtml = runsCellHtml(g.result, true, "home");
+
+  // DOM order follows reading order (each team's score right after that
+  // team's own cells) so screen readers associate them correctly; the CSS
+  // grid-template-areas handle the actual visual placement independently.
   return `
-  <div class="game-card">
-    <div class="matchup">
-      <div class="team away">
-        <span class="code" style="--team-color:${teamColor(g.away)}">${awayCode}</span>
-        <span class="pct ${homeFav ? "dog" : "fav"}">${pct(pAway)}</span>
-        <span class="sp" title="${awaySp}">${awaySp}</span>
-      </div>
-      <span class="at">@</span>
-      <div class="team home">
-        <span class="code" style="--team-color:${teamColor(g.home)}">${homeCode}</span>
-        <span class="pct ${homeFav ? "fav" : "dog"}">${pct(pHome)}${seedStdHtml(g)}</span>
-        <span class="sp" title="${homeSp}">${homeSp}</span>
-      </div>
-    </div>
-    ${probBarHtml(g.away, g.home, pAway, pHome)}
-    <div class="flags">${flags.join("")}</div>
-  </div>`;
+    <div class="team-cell away">${codeLineHtml(awayCode, false)}<span class="sp" title="${awaySp}">${awaySp}</span></div>
+    <div class="pct-cell${homeFav ? "" : " fav"}">${pct(pAway)}</div>
+    ${awayRunsHtml}
+    <div class="mid-line"><span class="at-sep" aria-hidden="true">@</span>${timeHtml}</div>
+    <div class="team-cell home">${codeLineHtml(homeCode, true)}<span class="sp" title="${homeSp}">${homeSp}</span></div>
+    <div class="pct-cell home${homeFav ? " fav" : ""}">${pct(pHome)}</div>
+    ${homeRunsHtml}
+    ${flagsHtml ? `<div class="row-flags">${flagsHtml}</div>` : ""}`;
 }
 
 function fmtDate(iso) {
@@ -257,7 +349,7 @@ function validPreviewInfo(preview, dates) {
   if (dates.some((d) => d.date === preview.date)) return null;
   // must be strictly after the latest published date — a stale/past preview.date
   // (e.g. predictions published but the preview-copy pipeline step failed)
-  // would otherwise let the picker/`›` arrow step backwards into a past date
+  // would otherwise let the `›` arrow step backwards into a past date
   // still captioned as "not predicted yet".
   if (dates.length > 0 && preview.date <= dates[dates.length - 1].date) return null;
   const nGames = typeof preview.n_games === "number" && Number.isFinite(preview.n_games) ? preview.n_games : null;
@@ -283,10 +375,9 @@ async function fetchDateIndex() {
 }
 
 /* scans a sorted (ascending) array of date strings for the nearest date
-   strictly before / strictly after `pickedDate` — shared by the date-picker
-   snap-back (snapToPublishedDate) and by the prev/next arrows when
-   `targetDate` itself isn't published (setupDateNav). Returns null for a
-   direction with nothing published. */
+   strictly before / strictly after `pickedDate` — used by the prev/next
+   arrows when `targetDate` itself isn't published (setupDateNav). Returns
+   null for a direction with nothing published. */
 function nearestPublishedNeighbors(dates, pickedDate) {
   let earlier = null, later = null;
   for (const d of dates) {
@@ -294,18 +385,6 @@ function nearestPublishedNeighbors(dates, pickedDate) {
     else if (d > pickedDate) { later = d; break; }
   }
   return { earlier, later };
-}
-
-function snapToPublishedDate(indexData, pickedDate) {
-  const dates = sortedDateEntries(indexData).map((d) => d.date);
-  if (dates.length === 0) return pickedDate;
-  // load-bearing: nearestPublishedNeighbors only scans for strictly-before /
-  // strictly-after dates, so an exact match must be handled here first — if
-  // this early return were removed, an exact pick would silently snap back
-  // to the previous published day instead of landing on itself.
-  if (dates.includes(pickedDate)) return pickedDate;
-  const { earlier } = nearestPublishedNeighbors(dates, pickedDate);
-  return earlier ?? dates[0];
 }
 
 function navigateToDate(date, latestDate) {
@@ -341,13 +420,12 @@ function showRecordEl(recordEl, countText) {
   if (noteEl) noteEl.textContent = DAY_RECORD_NOTE;
 }
 
-function setupDateNav({ navEl, prevBtn, nextBtn, pickerEl, backEl, recordEl, indexData, targetDate, latestDate, isLatest, suppressRecord = false, previewInfo = null }) {
+function setupDateNav({ navEl, prevBtn, nextBtn, backEl, recordEl, indexData, targetDate, latestDate, isLatest, suppressRecord = false, previewInfo = null }) {
   if (!navEl) return;
   const dates = indexData ? sortedDateEntries(indexData) : [];
   if (dates.length === 0) {
     if (prevBtn) prevBtn.style.display = "none";
     if (nextBtn) nextBtn.style.display = "none";
-    if (pickerEl) pickerEl.style.display = "none";
     if (backEl) backEl.style.display = "none";
     clearRecordEl(recordEl);
     return;
@@ -386,25 +464,6 @@ function setupDateNav({ navEl, prevBtn, nextBtn, pickerEl, backEl, recordEl, ind
     const nextIsPreview = !!(nextDate && previewInfo && nextDate === previewInfo.date);
     nextBtn.setAttribute("aria-label", nextIsPreview ? "Next day preview" : "Next published date");
     nextBtn.onclick = nextDate ? () => navigateToDate(nextDate, latestDate) : null;
-  }
-  if (pickerEl) {
-    pickerEl.style.display = "";
-    pickerEl.min = dates[0].date;
-    pickerEl.max = previewInfo ? previewInfo.date : dates[dates.length - 1].date;
-    pickerEl.setAttribute("aria-label", previewInfo ? "Jump to a published date or the next preview" : "Jump to a published date");
-    pickerEl.value = targetDate;
-    pickerEl.onchange = () => {
-      if (!pickerEl.value) {
-        pickerEl.value = targetDate; // clearing the picker should no-op, not jump to the oldest slate
-        return;
-      }
-      if (previewInfo && pickerEl.value === previewInfo.date) {
-        navigateToDate(previewInfo.date, latestDate);
-        return;
-      }
-      const snapped = snapToPublishedDate(indexData, pickerEl.value);
-      navigateToDate(snapped, latestDate);
-    };
   }
   if (backEl) backEl.style.display = isLatest ? "none" : "";
   if (recordEl) {
@@ -453,6 +512,7 @@ function renderPublishStateEmpty(gamesEl, header) {
   </div></div>`;
   if (header) setDashboardHeader(header, "Win probabilities", DASHBOARD_DEFAULT_TITLE, "", "No predictions published yet");
   document.getElementById("slate-note")?.style.setProperty("display", "none");
+  setSlateHeadVisible(false);
   _lastGamesHtml = null;
 }
 
@@ -462,7 +522,7 @@ function renderPublishStateEmpty(gamesEl, header) {
    the latest slate" would just point at this same date) from "you asked for
    a specific date that was never published". `hasOtherDates` gates the
    "browse a previous day above" clause: with a single-date index, the arrows
-   and picker have nothing else to navigate to, so that clause would promise
+   have nothing else to navigate to, so that clause would promise
    navigation that doesn't exist. */
 function renderNoSlateForDate(gamesEl, date, header, { implicit = false, hasOtherDates = false } = {}) {
   const valid = isValidDateParam(date);
@@ -482,6 +542,7 @@ function renderNoSlateForDate(gamesEl, date, header, { implicit = false, hasOthe
     setDashboardHeader(header, heading, title, dateText, statusText);
   }
   document.getElementById("slate-note")?.style.setProperty("display", "none");
+  setSlateHeadVisible(false);
   _lastGamesHtml = null;
 }
 
@@ -507,7 +568,7 @@ function entryFullyGraded(indexData, targetDate) {
 }
 
 async function renderDashboard() {
-  // renderDashboard is re-entrant (arrow presses, popstate, the date picker
+  // renderDashboard is re-entrant (arrow presses, popstate, keyboard arrows
   // can all trigger it while a prior call is still awaiting a fetch). Every
   // await below re-checks this token and bails before touching the DOM if a
   // newer invocation has since started, so a slow/superseded response can
@@ -521,14 +582,13 @@ async function renderDashboard() {
   const navEl = document.getElementById("date-nav");
   const prevBtn = document.getElementById("nav-prev");
   const nextBtn = document.getElementById("nav-next");
-  const pickerEl = document.getElementById("date-picker");
   const backEl = document.getElementById("back-today");
   const recordEl = document.getElementById("day-record");
   const statusEl = document.getElementById("slate-status");
   if (!gamesEl) return;
 
   const header = { headingEl, dateEl, recordEl, statusEl };
-  const navRefs = { navEl, prevBtn, nextBtn, pickerEl, backEl, recordEl };
+  const navRefs = { navEl, prevBtn, nextBtn, backEl, recordEl };
 
   const rawDateParam = new URLSearchParams(location.search).get("date");
   if (rawDateParam != null && !isValidDateParam(rawDateParam)) {
@@ -588,7 +648,7 @@ async function renderDashboard() {
     if (!isCurrent()) return;
   } catch {
     if (!isCurrent()) return;
-    // history known (an index exists) means the arrows/picker are live and an
+    // history known (an index exists) means the arrows are live and an
     // archive demonstrably exists, so a 404 here is "this slate" missing, not
     // "nothing has ever been published" — see renderNoSlateForDate's implicit
     // flag (true when targetDate is the latest slate, so it never claims a
@@ -611,15 +671,27 @@ async function renderDashboard() {
     return;
   }
 
-  let detailsAvailable = false;
+  // Full GET (not just a HEAD probe) so the FINAL-column start time can be
+  // read out of the same fetch that gates the game.html link — one round
+  // trip serving both purposes. detailsAvailable mostly mirrors the old HEAD
+  // semantics (fetch succeeded => links stay enabled), but deliberately
+  // differs in one case: a 200 response with corrupt JSON now throws in
+  // fetchJSON's res.json() and disables links (safer), where a HEAD probe
+  // would only have checked res.ok and left them enabled. detailsGames
+  // is a separate, defensively-typed view of the body used only for the
+  // per-game time lookup, so a details file that fetches OK but lacks a
+  // `games` object still gates links the same as before while simply
+  // yielding no times.
+  let detailsData = null;
   try {
-    const res = await fetch(`${REPO_ROOT}/data/details/${targetDate}.json`, { method: "HEAD", cache: "no-store" });
+    detailsData = await fetchJSON(`${REPO_ROOT}/data/details/${targetDate}.json`);
     if (!isCurrent()) return;
-    detailsAvailable = res.ok;
   } catch {
     if (!isCurrent()) return;
-    detailsAvailable = false;
+    detailsData = null;
   }
+  const detailsAvailable = detailsData !== null;
+  const detailsGames = detailsData && typeof detailsData.games === "object" ? detailsData.games : null;
 
   const isLatest = targetDate === latestDate;
   _autoRefreshEligible = isLatest || !entryFullyGraded(indexData, targetDate);
@@ -627,9 +699,10 @@ async function renderDashboard() {
   document.title = isLatest ? DASHBOARD_DEFAULT_TITLE : `${fmtTitleDate(targetDate)} — ml.ball`;
   if (dateEl) dateEl.textContent = fmtDate(day.date);
   document.getElementById("slate-note")?.style.setProperty("display", "");
+  setSlateHeadVisible(true);
 
   try {
-    setupDateNav({ navEl, prevBtn, nextBtn, pickerEl, backEl, recordEl, indexData, targetDate, latestDate, isLatest, previewInfo });
+    setupDateNav({ navEl, prevBtn, nextBtn, backEl, recordEl, indexData, targetDate, latestDate, isLatest, previewInfo });
   } catch {
     /* defensive: nav cluster must never block the slate itself from rendering */
   }
@@ -637,16 +710,25 @@ async function renderDashboard() {
   if (!day.games || day.games.length === 0) {
     gamesEl.innerHTML = `<div class="empty-state"><div class="box">No games on the slate for ${fmtDate(day.date)}.</div></div>`;
     _lastGamesHtml = null;
+    document.getElementById("slate-note")?.style.setProperty("display", "none");
+    setSlateHeadVisible(false);
     if (statusEl) statusEl.textContent = `No games for ${fmtShortDate(day.date)}`;
     return;
   }
   const cardsHtml = day.games.map((g) => {
-    const card = gameCard(g);
-    if (!detailsAvailable) return card;
-    const key = `${g.away}-${g.home}-${g.dh_game_number ?? 0}`;
-    const href = `game.html?date=${encodeURIComponent(day.date)}&g=${encodeURIComponent(key)}`;
-    return `<a class="game-card-link" href="${href}">${card}</a>`;
+    const inner = gameRowInnerHtml(g, gameStartTimeShort(detailsGames, g));
+    if (!detailsAvailable) return `<div class="slate-row">${inner}</div>`;
+    const href = `game.html?date=${encodeURIComponent(day.date)}&g=${encodeURIComponent(gameDetailsKey(g))}`;
+    return `<a class="slate-row" href="${href}">${inner}</a>`;
   }).join("");
+  // set/removed unconditionally on every render (not just when cardsHtml
+  // actually changes below) — an auto-refresh tick can flip a slate from
+  // all-ungraded to partially-graded without the row markup itself changing
+  // shape enough to matter, and the class must track that regardless of the
+  // _lastGamesHtml guard.
+  const hasFinals = day.games.some((g) => gameHasFinalScore(g.result));
+  gamesEl.classList.toggle("no-finals", !hasFinals);
+  document.getElementById("slate-head")?.classList.toggle("no-finals", !hasFinals);
   if (cardsHtml !== _lastGamesHtml) {
     gamesEl.innerHTML = cardsHtml;
     _lastGamesHtml = cardsHtml;
@@ -661,7 +743,7 @@ async function renderDashboard() {
 
 /* Polled by the interval/visibilitychange listeners wired in
    DOMContentLoaded. Skips entirely while the visitor is mid-interaction
-   with the date picker (isTypingTarget) or the current view has nothing
+   with a focused input control (isTypingTarget) or the current view has nothing
    left to change (_autoRefreshEligible). Resets the index.json memo so a
    newly-published date/preview/grading update is actually picked up —
    renderDashboard's own _dashboardRenderToken re-entrancy guard handles a
@@ -686,6 +768,12 @@ async function refreshRecordStrip(isCurrent) {
     setStat("stat-ll", rec.overall?.log_loss != null ? rec.overall.log_loss.toFixed(4) : "—");
     setStat("stat-n", rec.overall?.n_graded ?? "—");
     setStat("stat-30d", rec.last_30d?.accuracy != null ? (rec.last_30d.accuracy * 100).toFixed(1) + "%" : "—");
+    const accPanel = document.getElementById("acc-history-panel");
+    if (accPanel && !accPanel.hidden) {
+      const indexData = await fetchDateIndex();
+      if (!isCurrent()) return;
+      renderAccuracyPanel(accPanel, indexData);
+    }
   } catch {
     if (!isCurrent()) return;
     ["stat-acc", "stat-ll", "stat-n", "stat-30d"].forEach((id) => setStat(id, "—"));
@@ -746,15 +834,20 @@ function previewGameCard(g) {
     : "time TBD";
   metaRows.push(`<div class="meta-row">${timeText}${dn}</div>`);
 
+  const awaySpName = escapeHtml(g.away_sp?.name ?? "TBD");
+  const homeSpName = escapeHtml(g.home_sp?.name ?? "TBD");
+
   return `
   <div class="game-card preview-card">
     <div class="matchup">
-      <div class="team away">
-        <span class="code" style="--team-color:${teamColor(g.away)}">${awayCode}</span>
+      <div class="team-cell away">
+        ${codeLineHtml(awayCode, false, ` style="--team-color:${teamColor(g.away)}"`)}
+        <span class="sp" title="${awaySpName}">${awaySpName}</span>
       </div>
-      <span class="at">@</span>
-      <div class="team home">
-        <span class="code" style="--team-color:${teamColor(g.home)}">${homeCode}</span>
+      <div class="at-sep" aria-hidden="true">@</div>
+      <div class="team-cell home">
+        ${codeLineHtml(homeCode, true, ` style="--team-color:${teamColor(g.home)}"`)}
+        <span class="sp" title="${homeSpName}">${homeSpName}</span>
       </div>
     </div>
     <div class="game-meta">${metaRows.join("")}</div>
@@ -775,6 +868,7 @@ async function renderPreviewSlate({ gamesEl, header, navRefs, indexData, preview
     `Preview for ${fmtShortDate(previewInfo.date)} — no prediction until tomorrow morning`
   );
   document.getElementById("slate-note")?.style.setProperty("display", "none");
+  setSlateHeadVisible(false);
   _lastGamesHtml = null;
 
   try {
@@ -905,11 +999,10 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
         <span class="at">@</span>
         <div class="team home">
           <span class="code" style="--team-color:${teamColor(home)}">${homeCode}</span>
-          <span class="pct ${homeFav ? "fav" : "dog"}">${pct(pHome)}${seedStdHtml(matchGame)}</span>
+          <span class="pct ${homeFav ? "fav" : "dog"}">${pct(pHome)}</span>
         </div>
       </div>
-      ${probBarHtml(away, home, pAway, pHome)}
-      ${seedStdLegendHtml(matchGame)}`;
+      ${contestedTagHtml(matchGame)}`;
 
     const rf = resultFlagHtml(matchGame.result, pHome);
     if (rf) flags.push(rf);
@@ -949,8 +1042,11 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
     <div class="game-meta">${metaRows.join("")}</div>`;
 }
 
+/* Returns { label, value } for the detail panel's stat-row layout, or null
+   when the underlying data is absent — `value` carries every stat exactly
+   as before, just without the old inline label prefix. */
 function lineupRowSeasonLineHtml(seasonYear, st, rates) {
-  if (!st) return "";
+  if (!st) return null;
   const year = escapeHtml(String(seasonYear));
   const g = fmtOrDash(st.g, fmt0);
   const pa = fmtOrDash(st.pa, fmt0);
@@ -964,11 +1060,11 @@ function lineupRowSeasonLineHtml(seasonYear, st, rates) {
   if (rates?.obp != null) rateBits.push(`OBP ${fmtRate(rates.obp)}`);
   if (rates?.slg != null) rateBits.push(`SLG ${fmtRate(rates.slg)}`);
   const rateSuffix = rateBits.length ? ` · ${rateBits.join("/")}` : "";
-  return `${year} season: ${g} G, ${pa} PA — ${h}/${ab}, ${hr} HR, ${bb} BB, ${so} SO${rateSuffix}`;
+  return { label: `${year} season`, value: `${g} G, ${pa} PA — ${h}/${ab}, ${hr} HR, ${bb} BB, ${so} SO${rateSuffix}` };
 }
 
 function lineupRowCareerLineHtml(car) {
-  if (!car) return "";
+  if (!car) return null;
   const avg = car.avg != null ? fmtRate(car.avg) : "—";
   const obp = car.obp != null ? fmtRate(car.obp) : "—";
   const slg = car.slg != null ? fmtRate(car.slg) : "—";
@@ -976,11 +1072,11 @@ function lineupRowCareerLineHtml(car) {
   const ab = fmtOrDash(car.ab, fmt0);
   const hr = fmtOrDash(car.hr, fmt0);
   const pa = fmtOrDash(car.pa, fmt0);
-  return `Career: ${avg}/${obp}/${slg} — ${h}/${ab}, ${hr} HR (${pa} PA)`;
+  return { label: "Career", value: `${avg}/${obp}/${slg} — ${h}/${ab}, ${hr} HR (${pa} PA)` };
 }
 
 function lineupRowVsSpLineHtml(vsSp, oppSpName) {
-  if (!vsSp) return "";
+  if (!vsSp) return null;
   const name = oppSpName ? escapeHtml(oppSpName) : "TBD";
   const h = fmtOrDash(vsSp.h, fmt0);
   const ab = fmtOrDash(vsSp.ab, fmt0);
@@ -988,18 +1084,27 @@ function lineupRowVsSpLineHtml(vsSp, oppSpName) {
   const bb = fmtOrDash(vsSp.bb, fmt0);
   const so = fmtOrDash(vsSp.so, fmt0);
   const avg = vsSp.avg != null ? fmtRate(vsSp.avg) : "—";
-  return `vs ${name}: ${h}/${ab}, ${hr} HR, ${bb} BB, ${so} SO (AVG ${avg})`;
+  return { label: `vs ${name}`, value: `${h}/${ab}, ${hr} HR, ${bb} BB, ${so} SO (AVG ${avg})` };
 }
 
 function lineupRowDetailHtml(row, seasonYear, oppSpName) {
-  const lines = [
+  const stats = [
     lineupRowSeasonLineHtml(seasonYear, row.season_totals, row),
     lineupRowCareerLineHtml(row.career),
     lineupRowVsSpLineHtml(row.vs_sp, oppSpName),
   ].filter(Boolean);
-  if (lines.length === 0) return "";
-  const linesHtml = lines.map((l) => `<p class="row-detail-line">${l}</p>`).join("");
-  return `<div class="row-detail-wrap">${linesHtml}</div>`;
+  if (stats.length === 0) return "";
+  const statsHtml = stats
+    .map(({ label, value }) => `<div class="detail-stat"><span class="detail-stat-label">${label}</span><span class="detail-stat-val">${value}</span></div>`)
+    .join("");
+  return `<div class="row-detail-wrap">${statsHtml}</div>`;
+}
+
+/* Whether at least one row in `rows` actually has a detail panel — mirrors
+   lineupPanelHtml's own per-row `hasDetail` check, used to gate the
+   "Tap a player for..." hint above both lineup tables. */
+function anyLineupRowHasDetail(rows, seasonYear, oppSpName) {
+  return (rows || []).some((r) => !!lineupRowDetailHtml(r, seasonYear, oppSpName));
 }
 
 function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
@@ -1063,7 +1168,13 @@ function renderLineupsHtml(lineups, lineupStatus, awayCode, homeCode, seasonYear
   const legend = hasLgAvg
     ? `<p class="stale-note lg-avg-legend">* — no player-level data matched (call-up or name mismatch); league-average rates shown.</p>`
     : "";
+  const hasAnyDetail = anyLineupRowHasDetail(lineups.away, seasonYear, h.home_sp?.name)
+    || anyLineupRowHasDetail(lineups.home, seasonYear, h.away_sp?.name);
+  const hint = hasAnyDetail
+    ? `<p class="stale-note lineup-hint">Tap a player for season, career, and vs-starter detail.</p>`
+    : "";
   return `<h2>Lineups</h2>
+    ${hint}
     <div class="detail-grid">
       ${lineupPanelHtml(awayCode, lineups.away, status.away, seasonYear, h.home_sp?.name)}
       ${lineupPanelHtml(homeCode, lineups.home, status.home, seasonYear, h.away_sp?.name)}
@@ -1108,21 +1219,9 @@ function compareRowHtml(label, awayVal, homeVal, opts = {}) {
     homeBetter = !awayBetter;
   }
 
-  let barHtml = `<div class="compare-bar-spacer"></div>`;
-  if (awayNum && homeNum) {
-    const max = Math.max(Math.abs(awayVal), Math.abs(homeVal)) || 1;
-    const awayW = (Math.abs(awayVal) / max) * 100;
-    const homeW = (Math.abs(homeVal) / max) * 100;
-    barHtml = `<div class="compare-bar">
-      <div class="bar-half away"><div class="bar-fill${awayBetter ? " better" : ""}" style="width:${awayW}%"></div></div>
-      <div class="bar-half home"><div class="bar-fill${homeBetter ? " better" : ""}" style="width:${homeW}%"></div></div>
-    </div>`;
-  }
-
   return `<div class="compare-row">
     <div class="compare-label">${escapeHtml(label)}</div>
     <div class="compare-val away${awayBetter ? " better" : ""}">${awayDisplay}</div>
-    ${barHtml}
     <div class="compare-val home${homeBetter ? " better" : ""}">${homeDisplay}</div>
   </div>`;
 }
@@ -1195,11 +1294,13 @@ function renderTeamStatsHtml(stats, awayCode, homeCode) {
     ["Recent form", FORM_ROWS, stats.form],
     ["Head-to-head", H2H_ROWS, stats.head_to_head],
   ];
+  const codesRow = `<div class="compare-row compare-codes"><div class="compare-label"></div><div class="compare-val away">${away}</div><div class="compare-val home">${home}</div></div>`;
   const body = groups
     .filter(([, , obj]) => obj)
-    .map(([title, rowsCfg, obj]) => `<div class="compare-group"><h3>${title} — <span class="side away" style="--team-color:${teamColor(awayCode)}">${away}</span> | <span class="side home" style="--team-color:${teamColor(homeCode)}">${home}</span></h3>${statRows(rowsCfg, obj)}</div>`)
+    .map(([title, rowsCfg, obj]) => `<div class="compare-group"><h3>${title}</h3>${codesRow}${statRows(rowsCfg, obj)}</div>`)
     .join("");
-  return `<h2>Team stats</h2>${body || '<p class="stale-note">Team stats unavailable.</p>'}`;
+  if (!body) return `<h2>Team stats</h2><p class="stale-note">Team stats unavailable.</p>`;
+  return `<h2>Team stats</h2><div class="compare-cols">${body}</div>`;
 }
 
 function spSeasonTableHtml(s) {
@@ -1435,6 +1536,273 @@ function updateNavHeightVar() {
   }
 }
 
+/* ---------- accuracy history panel ---------- */
+
+/* Filters index.json's `dates` array down to rows that actually have a
+   graded result and turns it into a running cumulative-accuracy series.
+   Gap days (no entry) are simply absent from `entries`, so they show up as
+   wider horizontal spacing in the chart's true time scale rather than a
+   plotted point; the trailing today's-slate entry (n_graded: 0) is dropped
+   here, same as any other malformed/ungraded row. */
+function cumulativeAccuracySeries(entries) {
+  const list = Array.isArray(entries) ? entries : [];
+  let cumCorrect = 0;
+  let cumGraded = 0;
+  const out = [];
+  for (const e of list) {
+    if (!e || typeof e !== "object") continue;
+    const { date, n_graded, n_correct } = e;
+    if (!isValidDateParam(date)) continue;
+    if (!isFiniteNum(n_graded) || n_graded <= 0) continue;
+    if (!isFiniteNum(n_correct) || n_correct < 0 || n_correct > n_graded) continue;
+    cumCorrect += n_correct;
+    cumGraded += n_graded;
+    out.push({
+      date,
+      dayCorrect: n_correct,
+      dayGraded: n_graded,
+      dayAcc: n_correct / n_graded,
+      cumCorrect,
+      cumGraded,
+      cumAcc: cumCorrect / cumGraded,
+    });
+  }
+  return out;
+}
+
+function _accDayNum(dateStr) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dateStr ?? ""));
+  if (!m) return NaN;
+  return Date.UTC(+m[1], +m[2] - 1, +m[3]) / 86400000;
+}
+
+function _accFloor10(v) { return Math.floor(v / 10) * 10; }
+function _accCeil10(v) { return Math.ceil(v / 10) * 10; }
+
+/* Thins a sorted array of candidate tick values down to at most `max`,
+   always keeping the first and last, picking evenly-spaced indices in
+   between — shared by the x-axis tick selection below. */
+function _accThinToMax(arr, max) {
+  if (arr.length <= max) return arr;
+  const out = [];
+  for (let i = 0; i < max; i++) {
+    const idx = Math.round((i * (arr.length - 1)) / (max - 1));
+    out.push(arr[idx]);
+  }
+  return out.filter((v, i) => i === 0 || v !== out[i - 1]);
+}
+
+function _accReadoutText(pt) {
+  const dayPct = Math.round(pt.dayAcc * 100);
+  const cumPct = (pt.cumAcc * 100).toFixed(1);
+  return `${fmtShortDate(pt.date)} — day ${pt.dayCorrect}/${pt.dayGraded} (${dayPct}%) · cumulative ${pt.cumCorrect}/${pt.cumGraded} (${cumPct}%)`;
+}
+
+/* Pure string -> inline SVG. Colors/fonts are set via inline `style` (not
+   new CSS classes) so this stays a self-contained, independently testable
+   string builder — same reasoning as teamTagHtml's inline --team-color. */
+function accuracyChartSvg(series) {
+  const W = 640, H = 220;
+  const margin = { top: 16, right: 54, bottom: 28, left: 16 };
+  const plotW = W - margin.left - margin.right;
+  const plotH = H - margin.top - margin.bottom;
+
+  const showDots = series.length > 0 && series.length <= 60;
+
+  const dayNums = series.map((s) => _accDayNum(s.date)).filter((n) => Number.isFinite(n));
+  const minDay = dayNums.length ? Math.min(...dayNums) : 0;
+  const maxDay = dayNums.length ? Math.max(...dayNums) : 0;
+  const dayRange = Math.max(1, maxDay - minDay);
+  const xOf = (dateStr) => margin.left + ((_accDayNum(dateStr) - minDay) / dayRange) * plotW;
+
+  const yValues = series.map((s) => s.cumAcc * 100);
+  if (showDots) yValues.push(...series.map((s) => s.dayAcc * 100));
+  yValues.push(50);
+  const yMin = Math.max(0, _accFloor10(Math.min(...yValues) - 5));
+  const yMax = Math.min(100, _accCeil10(Math.max(...yValues) + 5));
+  const yRange = Math.max(1, yMax - yMin);
+  const yOf = (pctVal) => margin.top + (1 - (pctVal - yMin) / yRange) * plotH;
+
+  const gridTicks = [];
+  for (let t = Math.ceil(yMin / 10) * 10; t <= yMax; t += 10) gridTicks.push(t);
+  const gridlinesHtml = gridTicks
+    .map((t) => `<line x1="${margin.left}" y1="${yOf(t).toFixed(1)}" x2="${(margin.left + plotW).toFixed(1)}" y2="${yOf(t).toFixed(1)}" style="stroke:var(--rule);stroke-width:1;opacity:0.5" />`)
+    .join("");
+
+  const y50 = yOf(50);
+  const hairlineHtml = `<line x1="${margin.left}" y1="${y50.toFixed(1)}" x2="${(margin.left + plotW).toFixed(1)}" y2="${y50.toFixed(1)}" style="stroke:var(--faint);stroke-width:1;stroke-dasharray:3 3" />
+    <text x="${margin.left + 2}" y="${(y50 - 4).toFixed(1)}" style="fill:var(--faint);font-family:var(--font-mono);font-size:9px">50%</text>`;
+
+  const pointsAttr = series.map((s) => `${xOf(s.date).toFixed(1)},${yOf(s.cumAcc * 100).toFixed(1)}`).join(" ");
+  const lineHtml = `<polyline class="acc-line" points="${pointsAttr}" style="fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />`;
+
+  const dotsHtml = showDots
+    ? series.map((s) => `<circle cx="${xOf(s.date).toFixed(1)}" cy="${yOf(s.dayAcc * 100).toFixed(1)}" r="3.5" style="fill:var(--faint);stroke:var(--paper);stroke-width:2" />`).join("")
+    : "";
+
+  const last = series[series.length - 1];
+  const first = series[0];
+  const lastX = xOf(last.date);
+  const lastY = yOf(last.cumAcc * 100);
+  const endPct = (last.cumAcc * 100).toFixed(1);
+  const endMarkHtml = `<circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="4" style="fill:var(--accent)" />
+    <text x="${(lastX + 8).toFixed(1)}" y="${(lastY + 4).toFixed(1)}" style="fill:var(--ink);font-family:var(--font-mono);font-size:12px;font-weight:600">${endPct}%</text>`;
+
+  const monthBoundaries = [];
+  let lastMonth = null;
+  for (const s of series) {
+    const mk = s.date.slice(0, 7);
+    if (mk !== lastMonth) { monthBoundaries.push(s.date); lastMonth = mk; }
+  }
+  const seen = new Set();
+  const candidateDates = [];
+  for (const d of [first.date, ...monthBoundaries, last.date]) {
+    if (!seen.has(d)) { seen.add(d); candidateDates.push(d); }
+  }
+  candidateDates.sort();
+  const tickDates = _accThinToMax(candidateDates, 5);
+  const xTicksHtml = tickDates
+    .map((d, i) => {
+      const anchor = i === 0 ? "start" : i === tickDates.length - 1 ? "end" : "middle";
+      return `<text x="${xOf(d).toFixed(1)}" y="${H - 8}" text-anchor="${anchor}" style="fill:var(--muted);font-family:var(--font-mono);font-size:10px">${escapeHtml(fmtShortDate(d))}</text>`;
+    })
+    .join("");
+
+  const hitRectsHtml = series
+    .map((s, i) => {
+      const x = xOf(s.date);
+      const y = yOf(s.cumAcc * 100);
+      const prevX = i > 0 ? xOf(series[i - 1].date) : x - plotW / series.length;
+      const nextX = i < series.length - 1 ? xOf(series[i + 1].date) : x + plotW / series.length;
+      const w = Math.max(4, (nextX - prevX) / 2);
+      const rx = Math.max(margin.left, x - w / 2);
+      return `<rect class="acc-hit" data-i="${i}" data-x="${x.toFixed(1)}" data-y="${y.toFixed(1)}" x="${rx.toFixed(1)}" y="${margin.top}" width="${w.toFixed(1)}" height="${plotH}" style="fill:transparent;cursor:crosshair" />`;
+    })
+    .join("");
+
+  const crosshairHtml = `<line class="acc-crosshair" x1="0" y1="${margin.top}" x2="0" y2="${margin.top + plotH}" style="stroke:var(--rule-strong);stroke-width:1;display:none" />
+    <circle class="acc-hover-dot" cx="0" cy="0" r="5" style="fill:var(--accent);stroke:var(--paper);stroke-width:2;display:none" />`;
+
+  const n = series.length;
+  const ariaLabel = `Cumulative prediction accuracy across ${n} graded day${n === 1 ? "" : "s"}, ${fmtShortDate(first.date)} to ${fmtShortDate(last.date)}, ending at ${endPct}%.`;
+
+  return `<svg class="acc-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${escapeHtml(ariaLabel)}">
+    <g class="acc-gridlines">${gridlinesHtml}</g>
+    ${hairlineHtml}
+    ${lineHtml}
+    <g class="acc-dots">${dotsHtml}</g>
+    ${endMarkHtml}
+    <g class="acc-xticks">${xTicksHtml}</g>
+    ${crosshairHtml}
+    <g class="acc-hitrects">${hitRectsHtml}</g>
+  </svg>`;
+}
+
+function renderAccuracyPanel(panelEl, indexData) {
+  if (!panelEl) return;
+  if (!indexData || !Array.isArray(indexData.dates)) {
+    panelEl.innerHTML = `<p class="stale-note">History unavailable.</p>`;
+    return;
+  }
+  const series = cumulativeAccuracySeries(indexData.dates);
+  if (series.length === 0) {
+    panelEl.innerHTML = `<p class="stale-note">No graded games yet.</p>`;
+    return;
+  }
+  if (series.length === 1) {
+    const s = series[0];
+    const dayPct = (s.dayAcc * 100).toFixed(1);
+    panelEl.innerHTML = `<div class="acc-chart-readout">
+      <span aria-hidden="true" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:6px;vertical-align:middle"></span>${escapeHtml(fmtShortDate(s.date))} — ${s.dayCorrect} of ${s.dayGraded} correct (${dayPct}%)
+    </div>`;
+    return;
+  }
+
+  const last = series[series.length - 1];
+  panelEl.innerHTML = `
+    <div class="acc-chart-readout" id="acc-chart-readout">${escapeHtml(_accReadoutText(last))}</div>
+    ${accuracyChartSvg(series)}
+    <p class="slate-note">Cumulative accuracy after each day's graded games. Dots are single-day accuracy — small samples, mostly noise.</p>`;
+
+  const svgEl = panelEl.querySelector("svg");
+  const readoutEl = panelEl.querySelector("#acc-chart-readout");
+  if (!svgEl) return;
+  const crosshair = svgEl.querySelector(".acc-crosshair");
+  const hoverDot = svgEl.querySelector(".acc-hover-dot");
+  const hitRects = Array.from(svgEl.querySelectorAll(".acc-hit"));
+
+  const toSvgX = (clientX) => {
+    const rect = svgEl.getBoundingClientRect();
+    if (!rect.width) return 0;
+    return (clientX - rect.left) * (640 / rect.width);
+  };
+  const nearestIndex = (svgX) => {
+    let bestI = 0, bestD = Infinity;
+    hitRects.forEach((r) => {
+      const d = Math.abs(Number(r.dataset.x) - svgX);
+      if (d < bestD) { bestD = d; bestI = Number(r.dataset.i); }
+    });
+    return bestI;
+  };
+  const showPoint = (idx) => {
+    const pt = series[idx];
+    const hit = hitRects[idx];
+    if (!pt || !hit) return;
+    if (readoutEl) readoutEl.textContent = _accReadoutText(pt);
+    if (crosshair) {
+      crosshair.setAttribute("x1", hit.dataset.x);
+      crosshair.setAttribute("x2", hit.dataset.x);
+      crosshair.style.display = "";
+    }
+    if (hoverDot) {
+      hoverDot.setAttribute("cx", hit.dataset.x);
+      hoverDot.setAttribute("cy", hit.dataset.y);
+      hoverDot.style.display = "";
+    }
+  };
+  const resetToLatest = () => {
+    if (readoutEl) readoutEl.textContent = _accReadoutText(last);
+    if (crosshair) crosshair.style.display = "none";
+    if (hoverDot) hoverDot.style.display = "none";
+  };
+
+  svgEl.addEventListener("pointermove", (e) => showPoint(nearestIndex(toSvgX(e.clientX))));
+  svgEl.addEventListener("pointerleave", resetToLatest);
+}
+
+/* Wires the record-strip accuracy stat as a click/keyboard toggle for the
+   history panel — mirrors wireExpandableRows' keyboard/ARIA pattern. No-ops
+   harmlessly when the toggle elements don't exist (e.g. game.html). */
+function wireAccuracyPanel() {
+  const card = document.getElementById("stat-acc-card");
+  const panel = document.getElementById("acc-history-panel");
+  if (!card || !panel) return;
+  const caret = card.querySelector(".stat-caret");
+  let loaded = false;
+
+  const toggle = () => {
+    const opening = panel.hidden;
+    panel.hidden = !opening;
+    card.setAttribute("aria-expanded", String(opening));
+    if (caret) caret.textContent = opening ? "▴" : "▾";
+    if (opening && !loaded) {
+      loaded = true;
+      fetchDateIndex().then((indexData) => {
+        if (indexData === null) loaded = false;
+        renderAccuracyPanel(panel, indexData);
+      });
+    }
+  };
+
+  card.addEventListener("click", toggle);
+  card.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggle();
+    }
+  });
+}
+
 /* ---------- auto-refresh ----------
    GitHub Pages' CDN serves data/*.json with ~10-min max-age; cache:"no-store"
    bypasses the browser cache but not the CDN, so freshness is push time
@@ -1456,6 +1824,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   } else if (document.getElementById("games")) {
     renderDashboard();
+    wireAccuracyPanel();
     window.addEventListener("popstate", renderDashboard);
     document.addEventListener("keydown", handleDashboardKeydown);
     setInterval(() => { if (!document.hidden) refreshDashboard(); }, REFRESH_INTERVAL_MS);
