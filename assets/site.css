@@ -276,10 +276,11 @@ a.slate-row:hover::after { color: var(--accent); }
    rhythm. */
 .slate-section-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11.5px;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: var(--muted);
   padding: 14px 10px 4px;
   border-bottom: 1px solid var(--rule);
 }

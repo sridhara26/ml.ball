@@ -39,6 +39,7 @@ function fmt2(v) { return isFiniteNum(v) ? v.toFixed(2) : "—"; }
 function fmtPctVal(v) { return isFiniteNum(v) ? (v * 100).toFixed(1) + "%" : "—"; }
 function fmtRate(v) { return isFiniteNum(v) ? v.toFixed(3).replace(/^(-?)0\./, "$1.") : "—"; }
 function fmtOrDash(v, fmtFn) { return v == null ? "—" : fmtFn(v); }
+function fmtSigned1(v) { return isFiniteNum(v) ? (v > 0 ? "+" : "") + v.toFixed(1) : "—"; }
 
 /* "contested": the 10-model ensemble's seed spread around 0.5 is wide enough
    that it straddles a coin flip — the favorite/underdog split itself isn't
@@ -338,23 +339,31 @@ function gameRowInnerHtml(g, shortTime = null) {
    Rendered in the order upcoming, finished, inProgress — readers care most
    about games they can still watch the prediction for (upcoming), then
    about resolved games (was the model right? — finished), and least about
-   in-progress ones (prediction frozen, no live score shown here). Each
-   bucket sorts ascending by first-pitch epoch, with unknown-time games
+   in-progress ones (prediction frozen, no live score shown here). upcoming
+   and finished sort ascending by first-pitch epoch, with unknown-time games
    (Infinity key) stably sorted to the end of their bucket in published
    order — the comparator explicitly tiebreaks on array index whenever
    sortKeys are equal (including two Infinity keys, where a plain
    subtraction would silently yield NaN and only work by falling through a
    truthiness check), making the sort stable regardless of Array#sort's
-   engine-specific stability guarantees. Small section-label divider rows
-   (labeling every non-empty bucket) are inserted only when at least TWO of
-   the three buckets are non-empty; a single-bucket slate (the common case)
-   renders as a flat, unlabeled, ascending list, and when detailsGames is
-   absent entirely (no times known for anything) this falls back to a flat,
-   unsorted, published-order list — the pre-existing behavior. Called fresh
-   on every render (including auto-refresh ticks), so a game crossing
-   buckets naturally changes cardsHtml and trips the _lastGamesHtml repaint
-   guard in renderDashboard. Known accepted edge: a postponed past game (no
-   final score, but its known first-pitch epoch has passed) sits under "in
+   engine-specific stability guarantees. inProgress instead sorts DESCENDING
+   by epoch — the game that just started is the one a reader might still
+   care to check, while one that started hours ago is nearly over — via a
+   dedicated comparator (byEpochDescThenPublishedOrder): unknown epochs
+   still sort LAST, never first (sorting ascending and then reversing only
+   the known-epoch portion would get the null handling backwards), known
+   epochs descending, ties (including two Infinity keys) by idx ascending.
+   Small section-label divider rows (labeling every non-empty bucket) are
+   inserted only when at least TWO of the three buckets are non-empty; a
+   single-bucket slate (the common case) renders as a flat, unlabeled list
+   in that bucket's own sort order (ascending for upcoming/finished,
+   descending for inProgress), and when detailsGames is absent entirely (no
+   times known for anything) this falls back to a flat, unsorted,
+   published-order list — the pre-existing behavior. Called fresh on every
+   render (including auto-refresh ticks), so a game crossing buckets
+   naturally changes cardsHtml and trips the _lastGamesHtml repaint guard in
+   renderDashboard. Known accepted edge: a postponed past game (no final
+   score, but its known first-pitch epoch has passed) sits under "in
    progress" — rare, already a noted display nit, not special-cased. */
 function buildSlateGamesHtml(games, detailsGames, detailsAvailable, date) {
   const rowHtml = (g) => {
@@ -382,9 +391,18 @@ function buildSlateGamesHtml(games, detailsGames, detailsAvailable, date) {
     }
   });
   const byEpochThenPublishedOrder = (a, b) => (a.sortKey === b.sortKey ? a.idx - b.idx : a.sortKey - b.sortKey);
+  // inProgress reads most-recently-started first (see doc comment above):
+  // unknown epochs (Infinity sortKey) still sort last, known epochs
+  // descending, ties by idx ascending.
+  const byEpochDescThenPublishedOrder = (a, b) => {
+    if (a.sortKey === b.sortKey) return a.idx - b.idx;
+    if (a.sortKey === Infinity) return 1;
+    if (b.sortKey === Infinity) return -1;
+    return b.sortKey - a.sortKey;
+  };
   upcoming.sort(byEpochThenPublishedOrder);
   finished.sort(byEpochThenPublishedOrder);
-  inProgress.sort(byEpochThenPublishedOrder);
+  inProgress.sort(byEpochDescThenPublishedOrder);
 
   const buckets = [
     { label: "upcoming", entries: upcoming },
@@ -1356,7 +1374,11 @@ const FORM_ROWS = [
   ["win_pct", "Win %", { fmt: fmtPctVal }],
   ["streak", "Streak", { fmt: (v) => String(v), highlight: false }],
   ["run_diff_per_game", "Run diff/game", { fmt: fmt2 }],
-  ["games_behind", "Games behind", { fmt: fmt1, lowerIsBetter: true }],
+  // payload sign convention: positive = games up, the pipeline's
+  // parse_games_behind negates Baseball Reference's GB (e.g. "1.5 GB"
+  // becomes -1.5, "up 0.5" becomes +0.5) — so higher is better here, the
+  // default direction (no lowerIsBetter).
+  ["games_behind", "Games up", { fmt: fmtSigned1 }],
   ["days_rest", "Days rest", { fmt: fmt0, highlight: false }],
 ];
 const H2H_ROWS = [
