@@ -217,7 +217,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T01:14:47.080248+00:00"
+      }
     },
     {
       "home": "ARI",
@@ -235,7 +239,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T01:14:47.080248+00:00"
+      }
     },
     {
       "home": "SDP",
@@ -253,7 +261,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T01:14:47.080248+00:00"
+      }
     },
     {
       "home": "OAK",
@@ -271,7 +283,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T01:14:47.080248+00:00"
+      }
     },
     {
       "home": "SEA",
@@ -289,7 +305,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T01:14:47.080248+00:00"
+      }
     },
     {
       "home": "SFG",
@@ -307,7 +327,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-26T01:14:47.080248+00:00"
+      }
     }
   ]
 }
