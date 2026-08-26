@@ -112,6 +112,20 @@ const TEAM_ALIASES = Object.assign(Object.create(null), {
   ATH: "OAK", FLA: "MIA", MON: "WSN", TBD: "TBR", ANA: "LAA",
 });
 
+/* Accuracy page "By team" division panels — BR codes, matching record.json.
+   Every code below is a division-mapped canonical code; TEAM_ALIASES resolves
+   older/alternate raw codes (e.g. ATH) onto one of these before bucketing. */
+const ACC_DIVISIONS = [
+  { label: "AL East", teams: ["BAL", "BOS", "NYY", "TBR", "TOR"] },
+  { label: "AL Central", teams: ["CHW", "CLE", "DET", "KCR", "MIN"] },
+  { label: "AL West", teams: ["HOU", "LAA", "OAK", "SEA", "TEX"] },
+  { label: "NL East", teams: ["ATL", "MIA", "NYM", "PHI", "WSN"] },
+  { label: "NL Central", teams: ["CHC", "CIN", "MIL", "PIT", "STL"] },
+  { label: "NL West", teams: ["ARI", "COL", "LAD", "SDP", "SFG"] },
+];
+
+const ACC_DIVISION_CODE_SET = new Set(ACC_DIVISIONS.flatMap((d) => d.teams));
+
 function teamColor(code) {
   const meta = TEAM_META[code] ?? TEAM_META[TEAM_ALIASES[code]];
   return meta ? meta.color : "var(--accent)";
@@ -1975,15 +1989,6 @@ function teamDisplayName(code) {
   return TEAM_META[code]?.name ?? TEAM_META[TEAM_ALIASES[code]]?.name ?? code;
 }
 
-function sortedTeamCodes(byTeam) {
-  return Object.keys(byTeam).sort((a, b) => teamDisplayName(a).localeCompare(teamDisplayName(b)));
-}
-
-function teamOptionLabel(code) {
-  const name = teamDisplayName(code);
-  return name === code ? code : `${name} (${code})`;
-}
-
 const TEAM_SPLIT_ROWS = [
   { key: "picked", label: "Picked them" },
   { key: "faded", label: "Picked against them" },
@@ -2001,70 +2006,145 @@ function teamSplitRowHtml(row, split) {
   </div>`;
 }
 
-function renderTeamDetail(container, code, byTeam) {
-  if (!container) return;
-  const t = code && byTeam && typeof byTeam === "object" ? byTeam[code] : null;
-  if (!code || !t || typeof t !== "object") {
-    container.innerHTML = "";
-    return;
+/* Inner HTML for one team's expanded detail (summary stats + split rows +
+   small-sample note) — used inline inside a division panel, under the row
+   for that team, rather than in a separate shared container. */
+function teamDetailContentHtml(entry) {
+  if (!entry || typeof entry !== "object") {
+    return `<p class="stale-note">No graded games for this team yet.</p>`;
   }
-  const n = isFiniteNum(t.n_graded) ? t.n_graded : null;
-  const wins = isFiniteNum(t.wins) ? t.wins : null;
+  const n = isFiniteNum(entry.n_graded) ? entry.n_graded : null;
+  const wins = isFiniteNum(entry.wins) ? entry.wins : null;
   const record = n != null && wins != null ? `${wins}–${Math.max(0, n - wins)}` : "—";
-  const splitsHtml = TEAM_SPLIT_ROWS.map((row) => teamSplitRowHtml(row, t[row.key])).join("");
-  container.innerHTML = `
+  const splitsHtml = TEAM_SPLIT_ROWS.map((row) => teamSplitRowHtml(row, entry[row.key])).join("");
+  return `
     <div class="acc-team-summary">
       <div class="acc-team-stat"><div class="label">Games graded</div><div class="value">${n != null ? n : "—"}</div></div>
       <div class="acc-team-stat"><div class="label">Team record</div><div class="value">${record}</div></div>
-      <div class="acc-team-stat"><div class="label">Model accuracy</div><div class="value">${fmtPctVal(t.accuracy)}</div></div>
+      <div class="acc-team-stat"><div class="label">Model accuracy</div><div class="value">${fmtPctVal(entry.accuracy)}</div></div>
     </div>
     <div class="acc-team-splits">${splitsHtml}</div>
     <p class="stale-note">A team appears in only a handful of graded games so far — treat these as noise until the sample grows.</p>`;
 }
 
-function populateTeamSelect(selectEl, byTeam) {
-  if (!selectEl) return;
-  const current = selectEl.value || null;
-  const codes = sortedTeamCodes(byTeam);
-  const optionsHtml = codes.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(teamOptionLabel(c))}</option>`).join("");
-  selectEl.innerHTML = `<option value="">Choose a team…</option>${optionsHtml}`;
-  let stored = null;
-  try { stored = localStorage.getItem(ACCURACY_TEAM_STORAGE_KEY); } catch { /* ignore */ }
-  const restore = current && codes.includes(current) ? current : stored;
-  if (restore && codes.includes(restore)) selectEl.value = restore;
+/* Looks up a division-mapped code's by_team entry, resolving any raw code
+   that aliases onto it (e.g. a by_team key of "ATH" for a franchise whose
+   division slot is "OAK") — direct code match wins if both happen to be
+   present at once. */
+function byTeamEntryForCode(code, byTeam) {
+  if (byTeam[code]) return byTeam[code];
+  for (const rawCode of Object.keys(TEAM_ALIASES)) {
+    if (TEAM_ALIASES[rawCode] === code && byTeam[rawCode]) return byTeam[rawCode];
+  }
+  return null;
+}
+
+/* Raw by_team codes that don't resolve (directly or via TEAM_ALIASES) onto
+   any division-mapped code — rendered in an "Other" panel so they're never
+   silently dropped. */
+function accOtherTeamCodes(byTeam) {
+  return Object.keys(byTeam).filter((code) => {
+    if (ACC_DIVISION_CODE_SET.has(code)) return false;
+    const resolved = TEAM_ALIASES[code];
+    return !(resolved && ACC_DIVISION_CODE_SET.has(resolved));
+  });
+}
+
+/* Team codes drive DOM element ids (rowId/detailId) below. by_team keys
+   (especially the "Other" bucket) aren't provably safe under the site's
+   escapeHtml-everything discipline, so ids are derived from a whitelisted
+   subset of the code rather than the raw string — keeps the id attribute
+   value and its aria-controls reference matching by construction, and
+   avoids any risk of breaking out of the surrounding double-quoted
+   attribute. Shared with wireTeamPanels' post-toggle focus lookup so the
+   two never drift apart. */
+function accTeamIdSafe(code) {
+  return String(code).replace(/[^A-Za-z0-9_-]/g, "_");
+}
+
+function accTeamRowHtml(code, entry, isExpanded) {
+  const acc = entry ? fmtPctVal(entry.accuracy) : "—";
+  const n = entry && isFiniteNum(entry.n_graded) ? entry.n_graded : null;
+  const rowId = `acc-team-row-${accTeamIdSafe(code)}`;
+  const detailId = `acc-team-detail-${accTeamIdSafe(code)}`;
+  return `<div class="acc-team-row-wrap">
+    <button type="button" class="acc-team-row${isExpanded ? " expanded" : ""}" id="${rowId}" data-team-code="${escapeHtml(code)}" aria-expanded="${isExpanded ? "true" : "false"}" aria-controls="${detailId}">
+      <span class="acc-team-row-name">${escapeHtml(teamDisplayName(code))}</span>
+      <span class="acc-team-row-stats">
+        <span class="acc-team-row-acc">${acc}</span>
+        <span class="acc-team-row-n">${n != null ? `${n}g` : "—"}</span>
+        <span class="expand-caret" aria-hidden="true">${isExpanded ? "▾" : "▸"}</span>
+      </span>
+    </button>
+    <div class="acc-team-row-detail" id="${detailId}"${isExpanded ? "" : " hidden"}>${isExpanded ? teamDetailContentHtml(entry) : ""}</div>
+  </div>`;
+}
+
+function accPanelHtml(label, codes, byTeam, expandedCode, resolveEntry) {
+  const sorted = [...codes].sort((a, b) => teamDisplayName(a).localeCompare(teamDisplayName(b)));
+  const rowsHtml = sorted.map((code) => accTeamRowHtml(code, resolveEntry(code, byTeam), expandedCode === code)).join("");
+  return `<div class="acc-division-panel">
+    <div class="acc-division-label micro-label">${escapeHtml(label)}</div>
+    <div class="acc-division-teams">${rowsHtml}</div>
+  </div>`;
+}
+
+function renderTeamPanels(container, byTeam, expandedCode) {
+  if (!container) return;
+  const divisionsHtml = ACC_DIVISIONS.map((div) => accPanelHtml(div.label, div.teams, byTeam, expandedCode, byTeamEntryForCode)).join("");
+  const otherCodes = accOtherTeamCodes(byTeam);
+  const otherHtml = otherCodes.length
+    ? accPanelHtml("Other", otherCodes, byTeam, expandedCode, (code, bt) => bt[code] ?? null)
+    : "";
+  container.innerHTML = divisionsHtml + otherHtml;
 }
 
 /* by_team is the other new (currently absent from the deployed record.json)
-   optional key — degrades to a disabled picker + stale-note until the
-   pipeline redeploys with it. */
-function renderTeamSection(selectEl, detailEl, staleEl, byTeam) {
+   optional key — degrades to an empty panels container + stale-note until
+   the pipeline redeploys with it. */
+function renderTeamSection(panelsEl, staleEl, byTeam, expandedCode) {
   const hasData = !!byTeam && typeof byTeam === "object" && Object.keys(byTeam).length > 0;
   if (!hasData) {
-    if (selectEl) { selectEl.innerHTML = `<option value="">Choose a team…</option>`; selectEl.disabled = true; }
-    if (detailEl) detailEl.innerHTML = "";
+    if (panelsEl) panelsEl.innerHTML = "";
     if (staleEl) staleEl.hidden = false;
     return;
   }
   if (staleEl) staleEl.hidden = true;
-  if (selectEl) selectEl.disabled = false;
-  populateTeamSelect(selectEl, byTeam);
-  renderTeamDetail(detailEl, selectEl?.value || "", byTeam);
+  renderTeamPanels(panelsEl, byTeam, expandedCode);
+}
+
+let _accuracyExpandedTeam = null;
+let _accuracyExpandedTeamLoaded = false;
+
+function loadStoredExpandedTeam() {
+  if (_accuracyExpandedTeamLoaded) return;
+  _accuracyExpandedTeamLoaded = true;
+  try {
+    const stored = localStorage.getItem(ACCURACY_TEAM_STORAGE_KEY);
+    if (stored) _accuracyExpandedTeam = stored;
+  } catch { /* ignore */ }
 }
 
 /* Wired once (guarded by dataset.wired) — subsequent auto-refreshes only
-   re-populate options/detail, never re-attach the listener. getByTeam is a
+   re-render panel contents, never re-attach the listener. getByTeam is a
    thunk so the handler always reads the latest fetched record, not a stale
-   closure over the record.json snapshot at wiring time. */
-function wireTeamSelect(selectEl, detailEl, getByTeam) {
-  if (!selectEl || selectEl.dataset.wired) return;
-  selectEl.dataset.wired = "1";
-  selectEl.addEventListener("change", () => {
-    const code = selectEl.value;
+   closure over the record.json snapshot at wiring time. Delegated on the
+   panels container since rows are fully rebuilt on every render/refresh. */
+function wireTeamPanels(panelsEl, getByTeam) {
+  if (!panelsEl || panelsEl.dataset.wired) return;
+  panelsEl.dataset.wired = "1";
+  panelsEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".acc-team-row");
+    if (!btn || !panelsEl.contains(btn)) return;
+    const code = btn.dataset.teamCode;
+    if (!code) return;
+    _accuracyExpandedTeam = _accuracyExpandedTeam === code ? null : code;
     try {
-      if (code) localStorage.setItem(ACCURACY_TEAM_STORAGE_KEY, code);
+      if (_accuracyExpandedTeam) localStorage.setItem(ACCURACY_TEAM_STORAGE_KEY, _accuracyExpandedTeam);
       else localStorage.removeItem(ACCURACY_TEAM_STORAGE_KEY);
     } catch { /* ignore */ }
-    renderTeamDetail(detailEl, code, getByTeam());
+    renderTeamPanels(panelsEl, getByTeam() || {}, _accuracyExpandedTeam);
+    document.getElementById(`acc-team-row-${accTeamIdSafe(code)}`)?.focus();
   });
 }
 
@@ -2079,9 +2159,9 @@ async function renderAccuracyPage() {
   const loglossEl = document.getElementById("acc-logloss-stats");
   const homeBaselineEl = document.getElementById("acc-home-baseline");
   const confidenceEl = document.getElementById("acc-confidence-rows");
-  const teamSelectEl = document.getElementById("acc-team-select");
-  const teamDetailEl = document.getElementById("acc-team-detail");
+  const teamPanelsEl = document.getElementById("acc-team-panels");
   const teamStaleEl = document.getElementById("acc-team-stale");
+  loadStoredExpandedTeam();
 
   try {
     const rec = await fetchJSON(`${REPO_ROOT}/data/record.json`);
@@ -2096,8 +2176,8 @@ async function renderAccuracyPage() {
     renderHomeBaselineSection(homeBaselineEl, rec.home_baseline);
 
     _accuracyByTeamCache = rec.by_team && typeof rec.by_team === "object" ? rec.by_team : null;
-    renderTeamSection(teamSelectEl, teamDetailEl, teamStaleEl, _accuracyByTeamCache);
-    wireTeamSelect(teamSelectEl, teamDetailEl, () => _accuracyByTeamCache);
+    renderTeamSection(teamPanelsEl, teamStaleEl, _accuracyByTeamCache, _accuracyExpandedTeam);
+    wireTeamPanels(teamPanelsEl, () => _accuracyByTeamCache);
   } catch {
     if (!isCurrent()) return;
     ["acc-stat-acc", "acc-stat-30d", "acc-stat-n", "acc-stat-ll"].forEach((id) => setStat(id, "—"));
@@ -2105,7 +2185,7 @@ async function renderAccuracyPage() {
     renderConfidenceSection(confidenceEl, null);
     renderHomeBaselineSection(homeBaselineEl, null);
     _accuracyByTeamCache = null;
-    renderTeamSection(teamSelectEl, teamDetailEl, teamStaleEl, null);
+    renderTeamSection(teamPanelsEl, teamStaleEl, null, _accuracyExpandedTeam);
   }
 
   const indexData = await fetchDateIndex();
@@ -2113,10 +2193,24 @@ async function renderAccuracyPage() {
   renderAccuracyPanel(panelEl, indexData);
 }
 
+/* The panels re-render replaces #acc-team-panels' innerHTML wholesale, which
+   drops keyboard focus to <body> if a user is mid-navigation there when the
+   12-minute/visibility-return refresh fires. Capture the focused row's id
+   beforehand and re-focus the equivalent element after — a no-op when focus
+   is elsewhere, and safe if the team disappeared from the rebuilt payload
+   (getElementById returns null; optional chaining + try/catch swallow it). */
 function refreshAccuracyPage() {
   if (isTypingTarget(document.activeElement)) return;
   _dateIndexCache = undefined;
-  renderAccuracyPage();
+  const teamPanelsEl = document.getElementById("acc-team-panels");
+  const active = document.activeElement;
+  const focusedId = teamPanelsEl && active && teamPanelsEl.contains(active) ? active.id : null;
+  const result = renderAccuracyPage();
+  if (focusedId && result && typeof result.then === "function") {
+    result.then(() => {
+      try { document.getElementById(focusedId)?.focus(); } catch { /* ignore */ }
+    });
+  }
 }
 
 /* ---------- auto-refresh ----------

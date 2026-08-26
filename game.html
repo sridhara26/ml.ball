@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/site.css?v=ad1ad5c9" />
+  <link rel="stylesheet" href="assets/site.css?v=51f4eda2" />
 </head>
 <body>
   <header class="nav">
@@ -16,10 +16,17 @@
       <a class="brand" href="./" title="machine learning ball · major league baseball">ml<span class="dot">.</span>ball</a>
       <span class="brand-sub">machine learning ball</span>
     </div>
+    <nav class="tabs" aria-label="Site sections">
+      <a class="tab active" href="./">Predictions</a>
+      <a class="tab" href="accuracy.html">Accuracy</a>
+    </nav>
   </header>
 
   <main class="game-detail">
-    <div class="breadcrumb"><a href="./" id="crumb-home">ml.ball</a> / <span id="crumb">game</span></div>
+    <div class="back-nav">
+      <a href="./" id="crumb-home" class="back-link">‹ back to predictions</a>
+      <span class="back-nav-matchup" id="crumb">game</span>
+    </div>
 
     <section id="game-header" class="game-header"></section>
 
@@ -41,6 +48,6 @@
     </div>
   </footer>
 
-  <script src="assets/app.js?v=57dee706" data-root="."></script>
+  <script src="assets/app.js?v=bb818586" data-root="."></script>
 </body>
 </html>

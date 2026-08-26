@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/site.css?v=ad1ad5c9" />
+  <link rel="stylesheet" href="assets/site.css?v=51f4eda2" />
 </head>
 <body>
   <header class="nav">
@@ -60,12 +60,8 @@
 
     <section class="acc-section" aria-label="Accuracy by team">
       <h2>By team</h2>
-      <p class="acc-explainer">See how the model has done, and how confident it's been, in games involving one team.</p>
-      <div class="acc-team-picker">
-        <label for="acc-team-select" class="sr-only">Choose a team</label>
-        <select id="acc-team-select" class="acc-team-select"><option value="">Choose a team…</option></select>
-      </div>
-      <div id="acc-team-detail"></div>
+      <p class="acc-explainer">Tap or click a team below to see how the model has done, and how confident it's been, in that team's games.</p>
+      <div class="acc-team-panels" id="acc-team-panels"></div>
       <p class="stale-note" id="acc-team-stale" hidden>Not available yet — check back soon.</p>
     </section>
   </main>
@@ -78,6 +74,6 @@
     </div>
   </footer>
 
-  <script src="assets/app.js?v=57dee706" data-root="."></script>
+  <script src="assets/app.js?v=bb818586" data-root="."></script>
 </body>
 </html>
