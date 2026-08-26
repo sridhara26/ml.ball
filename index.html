@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/site.css?v=75b823f7" />
+  <link rel="stylesheet" href="assets/site.css?v=ad1ad5c9" />
 </head>
 <body>
   <header class="nav">
@@ -17,17 +17,14 @@
       <a class="brand" href="./" title="machine learning ball · major league baseball">ml<span class="dot">.</span>ball</a>
       <span class="brand-sub">machine learning ball</span>
     </div>
+    <nav class="tabs" aria-label="Site sections">
+      <a class="tab active" href="./" aria-current="page">Predictions</a>
+      <a class="tab" href="accuracy.html">Accuracy</a>
+    </nav>
   </header>
 
   <main>
-    <section class="record-strip" aria-label="Track record">
-      <div class="stat stat-toggle" id="stat-acc-card" role="button" tabindex="0" aria-expanded="false" aria-controls="acc-history-panel"><div class="label">Accuracy (all time) <span class="stat-caret" aria-hidden="true">▾</span></div><div class="value" id="stat-acc">—</div></div>
-      <div class="stat"><div class="label">Log loss</div><div class="value" id="stat-ll">—</div></div>
-      <div class="stat"><div class="label">Games graded</div><div class="value" id="stat-n">—</div></div>
-      <div class="stat"><div class="label">Accuracy (30d)</div><div class="value" id="stat-30d">—</div></div>
-    </section>
-    <section class="acc-history-panel" id="acc-history-panel" aria-label="Accuracy over time" hidden></section>
-    <p class="slate-note record-note">Record across all published predictions, graded against final scores.</p>
+    <p class="record-line" id="record-line" hidden></p>
 
     <div class="section-head" id="today">
       <h2 id="slate-heading">Win probabilities</h2>
@@ -75,6 +72,6 @@
     </div>
   </footer>
 
-  <script src="assets/app.js?v=3a608619" data-root="."></script>
+  <script src="assets/app.js?v=57dee706" data-root="."></script>
 </body>
 </html>

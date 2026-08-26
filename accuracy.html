@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accuracy — ml.ball</title>
+  <meta name="description" content="How accurate are ml.ball's MLB win-probability predictions? Track record, calibration, and per-team breakdowns." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚾</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css?v=ad1ad5c9" />
+</head>
+<body>
+  <header class="nav">
+    <div class="brand-group">
+      <a class="brand" href="./" title="machine learning ball · major league baseball">ml<span class="dot">.</span>ball</a>
+      <span class="brand-sub">machine learning ball</span>
+    </div>
+    <nav class="tabs" aria-label="Site sections">
+      <a class="tab" href="./">Predictions</a>
+      <a class="tab active" href="accuracy.html" aria-current="page">Accuracy</a>
+    </nav>
+  </header>
+
+  <main id="accuracy-page">
+    <div class="section-head">
+      <h2>Accuracy</h2>
+    </div>
+    <p class="slate-note">How the model's predictions have performed against final scores, across every published game.</p>
+
+    <section class="record-strip" aria-label="Track record">
+      <div class="stat"><div class="label">Accuracy (all time)</div><div class="value" id="acc-stat-acc">—</div></div>
+      <div class="stat"><div class="label">Accuracy (30d)</div><div class="value" id="acc-stat-30d">—</div></div>
+      <div class="stat"><div class="label">Games graded</div><div class="value" id="acc-stat-n">—</div></div>
+      <div class="stat"><div class="label">Log loss</div><div class="value" id="acc-stat-ll">—</div></div>
+    </section>
+
+    <section class="acc-section" aria-label="Accuracy over time">
+      <h2>Accuracy over time</h2>
+      <div class="acc-history-panel" id="acc-history-panel"></div>
+    </section>
+
+    <section class="acc-section" aria-label="What log loss means">
+      <h2>What log loss means</h2>
+      <p class="acc-explainer">Log loss grades the probabilities, not just the picks. Every prediction is scored on the probability placed on the team that actually won — a right call costs a little, a wrong one costs more, and a confidently wrong one costs the most. Lower is better: 0.693 is pure coin flips and the high .60s is where solid MLB models land — a useful model lives below the coin-flip line.</p>
+      <div id="acc-logloss-stats"></div>
+    </section>
+
+    <section class="acc-section" aria-label="The home-team baseline">
+      <h2>The home-team baseline</h2>
+      <div id="acc-home-baseline"></div>
+    </section>
+
+    <section class="acc-section" aria-label="Accuracy by confidence">
+      <h2>Accuracy by confidence</h2>
+      <p class="acc-explainer">When the model is more confident, it should be right more often.</p>
+      <div id="acc-confidence-rows"></div>
+    </section>
+
+    <section class="acc-section" aria-label="Accuracy by team">
+      <h2>By team</h2>
+      <p class="acc-explainer">See how the model has done, and how confident it's been, in games involving one team.</p>
+      <div class="acc-team-picker">
+        <label for="acc-team-select" class="sr-only">Choose a team</label>
+        <select id="acc-team-select" class="acc-team-select"><option value="">Choose a team…</option></select>
+      </div>
+      <div id="acc-team-detail"></div>
+      <p class="stale-note" id="acc-team-stale" hidden>Not available yet — check back soon.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="disclaimer">
+      Model output for research/entertainment — not betting advice.
+      Predictions may update before first pitch as lineups and starting
+      pitchers are announced; once a game starts, its prediction is frozen.
+    </div>
+  </footer>
+
+  <script src="assets/app.js?v=57dee706" data-root="."></script>
+</body>
+</html>

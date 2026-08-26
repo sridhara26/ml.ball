@@ -876,23 +876,30 @@ function setStat(id, val) {
   if (el) el.textContent = val;
 }
 
+function hideRecordLine() {
+  const el = document.getElementById("record-line");
+  if (!el) return;
+  el.hidden = true;
+  el.textContent = "";
+}
+
 async function refreshRecordStrip(isCurrent) {
+  const el = document.getElementById("record-line");
+  if (!el) return;
   try {
     const rec = await fetchJSON(`${REPO_ROOT}/data/record.json`);
     if (!isCurrent()) return;
-    setStat("stat-acc", rec.overall?.accuracy != null ? (rec.overall.accuracy * 100).toFixed(1) + "%" : "—");
-    setStat("stat-ll", rec.overall?.log_loss != null ? rec.overall.log_loss.toFixed(4) : "—");
-    setStat("stat-n", rec.overall?.n_graded ?? "—");
-    setStat("stat-30d", rec.last_30d?.accuracy != null ? (rec.last_30d.accuracy * 100).toFixed(1) + "%" : "—");
-    const accPanel = document.getElementById("acc-history-panel");
-    if (accPanel && !accPanel.hidden) {
-      const indexData = await fetchDateIndex();
-      if (!isCurrent()) return;
-      renderAccuracyPanel(accPanel, indexData);
+    const acc = rec.overall?.accuracy;
+    const n = rec.overall?.n_graded;
+    if (!isFiniteNum(acc) || !isFiniteNum(n)) {
+      hideRecordLine();
+      return;
     }
+    el.innerHTML = `<span class="record-line-num">${escapeHtml((acc * 100).toFixed(1))}%</span> accurate over <span class="record-line-num">${escapeHtml(String(n))}</span> graded games · <a href="accuracy.html">full breakdown →</a>`;
+    el.hidden = false;
   } catch {
     if (!isCurrent()) return;
-    ["stat-acc", "stat-ll", "stat-n", "stat-30d"].forEach((id) => setStat(id, "—"));
+    hideRecordLine();
   }
 }
 
@@ -1891,37 +1898,225 @@ function renderAccuracyPanel(panelEl, indexData) {
   svgEl.addEventListener("pointerleave", resetToLatest);
 }
 
-/* Wires the record-strip accuracy stat as a click/keyboard toggle for the
-   history panel — mirrors wireExpandableRows' keyboard/ARIA pattern. No-ops
-   harmlessly when the toggle elements don't exist (e.g. game.html). */
-function wireAccuracyPanel() {
-  const card = document.getElementById("stat-acc-card");
-  const panel = document.getElementById("acc-history-panel");
-  if (!card || !panel) return;
-  const caret = card.querySelector(".stat-caret");
-  let loaded = false;
+/* ---------- accuracy page (accuracy.html) ---------- */
 
-  const toggle = () => {
-    const opening = panel.hidden;
-    panel.hidden = !opening;
-    card.setAttribute("aria-expanded", String(opening));
-    if (caret) caret.textContent = opening ? "▴" : "▾";
-    if (opening && !loaded) {
-      loaded = true;
-      fetchDateIndex().then((indexData) => {
-        if (indexData === null) loaded = false;
-        renderAccuracyPanel(panel, indexData);
-      });
-    }
-  };
+const CONFIDENCE_BUCKET_LABELS = {
+  "[0.50,0.55)": "50–55% · toss-ups",
+  "[0.55,0.60)": "55–60% · leans",
+  "[0.60,1.00]": "60%+ · confident",
+};
 
-  card.addEventListener("click", toggle);
-  card.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      toggle();
-    }
+/* Known buckets first in their natural order, then any unrecognized key in
+   whatever order record.json carries it — so a future/renamed bucket still
+   renders instead of silently vanishing. */
+function orderedConfidenceBucketKeys(byConfidence) {
+  const known = ["[0.50,0.55)", "[0.55,0.60)", "[0.60,1.00]"];
+  const keys = Object.keys(byConfidence);
+  const rest = keys.filter((k) => !known.includes(k));
+  return [...known.filter((k) => keys.includes(k)), ...rest];
+}
+
+function confidenceRowHtml(key, bucket) {
+  const label = CONFIDENCE_BUCKET_LABELS[key] ?? key;
+  const acc = isFiniteNum(bucket?.accuracy) ? bucket.accuracy : null;
+  const n = isFiniteNum(bucket?.n_graded) ? bucket.n_graded : null;
+  const barPct = acc != null ? Math.max(0, Math.min(100, acc * 100)) : 0;
+  return `<div class="acc-conf-row">
+    <div class="acc-conf-label">${escapeHtml(label)}</div>
+    <div class="acc-conf-bar-wrap"><div class="acc-conf-bar-ref"></div><div class="acc-conf-bar" style="width:${barPct.toFixed(1)}%"></div></div>
+    <div class="acc-conf-value">${fmtPctVal(acc)}</div>
+    <div class="acc-conf-n">${n != null ? `${n} game${n === 1 ? "" : "s"}` : "—"}</div>
+  </div>`;
+}
+
+function renderConfidenceSection(container, byConfidence) {
+  if (!container) return;
+  if (!byConfidence || typeof byConfidence !== "object" || Object.keys(byConfidence).length === 0) {
+    container.innerHTML = `<p class="stale-note">Not available yet — check back soon.</p>`;
+    return;
+  }
+  const keys = orderedConfidenceBucketKeys(byConfidence);
+  container.innerHTML = keys.map((k) => confidenceRowHtml(k, byConfidence[k])).join("");
+}
+
+function renderLogLossStats(container, rec) {
+  if (!container) return;
+  const overall = isFiniteNum(rec?.overall?.log_loss) ? rec.overall.log_loss.toFixed(4) : null;
+  if (overall == null) {
+    container.innerHTML = `<p class="stale-note">Not available yet — check back soon.</p>`;
+    return;
+  }
+  const parts = [`Overall: <strong>${overall}</strong>`];
+  if (isFiniteNum(rec?.last_30d?.log_loss)) {
+    parts.push(`Last 30 days: <strong>${rec.last_30d.log_loss.toFixed(4)}</strong>`);
+  }
+  container.innerHTML = `<p class="acc-stat-line">${parts.join(" · ")}</p>`;
+}
+
+/* home_baseline is one of the two new (currently absent from the deployed
+   record.json) optional keys — must degrade to a stale-note, never throw,
+   until the pipeline redeploys with it. */
+function renderHomeBaselineSection(container, homeBaseline) {
+  if (!container) return;
+  if (!homeBaseline || typeof homeBaseline !== "object") {
+    container.innerHTML = `<p class="stale-note">Not available yet — check back soon.</p>`;
+    return;
+  }
+  const winRate = fmtPctVal(homeBaseline.home_win_rate);
+  const pickRate = fmtPctVal(homeBaseline.home_pick_rate);
+  const n = isFiniteNum(homeBaseline.n_graded) ? homeBaseline.n_graded : null;
+  const onText = n != null ? `On the ${n} games graded here` : "On the games graded here";
+  container.innerHTML = `<p class="acc-explainer">Home teams win roughly 52–54% of MLB games, so a &ldquo;model&rdquo; that always picks the home team gets ~53% accuracy for free — raw accuracy only means something against that baseline. ${onText}, always picking home would have scored ${winRate}. The model picked the home side in ${pickRate} of games. We watch that gap: a well-calibrated model shouldn't lean on home teams far beyond the real home-win rate for cheap accuracy.</p>`;
+}
+
+const ACCURACY_TEAM_STORAGE_KEY = "mlball-accuracy-team";
+
+function teamDisplayName(code) {
+  return TEAM_META[code]?.name ?? TEAM_META[TEAM_ALIASES[code]]?.name ?? code;
+}
+
+function sortedTeamCodes(byTeam) {
+  return Object.keys(byTeam).sort((a, b) => teamDisplayName(a).localeCompare(teamDisplayName(b)));
+}
+
+function teamOptionLabel(code) {
+  const name = teamDisplayName(code);
+  return name === code ? code : `${name} (${code})`;
+}
+
+const TEAM_SPLIT_ROWS = [
+  { key: "picked", label: "Picked them" },
+  { key: "faded", label: "Picked against them" },
+  { key: "home", label: "Home games" },
+  { key: "away", label: "Road games" },
+];
+
+function teamSplitRowHtml(row, split) {
+  const n = isFiniteNum(split?.n) ? split.n : null;
+  const acc = isFiniteNum(split?.accuracy) ? split.accuracy : null;
+  return `<div class="acc-team-split-row">
+    <div class="acc-team-split-label">${escapeHtml(row.label)}</div>
+    <div class="acc-team-split-n">${n != null ? `${n} game${n === 1 ? "" : "s"}` : "—"}</div>
+    <div class="acc-team-split-value">${fmtPctVal(acc)}</div>
+  </div>`;
+}
+
+function renderTeamDetail(container, code, byTeam) {
+  if (!container) return;
+  const t = code && byTeam && typeof byTeam === "object" ? byTeam[code] : null;
+  if (!code || !t || typeof t !== "object") {
+    container.innerHTML = "";
+    return;
+  }
+  const n = isFiniteNum(t.n_graded) ? t.n_graded : null;
+  const wins = isFiniteNum(t.wins) ? t.wins : null;
+  const record = n != null && wins != null ? `${wins}–${Math.max(0, n - wins)}` : "—";
+  const splitsHtml = TEAM_SPLIT_ROWS.map((row) => teamSplitRowHtml(row, t[row.key])).join("");
+  container.innerHTML = `
+    <div class="acc-team-summary">
+      <div class="acc-team-stat"><div class="label">Games graded</div><div class="value">${n != null ? n : "—"}</div></div>
+      <div class="acc-team-stat"><div class="label">Team record</div><div class="value">${record}</div></div>
+      <div class="acc-team-stat"><div class="label">Model accuracy</div><div class="value">${fmtPctVal(t.accuracy)}</div></div>
+    </div>
+    <div class="acc-team-splits">${splitsHtml}</div>
+    <p class="stale-note">A team appears in only a handful of graded games so far — treat these as noise until the sample grows.</p>`;
+}
+
+function populateTeamSelect(selectEl, byTeam) {
+  if (!selectEl) return;
+  const current = selectEl.value || null;
+  const codes = sortedTeamCodes(byTeam);
+  const optionsHtml = codes.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(teamOptionLabel(c))}</option>`).join("");
+  selectEl.innerHTML = `<option value="">Choose a team…</option>${optionsHtml}`;
+  let stored = null;
+  try { stored = localStorage.getItem(ACCURACY_TEAM_STORAGE_KEY); } catch { /* ignore */ }
+  const restore = current && codes.includes(current) ? current : stored;
+  if (restore && codes.includes(restore)) selectEl.value = restore;
+}
+
+/* by_team is the other new (currently absent from the deployed record.json)
+   optional key — degrades to a disabled picker + stale-note until the
+   pipeline redeploys with it. */
+function renderTeamSection(selectEl, detailEl, staleEl, byTeam) {
+  const hasData = !!byTeam && typeof byTeam === "object" && Object.keys(byTeam).length > 0;
+  if (!hasData) {
+    if (selectEl) { selectEl.innerHTML = `<option value="">Choose a team…</option>`; selectEl.disabled = true; }
+    if (detailEl) detailEl.innerHTML = "";
+    if (staleEl) staleEl.hidden = false;
+    return;
+  }
+  if (staleEl) staleEl.hidden = true;
+  if (selectEl) selectEl.disabled = false;
+  populateTeamSelect(selectEl, byTeam);
+  renderTeamDetail(detailEl, selectEl?.value || "", byTeam);
+}
+
+/* Wired once (guarded by dataset.wired) — subsequent auto-refreshes only
+   re-populate options/detail, never re-attach the listener. getByTeam is a
+   thunk so the handler always reads the latest fetched record, not a stale
+   closure over the record.json snapshot at wiring time. */
+function wireTeamSelect(selectEl, detailEl, getByTeam) {
+  if (!selectEl || selectEl.dataset.wired) return;
+  selectEl.dataset.wired = "1";
+  selectEl.addEventListener("change", () => {
+    const code = selectEl.value;
+    try {
+      if (code) localStorage.setItem(ACCURACY_TEAM_STORAGE_KEY, code);
+      else localStorage.removeItem(ACCURACY_TEAM_STORAGE_KEY);
+    } catch { /* ignore */ }
+    renderTeamDetail(detailEl, code, getByTeam());
   });
+}
+
+let _accuracyRenderToken = 0;
+let _accuracyByTeamCache = null;
+
+async function renderAccuracyPage() {
+  const myToken = ++_accuracyRenderToken;
+  const isCurrent = () => myToken === _accuracyRenderToken;
+
+  const panelEl = document.getElementById("acc-history-panel");
+  const loglossEl = document.getElementById("acc-logloss-stats");
+  const homeBaselineEl = document.getElementById("acc-home-baseline");
+  const confidenceEl = document.getElementById("acc-confidence-rows");
+  const teamSelectEl = document.getElementById("acc-team-select");
+  const teamDetailEl = document.getElementById("acc-team-detail");
+  const teamStaleEl = document.getElementById("acc-team-stale");
+
+  try {
+    const rec = await fetchJSON(`${REPO_ROOT}/data/record.json`);
+    if (!isCurrent()) return;
+    setStat("acc-stat-acc", isFiniteNum(rec.overall?.accuracy) ? (rec.overall.accuracy * 100).toFixed(1) + "%" : "—");
+    setStat("acc-stat-30d", isFiniteNum(rec.last_30d?.accuracy) ? (rec.last_30d.accuracy * 100).toFixed(1) + "%" : "—");
+    setStat("acc-stat-n", rec.overall?.n_graded ?? "—");
+    setStat("acc-stat-ll", isFiniteNum(rec.overall?.log_loss) ? rec.overall.log_loss.toFixed(4) : "—");
+
+    renderLogLossStats(loglossEl, rec);
+    renderConfidenceSection(confidenceEl, rec.by_confidence);
+    renderHomeBaselineSection(homeBaselineEl, rec.home_baseline);
+
+    _accuracyByTeamCache = rec.by_team && typeof rec.by_team === "object" ? rec.by_team : null;
+    renderTeamSection(teamSelectEl, teamDetailEl, teamStaleEl, _accuracyByTeamCache);
+    wireTeamSelect(teamSelectEl, teamDetailEl, () => _accuracyByTeamCache);
+  } catch {
+    if (!isCurrent()) return;
+    ["acc-stat-acc", "acc-stat-30d", "acc-stat-n", "acc-stat-ll"].forEach((id) => setStat(id, "—"));
+    renderLogLossStats(loglossEl, null);
+    renderConfidenceSection(confidenceEl, null);
+    renderHomeBaselineSection(homeBaselineEl, null);
+    _accuracyByTeamCache = null;
+    renderTeamSection(teamSelectEl, teamDetailEl, teamStaleEl, null);
+  }
+
+  const indexData = await fetchDateIndex();
+  if (!isCurrent()) return;
+  renderAccuracyPanel(panelEl, indexData);
+}
+
+function refreshAccuracyPage() {
+  if (isTypingTarget(document.activeElement)) return;
+  _dateIndexCache = undefined;
+  renderAccuracyPage();
 }
 
 /* ---------- auto-refresh ----------
@@ -1950,13 +2145,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   } else if (document.getElementById("games")) {
     renderDashboard();
-    wireAccuracyPanel();
     window.addEventListener("popstate", renderDashboard);
     document.addEventListener("keydown", handleDashboardKeydown);
     setInterval(() => { if (!document.hidden) refreshDashboard(); }, REFRESH_INTERVAL_MS);
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) { _hiddenAt = Date.now(); return; }
       if (_hiddenAt && Date.now() - _hiddenAt >= REFRESH_AFTER_HIDDEN_MS) refreshDashboard();
+      _hiddenAt = 0;
+    });
+  } else if (document.getElementById("accuracy-page")) {
+    renderAccuracyPage();
+    setInterval(() => { if (!document.hidden) refreshAccuracyPage(); }, REFRESH_INTERVAL_MS);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) { _hiddenAt = Date.now(); return; }
+      if (_hiddenAt && Date.now() - _hiddenAt >= REFRESH_AFTER_HIDDEN_MS) refreshAccuracyPage();
       _hiddenAt = 0;
     });
   }
