@@ -1,6 +1,6 @@
 {
   "date": "2026-08-25",
-  "generated_at_utc": "2026-08-25T22:12:34.693731+00:00",
+  "generated_at_utc": "2026-08-26T00:50:59.164894+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -205,8 +205,8 @@
       "home": "LAA",
       "away": "CLE",
       "dh_game_number": 0,
-      "prob_home_win": 0.4442117214202881,
-      "seed_std": 0.02062152809876812,
+      "prob_home_win": 0.4424733191728592,
+      "seed_std": 0.021192846119661383,
       "home_sp": "Walbert Urena",
       "away_sp": "Gavin Williams",
       "sp_status": {
@@ -215,20 +215,16 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-25T22:43:47.023874+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "ARI",
       "away": "CHC",
       "dh_game_number": 0,
-      "prob_home_win": 0.5023440301418305,
-      "seed_std": 0.017065191551209096,
+      "prob_home_win": 0.5015650272369385,
+      "seed_std": 0.01694620497992408,
       "home_sp": "Brandon Pfaadt",
       "away_sp": "Clay Holmes",
       "sp_status": {
@@ -236,21 +232,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-25T22:43:47.023874+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "SDP",
       "away": "PIT",
       "dh_game_number": 0,
-      "prob_home_win": 0.5650577366352081,
-      "seed_std": 0.02548765056630654,
+      "prob_home_win": 0.5733886897563935,
+      "seed_std": 0.02292544776191983,
       "home_sp": "Michael King",
       "away_sp": "Paul Skenes",
       "sp_status": {
@@ -259,20 +251,16 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-25T22:43:47.023874+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "OAK",
       "away": "MIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.4291581004858017,
-      "seed_std": 0.024816442893408487,
+      "prob_home_win": 0.4291588723659515,
+      "seed_std": 0.024816815164066953,
       "home_sp": "Gage Jump",
       "away_sp": "Taj Bradley",
       "sp_status": {
@@ -283,18 +271,14 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-25T22:43:47.023874+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "SEA",
       "away": "PHI",
       "dh_game_number": 0,
-      "prob_home_win": 0.46672115921974183,
-      "seed_std": 0.02174674999828287,
+      "prob_home_win": 0.46698471903800964,
+      "seed_std": 0.021896025977651598,
       "home_sp": "George Kirby",
       "away_sp": "Aaron Nola",
       "sp_status": {
@@ -303,20 +287,16 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-25T22:43:47.023874+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "SFG",
       "away": "CIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.5209775388240814,
-      "seed_std": 0.016780494176757695,
+      "prob_home_win": 0.520977583527565,
+      "seed_std": 0.016780538515505622,
       "home_sp": "Adrian Houser",
       "away_sp": "Brady Singer",
       "sp_status": {
@@ -324,14 +304,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
+        "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-25T22:43:47.023874+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
