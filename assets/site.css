@@ -125,6 +125,12 @@ code, .mono { font-family: var(--font-mono); font-size: 0.92em; }
 
 .record-note { margin-top: -18px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
 
+.legend-jump { margin-top: 4px; }
+/* defensive, mirroring .chip-legend[hidden]'s own reasoning — no author
+   `display` rule is set on .legend-jump itself, so the UA [hidden] rule
+   should already apply, but this guards against that ever changing. */
+.legend-jump[hidden] { display: none; }
+
 .date-nav { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
 
 .nav-arrow {
@@ -198,19 +204,44 @@ code, .mono { font-family: var(--font-mono); font-size: 0.92em; }
     "flags flags flags";
   column-gap: 16px;
   align-items: start;
-  padding: 12px 10px;
+  padding: 12px 16px 12px 10px;
   border-bottom: 1px solid var(--rule);
   color: inherit;
 }
 a.slate-row:hover { background: var(--paper-2); text-decoration: none; }
 a.slate-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
+/* chevron affordance: CSS-only — matches only an actual <a class="slate-row">
+   link (never a plain <div class="slate-row"> row for a date without
+   details, and never #slate-head, which is a <div>). Placed as a grid item
+   on the mid (@ + time) row, in the "." cell of the runs column
+   (grid-template-areas "mid mid ." above) — vertically it lines up with the
+   @/time line rather than the row's vertical center (which sits lower, past
+   the flags line). `width: 0` + `overflow: visible` keeps the box from
+   contributing to the runs column's own width — the glyph itself overflows
+   rightward into the row's 16px right padding gutter, landing at the same
+   x position the old absolutely-positioned chevron used. */
+a.slate-row::after {
+  content: "›" / "";
+  grid-row: 2;
+  grid-column: 3;
+  justify-self: end;
+  align-self: center;
+  width: 0;
+  overflow: visible;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  color: var(--faint);
+  font-size: 16px;
+}
+a.slate-row:hover::after { color: var(--accent); }
+
 /* minimal column-header row (#slate-head) — shares .slate-row's own grid
    template so its two labels sit exactly over the pct/runs columns below;
    rows 2-4 of that template stay empty here, so the row collapses to a
    single visible line. */
 .slate-head {
-  padding: 0 10px 6px;
+  padding: 0 16px 6px 10px;
   border-bottom-color: var(--rule-strong);
 }
 /* .slate-row's own `display: grid` is an author rule, so it otherwise beats
@@ -239,6 +270,20 @@ a.slate-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2
 .no-finals .runs-cell, .slate-head.no-finals .col-final { min-width: 0; }
 .slate-head.no-finals .col-final { display: none; }
 
+/* slate divider (buildSlateGamesHtml in app.js) — labels the upcoming /
+   finished / in-progress sections, only inserted when at least two of those
+   three buckets are non-empty; styled to match #slate-head's own label
+   rhythm. */
+.slate-section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding: 14px 10px 4px;
+  border-bottom: 1px solid var(--rule);
+}
+
 .team-cell { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .mcode { font-family: var(--font-mono); font-weight: 600; font-size: 16px; line-height: 1.2; color: var(--ink); }
 .team-cell .sp { font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
@@ -248,10 +293,10 @@ a.slate-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2
 .code-line { display: flex; align-items: baseline; }
 
 /* separator row between a ledger row's away/home lines — carries the "@" of
-   the standard "AWAY @ HOME" notation plus, for an ungraded game with a
-   known start time, that time right-aligned at the win-prob column edge
-   (see .game-time below). Spans the away+apct columns (grid-template-areas
-   "mid mid ."), leaving the FINAL column untouched. */
+   the standard "AWAY @ HOME" notation plus, whenever the start time is
+   known (graded or not), that time right-aligned at the win-prob column
+   edge (see .game-time below). Spans the away+apct columns
+   (grid-template-areas "mid mid ."), leaving the FINAL column untouched. */
 .slate-row .mid-line {
   grid-area: mid;
   display: flex;
@@ -298,9 +343,10 @@ a.slate-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2
 .slate-row .runs-cell { grid-area: aruns; align-self: center; }
 .slate-row .runs-cell.home { grid-area: hruns; }
 
-/* ungraded game's start time — rides the mid separator row alongside the
-   "@" (see .mid-line above), right-aligned at the win-prob column edge via
-   .mid-line's own flex layout; no longer independently grid-positioned. */
+/* game's start time (shown whether or not the game is graded) — rides the
+   mid separator row alongside the "@" (see .mid-line above), right-aligned
+   at the win-prob column edge via .mid-line's own flex layout; no longer
+   independently grid-positioned. */
 .game-time {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -365,6 +411,46 @@ a.slate-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2
 .flag.ok { color: var(--win); border-color: var(--win); }
 .flag.loss, .flag.result-loss { color: var(--loss); border-color: var(--loss); }
 .flag.quiet { color: var(--faint); border-color: var(--rule); }
+
+/* ---------- chip legend (collapsible, index.html) ---------- */
+
+.chip-legend {
+  max-width: 1120px;
+  margin: 10px auto 0;
+  padding: 0 calc(clamp(20px, 5vw, 56px) + 10px);
+  scroll-margin-top: calc(var(--nav-h, 64px) + 12px);
+}
+/* defensive, mirroring .slate-head[hidden]'s own reasoning — no author
+   `display` rule is set on .chip-legend itself, so the UA [hidden] rule
+   should already apply, but this guards against that ever changing. */
+.chip-legend[hidden] { display: none; }
+.chip-legend summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  list-style: none;
+}
+.chip-legend summary::-webkit-details-marker { display: none; }
+.chip-legend summary::before { content: "▸ " / ""; }
+.chip-legend[open] summary::before { content: "▾ " / ""; }
+.chip-legend summary:hover { color: var(--muted); }
+.chip-legend summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.legend-rows {
+  display: grid;
+  gap: 7px 0;
+  padding: 10px 0 4px;
+}
+/* fixed 200px label column so every description starts at the same x —
+   200px comfortably clears the widest chips ("SP: SOURCES DISAGREE" /
+   "LINEUPS: UNAVAILABLE", both 20 chars at 10px IBM Plex Mono: ~120px of
+   glyph advance + ~10px letter-spacing + 12px padding + 2px border ≈ 144px). */
+.legend-row { display: grid; grid-template-columns: 200px 1fr; gap: 2px 12px; align-items: baseline; }
+.legend-row > :first-child { justify-self: start; }
+.legend-row .contested-chip { margin: 0; }
+.legend-text { font-size: 12.5px; color: var(--muted); }
 
 /* nested inside #games (a block container) rather than replacing it —
    span the full row width instead of collapsing into a grid column */
@@ -711,6 +797,8 @@ footer a { color: var(--muted); }
   .game-card { padding: 14px 14px 12px; }
   .preview-banner { padding: 10px 12px; gap: 8px; }
   .preview-sp-grid { gap: 8px; }
+  .legend-row { grid-template-columns: 1fr; }
+  .legend-rows { gap: 10px; }
 
   .game-detail { padding: 18px 14px 60px; }
   .detail-section { margin: 24px 0; }

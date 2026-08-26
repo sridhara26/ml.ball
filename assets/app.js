@@ -50,7 +50,7 @@ function isContestedGame(g) {
 
 function contestedTagHtml(g) {
   if (!isContestedGame(g)) return "";
-  return `<span class="contested-chip" title="the model's ten runs don't agree on a favorite — effectively a coin flip">toss-up</span>`;
+  return `<span class="contested-chip">toss-up</span>`;
 }
 
 /* index.html's minimal column-header row (#slate-head) sits above the games
@@ -60,6 +60,18 @@ function contestedTagHtml(g) {
 function setSlateHeadVisible(visible) {
   const el = document.getElementById("slate-head");
   if (el) el.hidden = !visible;
+}
+
+/* index.html's collapsible chip-legend disclosure — same visibility contract
+   as setSlateHeadVisible: hidden on every empty/no-slate/preview state,
+   shown whenever the slate itself is shown. #legend-jump (the "What do the
+   labels mean?" jump link) tracks the same visibility so it never appears
+   without the legend it points to. */
+function setChipLegendVisible(visible) {
+  const el = document.getElementById("chip-legend");
+  if (el) el.hidden = !visible;
+  const jumpEl = document.getElementById("legend-jump");
+  if (jumpEl) jumpEl.hidden = !visible;
 }
 
 const TEAM_META = Object.assign(Object.create(null), {
@@ -245,17 +257,16 @@ function gameDetailsKey(g) {
 
 /* Mirrors game.html's fmtLocalDateTime: parse the ISO UTC instant with
    Date, then let Intl do the timezone conversion (never hand-rolled offset
-   math). Unlike fmtLocalDateTime (which shows each visitor's own local
-   zone, matching the detail page's full first-pitch line), this forces
-   America/New_York and a literal "ET" suffix — MLB first-pitch times are
-   canonically reported in Eastern Time regardless of viewer location, and a
-   fixed zone keeps the compact slate string short and DST-abbreviation-free
-   ("1:35 PM ET", never "1:35 PM EDT"/"1:35 PM EST"). */
+   math). Like fmtLocalDateTime, shows each visitor's own local wall-clock
+   time (no timeZone option = the browser's own zone) with no zone-name
+   suffix — every viewer sees their own local time, same as any other
+   sports site, and the detail page's fmtLocalDateTime already shows local
+   time in full there. */
 function fmtShortGameTime(iso) {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return null;
-  const time = d.toLocaleString("en-US", { timeZone: "America/New_York", hour: "numeric", minute: "2-digit" });
-  return escapeHtml(`${time} ET`);
+  const time = d.toLocaleString("en-US", { hour: "numeric", minute: "2-digit" });
+  return escapeHtml(time);
 }
 
 /* Looks up a game's first_pitch_utc in the (already-fetched) details JSON's
@@ -266,6 +277,17 @@ function gameStartTimeShort(detailsGames, g) {
   if (!detailsGames) return null;
   const iso = detailsGames[gameDetailsKey(g)]?.header?.first_pitch_utc;
   return typeof iso === "string" ? fmtShortGameTime(iso) : null;
+}
+
+/* Same first_pitch_utc lookup as gameStartTimeShort, but returns the raw
+   epoch ms (or null) for the upcoming/finished/in-progress bucketing sort in
+   buildSlateGamesHtml below, instead of a formatted display string. */
+function gameStartEpoch(detailsGames, g) {
+  if (!detailsGames) return null;
+  const iso = detailsGames[gameDetailsKey(g)]?.header?.first_pitch_utc;
+  if (typeof iso !== "string") return null;
+  const t = new Date(iso).getTime();
+  return Number.isNaN(t) ? null : t;
 }
 
 function gameRowInnerHtml(g, shortTime = null) {
@@ -287,7 +309,11 @@ function gameRowInnerHtml(g, shortTime = null) {
   const awaySp = escapeHtml(g.away_sp ?? "TBD");
   const homeSp = escapeHtml(g.home_sp ?? "TBD");
 
-  const timeHtml = (!gameHasFinalScore(g.result) && shortTime) ? `<span class="game-time">${shortTime}</span>` : "";
+  // Shown whenever the start time is known, regardless of whether the game
+  // is graded — the FINAL column already carries the runs once a result is
+  // in, so the mid-line "@ + time" stays as a stable reference line even
+  // after publication.
+  const timeHtml = shortTime ? `<span class="game-time">${shortTime}</span>` : "";
   const awayRunsHtml = runsCellHtml(g.result, false);
   const homeRunsHtml = runsCellHtml(g.result, true, "home");
 
@@ -303,6 +329,75 @@ function gameRowInnerHtml(g, shortTime = null) {
     <div class="pct-cell home${homeFav ? " fav" : ""}">${pct(pHome)}</div>
     ${homeRunsHtml}
     ${flagsHtml ? `<div class="row-flags">${flagsHtml}</div>` : ""}`;
+}
+
+/* Three-section slate ordering (index.html's games list only):
+     - finished    = gameHasFinalScore(g.result)
+     - upcoming    = not finished AND (epoch unknown OR now < epoch)
+     - inProgress  = not finished AND epoch known AND now >= epoch
+   Rendered in the order upcoming, finished, inProgress — readers care most
+   about games they can still watch the prediction for (upcoming), then
+   about resolved games (was the model right? — finished), and least about
+   in-progress ones (prediction frozen, no live score shown here). Each
+   bucket sorts ascending by first-pitch epoch, with unknown-time games
+   (Infinity key) stably sorted to the end of their bucket in published
+   order — the comparator explicitly tiebreaks on array index whenever
+   sortKeys are equal (including two Infinity keys, where a plain
+   subtraction would silently yield NaN and only work by falling through a
+   truthiness check), making the sort stable regardless of Array#sort's
+   engine-specific stability guarantees. Small section-label divider rows
+   (labeling every non-empty bucket) are inserted only when at least TWO of
+   the three buckets are non-empty; a single-bucket slate (the common case)
+   renders as a flat, unlabeled, ascending list, and when detailsGames is
+   absent entirely (no times known for anything) this falls back to a flat,
+   unsorted, published-order list — the pre-existing behavior. Called fresh
+   on every render (including auto-refresh ticks), so a game crossing
+   buckets naturally changes cardsHtml and trips the _lastGamesHtml repaint
+   guard in renderDashboard. Known accepted edge: a postponed past game (no
+   final score, but its known first-pitch epoch has passed) sits under "in
+   progress" — rare, already a noted display nit, not special-cased. */
+function buildSlateGamesHtml(games, detailsGames, detailsAvailable, date) {
+  const rowHtml = (g) => {
+    const inner = gameRowInnerHtml(g, gameStartTimeShort(detailsGames, g));
+    if (!detailsAvailable) return `<div class="slate-row">${inner}</div>`;
+    const href = `game.html?date=${encodeURIComponent(date)}&g=${encodeURIComponent(gameDetailsKey(g))}`;
+    return `<a class="slate-row" href="${href}">${inner}</a>`;
+  };
+
+  if (!detailsGames) return games.map(rowHtml).join("");
+
+  const now = Date.now();
+  const upcoming = [];
+  const finished = [];
+  const inProgress = [];
+  games.forEach((g, idx) => {
+    const epoch = gameStartEpoch(detailsGames, g);
+    const entry = { g, sortKey: epoch ?? Infinity, idx };
+    if (gameHasFinalScore(g.result)) {
+      finished.push(entry);
+    } else if (epoch == null || now < epoch) {
+      upcoming.push(entry);
+    } else {
+      inProgress.push(entry);
+    }
+  });
+  const byEpochThenPublishedOrder = (a, b) => (a.sortKey === b.sortKey ? a.idx - b.idx : a.sortKey - b.sortKey);
+  upcoming.sort(byEpochThenPublishedOrder);
+  finished.sort(byEpochThenPublishedOrder);
+  inProgress.sort(byEpochThenPublishedOrder);
+
+  const buckets = [
+    { label: "upcoming", entries: upcoming },
+    { label: "finished", entries: finished },
+    { label: "in progress", entries: inProgress },
+  ];
+  const nonEmpty = buckets.filter((b) => b.entries.length > 0);
+  if (nonEmpty.length < 2) {
+    return nonEmpty.flatMap((b) => b.entries).map((e) => rowHtml(e.g)).join("");
+  }
+  return nonEmpty
+    .map((b) => `<div class="slate-section-label">${b.label}</div>` + b.entries.map((e) => rowHtml(e.g)).join(""))
+    .join("");
 }
 
 function fmtDate(iso) {
@@ -513,6 +608,7 @@ function renderPublishStateEmpty(gamesEl, header) {
   if (header) setDashboardHeader(header, "Win probabilities", DASHBOARD_DEFAULT_TITLE, "", "No predictions published yet");
   document.getElementById("slate-note")?.style.setProperty("display", "none");
   setSlateHeadVisible(false);
+  setChipLegendVisible(false);
   _lastGamesHtml = null;
 }
 
@@ -543,6 +639,7 @@ function renderNoSlateForDate(gamesEl, date, header, { implicit = false, hasOthe
   }
   document.getElementById("slate-note")?.style.setProperty("display", "none");
   setSlateHeadVisible(false);
+  setChipLegendVisible(false);
   _lastGamesHtml = null;
 }
 
@@ -692,6 +789,10 @@ async function renderDashboard() {
   }
   const detailsAvailable = detailsData !== null;
   const detailsGames = detailsData && typeof detailsData.games === "object" ? detailsData.games : null;
+  // rows render as <a class="slate-row"> only when detailsAvailable — the tap
+  // hint must say so only when it's actually true, known as of right here.
+  const tapHintEl = document.getElementById("slate-note-tap");
+  if (tapHintEl) tapHintEl.hidden = !detailsAvailable;
 
   const isLatest = targetDate === latestDate;
   _autoRefreshEligible = isLatest || !entryFullyGraded(indexData, targetDate);
@@ -700,6 +801,7 @@ async function renderDashboard() {
   if (dateEl) dateEl.textContent = fmtDate(day.date);
   document.getElementById("slate-note")?.style.setProperty("display", "");
   setSlateHeadVisible(true);
+  setChipLegendVisible(true);
 
   try {
     setupDateNav({ navEl, prevBtn, nextBtn, backEl, recordEl, indexData, targetDate, latestDate, isLatest, previewInfo });
@@ -712,15 +814,11 @@ async function renderDashboard() {
     _lastGamesHtml = null;
     document.getElementById("slate-note")?.style.setProperty("display", "none");
     setSlateHeadVisible(false);
+    setChipLegendVisible(false);
     if (statusEl) statusEl.textContent = `No games for ${fmtShortDate(day.date)}`;
     return;
   }
-  const cardsHtml = day.games.map((g) => {
-    const inner = gameRowInnerHtml(g, gameStartTimeShort(detailsGames, g));
-    if (!detailsAvailable) return `<div class="slate-row">${inner}</div>`;
-    const href = `game.html?date=${encodeURIComponent(day.date)}&g=${encodeURIComponent(gameDetailsKey(g))}`;
-    return `<a class="slate-row" href="${href}">${inner}</a>`;
-  }).join("");
+  const cardsHtml = buildSlateGamesHtml(day.games, detailsGames, detailsAvailable, day.date);
   // set/removed unconditionally on every render (not just when cardsHtml
   // actually changes below) — an auto-refresh tick can flip a slate from
   // all-ungraded to partially-graded without the row markup itself changing
@@ -869,6 +967,7 @@ async function renderPreviewSlate({ gamesEl, header, navRefs, indexData, preview
   );
   document.getElementById("slate-note")?.style.setProperty("display", "none");
   setSlateHeadVisible(false);
+  setChipLegendVisible(false);
   _lastGamesHtml = null;
 
   try {
@@ -1814,6 +1913,11 @@ const REFRESH_AFTER_HIDDEN_MS = 5 * 60 * 1000;
 document.addEventListener("DOMContentLoaded", () => {
   updateNavHeightVar();
   window.addEventListener?.("resize", updateNavHeightVar);
+  const legendJumpLink = document.querySelector("#legend-jump a");
+  const legendEl = document.getElementById("chip-legend");
+  if (legendJumpLink && legendEl) {
+    legendJumpLink.addEventListener("click", () => { legendEl.open = true; });
+  }
   if (document.getElementById("game-header")) {
     renderGameDetail();
     setInterval(() => { if (!document.hidden) refreshGameResult(); }, REFRESH_INTERVAL_MS);

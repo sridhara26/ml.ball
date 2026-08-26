@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/site.css?v=85c97ca2" />
+  <link rel="stylesheet" href="assets/site.css?v=02a96f8e" />
 </head>
 <body>
   <header class="nav">
@@ -40,7 +40,8 @@
       <span id="slate-status" class="sr-only" aria-live="polite"></span>
       <span class="day-record" id="day-record" style="display:none"><span class="day-record-count"></span><span class="day-record-note"></span></span>
     </div>
-    <p class="slate-note" id="slate-note">Each percentage is the model's predicted win probability for that team.</p>
+    <p class="slate-note" id="slate-note">Each percentage is the model's predicted win probability for that team. <span id="slate-note-tap">Tap a game for lineups, team stats, and starter detail.</span></p>
+    <p class="slate-note legend-jump" id="legend-jump" hidden><a href="#chip-legend">What do the labels mean?</a></p>
     <div class="slate-list">
       <div class="slate-row slate-head" id="slate-head" hidden>
         <span class="col-label col-win">Win prob</span>
@@ -48,15 +49,32 @@
       </div>
       <section class="games" id="games"></section>
     </div>
+
+    <details class="chip-legend" id="chip-legend" hidden>
+      <summary>What the labels mean</summary>
+      <div class="legend-rows">
+        <div class="legend-row"><span class="flag win">✓ correct</span><span class="legend-text">the model's prediction was correct</span></div>
+        <div class="legend-row"><span class="flag loss">✗ missed</span><span class="legend-text">it wasn't</span></div>
+        <div class="legend-row"><span class="contested-chip">toss-up</span><span class="legend-text">the model's ten runs don't agree on a favorite — effectively a coin flip</span></div>
+        <div class="legend-row"><span class="flag ok">lineups: announced</span><span class="legend-text">official starting lineups were posted before the prediction</span></div>
+        <div class="legend-row"><span class="flag warn">lineups: projected</span><span class="legend-text">not posted yet — the previous game's lineup was used</span></div>
+        <div class="legend-row"><span class="flag warn">lineups: unavailable</span><span class="legend-text">no lineup data — league-average assumptions</span></div>
+        <div class="legend-row"><span class="flag warn">SP: TBD</span><span class="legend-text">a starting pitcher hadn't been named</span></div>
+        <div class="legend-row"><span class="flag warn">SP: sources disagree</span><span class="legend-text">sources disagreed on the probable starter — the one shown was used</span></div>
+        <div class="legend-row"><span class="flag">SP: single-source</span><span class="legend-text">the starter was named by only one source</span></div>
+        <div class="legend-row"><span class="flag warn">low confidence</span><span class="legend-text">no named starter, a disputed starter, or a missing lineup — trust this number less</span></div>
+      </div>
+    </details>
   </main>
 
   <footer>
     <div class="disclaimer">
-      Model output for research/entertainment — not betting advice. Win
-      probabilities are published before first pitch and never edited.
+      Model output for research/entertainment — not betting advice.
+      Predictions may update before first pitch as lineups and starting
+      pitchers are announced; once a game starts, its prediction is frozen.
     </div>
   </footer>
 
-  <script src="assets/app.js?v=4c923123" data-root="."></script>
+  <script src="assets/app.js?v=e1df23de" data-root="."></script>
 </body>
 </html>
