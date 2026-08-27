@@ -710,33 +710,15 @@ footer a { color: var(--muted); }
   color: var(--accent);
 }
 .expand-caret { display: inline-block; margin-left: 6px; color: var(--faint); font-size: 11px; }
-.lineup-table tr.row-detail td { background: var(--paper-2); border-left: 2px solid var(--accent); padding: 10px 12px; white-space: normal; }
+.lineup-table tr.row-detail > td { background: var(--paper-2); border-left: 2px solid var(--accent); padding: 10px 12px; white-space: normal; }
 .row-detail-wrap {
   position: sticky;
   left: 0;
   max-width: calc(100cqw - 20px);
 }
-.detail-stat {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 2px 12px;
-  padding: 3px 0;
-  align-items: baseline;
-}
-.detail-stat-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--faint);
-  white-space: nowrap;
-}
-.detail-stat-val {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
+.row-detail-table { margin-top: 0; }
+.row-detail-table th, .row-detail-table td { text-align: center; }
+.row-detail-table th:first-child, .row-detail-table td:first-child { text-align: left; white-space: nowrap; }
 
 .lg-avg-mark { color: var(--warn); font-family: var(--font-mono); margin-left: 2px; cursor: help; line-height: 0; }
 .stale-note.lg-avg-legend { margin-top: 4px; }
@@ -822,6 +804,15 @@ footer a { color: var(--muted); }
 .form-chip .fc-score { font-family: var(--font-mono); }
 .form-chip .flag { justify-self: start; }
 
+/* upgradeRecentFormLinks (app.js) swaps a plain <div class="form-chip"> for
+   an <a class="form-chip"> once its past game resolves to exactly one
+   published prediction — same box/grid as the div (no rule above targets
+   the element type), just the link affordance layered on top. */
+a.form-chip { color: inherit; text-decoration: none; cursor: pointer; }
+a.form-chip:hover { border-bottom-color: var(--accent); }
+a.form-chip:hover .fc-opp { color: var(--ink); }
+a.form-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
 .stale-note { color: var(--faint); font-size: 13px; margin: 6px 0; }
 
 .detail-empty { margin: 20px 0; }
@@ -863,7 +854,6 @@ footer a { color: var(--muted); }
   .lineup-table, .sp-season-table { font-size: 12px; }
   .lineup-table tr.lineup-row.has-detail td { padding-top: 11px; padding-bottom: 11px; }
   .lineup-table .player-name { max-width: 14ch; }
-  .detail-stat { grid-template-columns: 1fr; }
 
   .game-sticky { font-size: 11.5px; padding: 6px 10px; gap: 6px; }
   .compare-group h3 { font-size: 13.5px; }
@@ -955,6 +945,21 @@ footer a { color: var(--muted); }
   white-space: nowrap;
 }
 
+.acc-conf-head {
+  display: grid;
+  grid-template-columns: 150px 1fr 60px 80px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.acc-conf-head[hidden] { display: none; }
+.acc-conf-head-value, .acc-conf-head-n { text-align: right; }
+
 .acc-team-summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -979,6 +984,21 @@ footer a { color: var(--muted); }
 .acc-team-split-n { font-family: var(--font-mono); color: var(--faint); text-align: right; font-variant-numeric: tabular-nums; }
 .acc-team-split-value { font-family: var(--font-mono); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
 
+.acc-team-split-head {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+}
+.acc-team-split-head .acc-team-split-label,
+.acc-team-split-head .acc-team-split-n,
+.acc-team-split-head .acc-team-split-value {
+  color: var(--faint);
+  font-weight: 500;
+  font-size: 10px;
+}
+
 /* ---------- accuracy page: by-team division panels ---------- */
 
 .acc-team-panels {
@@ -998,6 +1018,25 @@ footer a { color: var(--muted); }
   padding: 14px 16px;
 }
 .acc-division-label { margin-bottom: 8px; }
+
+.acc-division-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 2px 4px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.acc-division-head-stats { display: flex; align-items: baseline; gap: 8px; }
+.acc-division-head-acc { min-width: 46px; text-align: right; }
+.acc-division-head-n { min-width: 28px; text-align: right; }
+.acc-division-head-caret-spacer { display: inline-block; width: 17px; }
 
 .acc-team-row-wrap { border-bottom: 1px solid var(--rule); }
 .acc-team-row-wrap:last-child { border-bottom: none; }
@@ -1053,7 +1092,7 @@ footer a { color: var(--muted); }
 .acc-team-row-detail .acc-team-stat .value { font-size: 16px; }
 .acc-team-row-detail .acc-team-splits { max-width: none; }
 .acc-team-row-detail .acc-team-split-row {
-  grid-template-columns: minmax(0, 1fr) 70px 56px;
+  grid-template-columns: minmax(0, 1fr) 70px 64px;
   gap: 6px;
   padding: 5px 0;
   font-size: 12.5px;
@@ -1062,11 +1101,29 @@ footer a { color: var(--muted); }
 
 @media (max-width: 640px) {
   .acc-section { padding: 0 16px; }
-  .acc-conf-row { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
-  .acc-conf-value, .acc-conf-n { text-align: left; }
-  .acc-team-split-row { grid-template-columns: 1fr; gap: 2px; }
-  .acc-team-split-n, .acc-team-split-value { text-align: left; }
+
+  .acc-history-panel { padding: 12px 10px; }
+  .acc-history-panel:not([hidden]) { margin: 10px 10px 20px; }
+  .acc-chart-readout { font-size: 13.5px; }
+
+  /* confidence rows: label/accuracy/games stay on one line, the bar drops
+     to a thin full-width strip underneath (see .acc-conf-row's own
+     grid-template-areas) instead of stacking every field vertically. */
+  .acc-conf-head { grid-template-columns: 1fr 60px 80px; column-gap: 10px; }
+  .acc-conf-head-bar { display: none; }
+  .acc-conf-row {
+    grid-template-columns: 1fr 60px 80px;
+    grid-template-areas: "label value n" "bar bar bar";
+    row-gap: 6px;
+    column-gap: 10px;
+    padding: 10px 0;
+  }
+  .acc-conf-label { grid-area: label; }
+  .acc-conf-bar-wrap { grid-area: bar; }
+  .acc-conf-value { grid-area: value; text-align: right; }
+  .acc-conf-n { grid-area: n; text-align: right; }
+
+  .acc-team-split-row { grid-template-columns: minmax(0, 1fr) 68px 54px; gap: 6px; }
   .acc-team-panels { grid-template-columns: 1fr; }
-  .acc-team-row-detail .acc-team-split-row { grid-template-columns: 1fr; gap: 2px; }
-  .acc-team-row-detail .acc-team-split-n, .acc-team-row-detail .acc-team-split-value { text-align: left; }
+  .acc-team-row-detail .acc-team-split-row { grid-template-columns: minmax(0, 1fr) 62px 64px; gap: 6px; }
 }

@@ -33,13 +33,13 @@ function fmt0(v) { return escapeHtml(String(v)); }
 // fmt1/fmt2/fmtPctVal/fmtRate feed on per-field data crossing a repo boundary
 // (game-details / preview JSON written by a separate pipeline) — a
 // non-number where a number is expected (e.g. a stat serialized as a string)
-// must degrade to "—", not throw and blank the whole section.
-function fmt1(v) { return isFiniteNum(v) ? v.toFixed(1) : "—"; }
-function fmt2(v) { return isFiniteNum(v) ? v.toFixed(2) : "—"; }
-function fmtPctVal(v) { return isFiniteNum(v) ? (v * 100).toFixed(1) + "%" : "—"; }
-function fmtRate(v) { return isFiniteNum(v) ? v.toFixed(3).replace(/^(-?)0\./, "$1.") : "—"; }
-function fmtOrDash(v, fmtFn) { return v == null ? "—" : fmtFn(v); }
-function fmtSigned1(v) { return isFiniteNum(v) ? (v > 0 ? "+" : "") + v.toFixed(1) : "—"; }
+// must degrade to "-", not throw and blank the whole section.
+function fmt1(v) { return isFiniteNum(v) ? v.toFixed(1) : "-"; }
+function fmt2(v) { return isFiniteNum(v) ? v.toFixed(2) : "-"; }
+function fmtPctVal(v) { return isFiniteNum(v) ? (v * 100).toFixed(1) + "%" : "-"; }
+function fmtRate(v) { return isFiniteNum(v) ? v.toFixed(3).replace(/^(-?)0\./, "$1.") : "-"; }
+function fmtOrDash(v, fmtFn) { return v == null ? "-" : fmtFn(v); }
+function fmtSigned1(v) { return isFiniteNum(v) ? (v > 0 ? "+" : "") + v.toFixed(1) : "-"; }
 
 /* "contested": the 10-model ensemble's seed spread around 0.5 is wide enough
    that it straddles a coin flip — the favorite/underdog split itself isn't
@@ -202,10 +202,10 @@ function resultFlagHtml(result, pHome) {
   }
   if (typeof result.home_won === "boolean") {
     const won = result.home_won === (pHome >= 0.5);
-    return `<span class="flag ${won ? "result-win" : "result-loss"}">${won ? "✓ correct" : "✗ missed"} — final ${result.away_score ?? ""}${result.away_score != null ? "–" : ""}${result.home_score ?? ""}</span>`;
+    return `<span class="flag ${won ? "result-win" : "result-loss"}">${won ? "✓ correct" : "✗ missed"} · final ${result.away_score ?? ""}${result.away_score != null ? "–" : ""}${result.home_score ?? ""}</span>`;
   }
   const hasScores = result.home_score != null && result.away_score != null;
-  return `<span class="flag">final (tie)${hasScores ? ` — ${result.away_score}–${result.home_score}` : ""}</span>`;
+  return `<span class="flag">final (tie)${hasScores ? ` · ${result.away_score}–${result.home_score}` : ""}</span>`;
 }
 
 /* ---------- predictions dashboard (index.html) ---------- */
@@ -523,7 +523,7 @@ function navigateToDate(date, latestDate) {
   renderDashboard();
 }
 
-const DAY_RECORD_NOTE = "one day is mostly noise — see the all-time record above";
+const DAY_RECORD_NOTE = "one day is mostly noise; see the all-time record above";
 
 /* #day-record wraps two persistent child spans (.day-record-count /
    .day-record-note) rather than a single text node, so the caveat can be
@@ -657,14 +657,14 @@ function renderNoSlateForDate(gamesEl, date, header, { implicit = false, hasOthe
   const escapedLabel = valid ? fmtDate(date) : escapeHtml(String(date ?? ""));
   const bodyHtml = implicit
     ? `<p><strong>Today's slate isn't published yet.</strong></p>
-    <p>Check back soon${hasOtherDates ? " — or browse a previous day above." : "."}</p>`
+    <p>Check back soon${hasOtherDates ? ", or browse a previous day above." : "."}</p>`
     : `<p><strong>No slate was published for ${escapedLabel}.</strong></p>
     <p><a href="./">Back to the latest slate →</a></p>`;
   gamesEl.innerHTML = `<div class="empty-state"><div class="box">${bodyHtml}</div></div>`;
   if (header) {
     const dateText = valid ? fmtDate(date) : String(date ?? "");
     const heading = "Win probabilities";
-    const title = implicit ? DASHBOARD_DEFAULT_TITLE : (valid ? `${fmtTitleDate(date)} — ml.ball` : DASHBOARD_DEFAULT_TITLE);
+    const title = implicit ? DASHBOARD_DEFAULT_TITLE : (valid ? `${fmtTitleDate(date)} · ml.ball` : DASHBOARD_DEFAULT_TITLE);
     const rawLabel = valid ? fmtShortDate(date) : String(date ?? "");
     const statusText = implicit ? "Today's slate isn't published yet" : `No slate published for ${rawLabel}`;
     setDashboardHeader(header, heading, title, dateText, statusText);
@@ -829,7 +829,7 @@ async function renderDashboard() {
   const isLatest = targetDate === latestDate;
   _autoRefreshEligible = isLatest || !entryFullyGraded(indexData, targetDate);
   if (headingEl) headingEl.textContent = "Win probabilities";
-  document.title = isLatest ? DASHBOARD_DEFAULT_TITLE : `${fmtTitleDate(targetDate)} — ml.ball`;
+  document.title = isLatest ? DASHBOARD_DEFAULT_TITLE : `${fmtTitleDate(targetDate)} · ml.ball`;
   if (dateEl) dateEl.textContent = fmtDate(day.date);
   document.getElementById("slate-note")?.style.setProperty("display", "");
   setSlateHeadVisible(true);
@@ -864,7 +864,7 @@ async function renderDashboard() {
     _lastGamesHtml = cardsHtml;
   }
   if (statusEl) {
-    statusEl.textContent = `Predictions for ${fmtShortDate(day.date)} — ${day.games.length} game${day.games.length === 1 ? "" : "s"}`;
+    statusEl.textContent = `Predictions for ${fmtShortDate(day.date)}, ${day.games.length} game${day.games.length === 1 ? "" : "s"}`;
   }
 
   // record strip (all-time / 30d — intentionally not per-date)
@@ -919,7 +919,7 @@ async function refreshRecordStrip(isCurrent) {
 
 /* ---------- next-day preview (index.html?date=<preview_date>) ---------- */
 
-const PREVIEW_COPY = "Preview, not a prediction — no model output yet. Matchups and probable starters can change until win probabilities are published before first pitch.";
+const PREVIEW_COPY = "Preview, not a prediction: no model output yet. Matchups and probable starters can change until win probabilities are published before first pitch.";
 
 function previewBannerHtml(generatedAtUtc) {
   const updatedHtml = typeof generatedAtUtc === "string"
@@ -1000,9 +1000,9 @@ async function renderPreviewSlate({ gamesEl, header, navRefs, indexData, preview
   setDashboardHeader(
     header,
     "Preview",
-    `Preview: ${fmtTitleDate(previewInfo.date)} — ml.ball`,
+    `Preview: ${fmtTitleDate(previewInfo.date)} · ml.ball`,
     fmtDate(previewInfo.date),
-    `Preview for ${fmtShortDate(previewInfo.date)} — no prediction until tomorrow morning`
+    `Preview for ${fmtShortDate(previewInfo.date)}: no prediction until tomorrow morning`
   );
   document.getElementById("slate-note")?.style.setProperty("display", "none");
   setSlateHeadVisible(false);
@@ -1056,7 +1056,7 @@ async function renderPreviewSlate({ gamesEl, header, navRefs, indexData, preview
   gamesEl.innerHTML = cardsHtml;
   if (header.statusEl) {
     header.statusEl.textContent =
-      `Preview for ${fmtShortDate(previewInfo.date)} — ${games.length} game${games.length === 1 ? "" : "s"}, no prediction until tomorrow morning`;
+      `Preview for ${fmtShortDate(previewInfo.date)}: ${games.length} game${games.length === 1 ? "" : "s"}, no prediction until tomorrow morning`;
   }
 
   await refreshRecordStrip(isCurrent);
@@ -1113,7 +1113,7 @@ function spLineHtml(label, sp) {
     return `<div class="meta-row">${escapeHtml(label)}: Starter TBD</div>`;
   }
   const hand = sp.hand ? ` (${escapeHtml(sp.hand)})` : "";
-  const status = sp.status ? ` — ${escapeHtml(sp.status)}` : "";
+  const status = sp.status ? ` · ${escapeHtml(sp.status)}` : "";
   return `<div class="meta-row">${escapeHtml(label)}: ${escapeHtml(sp.name)}${hand}${status}</div>`;
 }
 
@@ -1150,9 +1150,9 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
   } else {
     matchupHtml = `
       <div class="matchup">
-        <div class="team away"><span class="code" style="--team-color:${teamColor(away)}">${awayCode}</span><span class="pct">—</span></div>
+        <div class="team away"><span class="code" style="--team-color:${teamColor(away)}">${awayCode}</span><span class="pct">-</span></div>
         <span class="at">@</span>
-        <div class="team home"><span class="code" style="--team-color:${teamColor(home)}">${homeCode}</span><span class="pct">—</span></div>
+        <div class="team home"><span class="code" style="--team-color:${teamColor(home)}">${homeCode}</span><span class="pct">-</span></div>
       </div>`;
   }
   if (dh > 0) flags.push(`<span class="flag">DH game ${dh}</span>`);
@@ -1180,62 +1180,70 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
     <div class="game-meta">${metaRows.join("")}</div>`;
 }
 
-/* Returns { label, value } for the detail panel's stat-row layout, or null
-   when the underlying data is absent — `value` carries every stat exactly
-   as before, just without the old inline label prefix. */
-function lineupRowSeasonLineHtml(seasonYear, st, rates) {
+/* Returns a stat-table row spec ({ label, g, avg, obp, slg, ab, h, hr, bb,
+   so, pa }, any field left undefined renders as the "-" placeholder), or
+   null when the underlying data is absent — one row per {season, career,
+   vs SP} section, assembled into a single table by lineupStatsTableHtml. */
+function lineupRowSeasonStats(seasonYear, st, rates) {
   if (!st) return null;
-  const year = escapeHtml(String(seasonYear));
-  const g = fmtOrDash(st.g, fmt0);
-  const pa = fmtOrDash(st.pa, fmt0);
-  const h = fmtOrDash(st.h, fmt0);
-  const ab = fmtOrDash(st.ab, fmt0);
-  const hr = fmtOrDash(st.hr, fmt0);
-  const bb = fmtOrDash(st.bb, fmt0);
-  const so = fmtOrDash(st.so, fmt0);
-  const rateBits = [];
-  if (rates?.avg != null) rateBits.push(`AVG ${fmtRate(rates.avg)}`);
-  if (rates?.obp != null) rateBits.push(`OBP ${fmtRate(rates.obp)}`);
-  if (rates?.slg != null) rateBits.push(`SLG ${fmtRate(rates.slg)}`);
-  const rateSuffix = rateBits.length ? ` · ${rateBits.join("/")}` : "";
-  return { label: `${year} season`, value: `${g} G, ${pa} PA — ${h}/${ab}, ${hr} HR, ${bb} BB, ${so} SO${rateSuffix}` };
+  return {
+    label: `${seasonYear} season`,
+    g: st.g, pa: st.pa, ab: st.ab, h: st.h, hr: st.hr, bb: st.bb, so: st.so,
+    avg: rates?.avg, obp: rates?.obp, slg: rates?.slg,
+  };
 }
 
-function lineupRowCareerLineHtml(car) {
+function lineupRowCareerStats(car) {
   if (!car) return null;
-  const avg = car.avg != null ? fmtRate(car.avg) : "—";
-  const obp = car.obp != null ? fmtRate(car.obp) : "—";
-  const slg = car.slg != null ? fmtRate(car.slg) : "—";
-  const h = fmtOrDash(car.h, fmt0);
-  const ab = fmtOrDash(car.ab, fmt0);
-  const hr = fmtOrDash(car.hr, fmt0);
-  const pa = fmtOrDash(car.pa, fmt0);
-  return { label: "Career", value: `${avg}/${obp}/${slg} — ${h}/${ab}, ${hr} HR (${pa} PA)` };
+  return {
+    label: "Career",
+    g: car.g, ab: car.ab, h: car.h, hr: car.hr, bb: car.bb, so: car.so, pa: car.pa,
+    avg: car.avg, obp: car.obp, slg: car.slg,
+  };
 }
 
-function lineupRowVsSpLineHtml(vsSp, oppSpName) {
+function lineupRowVsSpStats(vsSp, oppSpName) {
   if (!vsSp) return null;
-  const name = oppSpName ? escapeHtml(oppSpName) : "TBD";
-  const h = fmtOrDash(vsSp.h, fmt0);
-  const ab = fmtOrDash(vsSp.ab, fmt0);
-  const hr = fmtOrDash(vsSp.hr, fmt0);
-  const bb = fmtOrDash(vsSp.bb, fmt0);
-  const so = fmtOrDash(vsSp.so, fmt0);
-  const avg = vsSp.avg != null ? fmtRate(vsSp.avg) : "—";
-  return { label: `vs ${name}`, value: `${h}/${ab}, ${hr} HR, ${bb} BB, ${so} SO (AVG ${avg})` };
+  return {
+    label: `vs ${oppSpName || "TBD"}`,
+    ab: vsSp.ab, h: vsSp.h, hr: vsSp.hr, bb: vsSp.bb, so: vsSp.so,
+    avg: vsSp.avg,
+  };
+}
+
+/* Shared row -> table renderer for the lineup-row detail expansion (season /
+   career / vs-SP) — same `.lineup-table` styling + `.table-scroll` wrapper
+   as the outer lineup table, so it scrolls horizontally on mobile instead of
+   wrapping. Missing cells (undefined fields) render via fmtOrDash's "-"
+   placeholder. */
+function lineupStatsTableHtml(rows) {
+  const bodyHtml = rows.map((r) => `<tr>
+    <td>${escapeHtml(r.label)}</td>
+    <td>${fmtOrDash(r.g, fmt0)}</td>
+    <td>${fmtOrDash(r.avg, fmtRate)}</td>
+    <td>${fmtOrDash(r.obp, fmtRate)}</td>
+    <td>${fmtOrDash(r.slg, fmtRate)}</td>
+    <td>${fmtOrDash(r.ab, fmt0)}</td>
+    <td>${fmtOrDash(r.h, fmt0)}</td>
+    <td>${fmtOrDash(r.hr, fmt0)}</td>
+    <td>${fmtOrDash(r.bb, fmt0)}</td>
+    <td>${fmtOrDash(r.so, fmt0)}</td>
+    <td>${fmtOrDash(r.pa, fmt0)}</td>
+  </tr>`).join("");
+  return `<div class="table-scroll"><table class="lineup-table row-detail-table">
+    <thead><tr><th></th><th>G</th><th>AVG</th><th>OBP</th><th>SLG</th><th>AB</th><th>H</th><th>HR</th><th>BB</th><th>SO</th><th>PA</th></tr></thead>
+    <tbody>${bodyHtml}</tbody>
+  </table></div>`;
 }
 
 function lineupRowDetailHtml(row, seasonYear, oppSpName) {
   const stats = [
-    lineupRowSeasonLineHtml(seasonYear, row.season_totals, row),
-    lineupRowCareerLineHtml(row.career),
-    lineupRowVsSpLineHtml(row.vs_sp, oppSpName),
+    lineupRowSeasonStats(seasonYear, row.season_totals, row),
+    lineupRowCareerStats(row.career),
+    lineupRowVsSpStats(row.vs_sp, oppSpName),
   ].filter(Boolean);
   if (stats.length === 0) return "";
-  const statsHtml = stats
-    .map(({ label, value }) => `<div class="detail-stat"><span class="detail-stat-label">${label}</span><span class="detail-stat-val">${value}</span></div>`)
-    .join("");
-  return `<div class="row-detail-wrap">${statsHtml}</div>`;
+  return `<div class="row-detail-wrap">${lineupStatsTableHtml(stats)}</div>`;
 }
 
 /* Whether at least one row in `rows` actually has a detail panel — mirrors
@@ -1249,7 +1257,7 @@ function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
   if (!rows) {
     return `<div class="lineup-panel">
       <h3>${teamTagHtml(code)}</h3>
-      <p class="stale-note">Lineup unavailable — model used league-average priors.</p>
+      <p class="stale-note">Lineup unavailable. Model used league-average priors.</p>
     </div>`;
   }
   const caption = status === "projected_last_game"
@@ -1271,11 +1279,11 @@ function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
       <td>${escapeHtml(r.slot ?? "")}</td>
       <td><span class="player-name" title="${escapeHtml(r.name ?? "")}">${escapeHtml(r.name ?? "")}</span>${badge}${caret}</td>
       <td>${escapeHtml(r.pos ?? "")}</td>
-      <td${cellCls}>${r.avg != null ? fmtRate(r.avg) : "—"}</td>
-      <td${cellCls}>${r.obp != null ? fmtRate(r.obp) : "—"}</td>
-      <td${cellCls}>${r.slg != null ? fmtRate(r.slg) : "—"}</td>
-      <td${cellCls}>${r.k_pct != null ? fmtPctVal(r.k_pct) : "—"}</td>
-      <td${cellCls}>${r.bb_pct != null ? fmtPctVal(r.bb_pct) : "—"}</td>
+      <td${cellCls}>${r.avg != null ? fmtRate(r.avg) : "-"}</td>
+      <td${cellCls}>${r.obp != null ? fmtRate(r.obp) : "-"}</td>
+      <td${cellCls}>${r.slg != null ? fmtRate(r.slg) : "-"}</td>
+      <td${cellCls}>${r.k_pct != null ? fmtPctVal(r.k_pct) : "-"}</td>
+      <td${cellCls}>${r.bb_pct != null ? fmtPctVal(r.bb_pct) : "-"}</td>
     </tr>`;
     const detailRow = hasDetail
       ? `<tr class="row-detail" id="${rowId}-detail" hidden><td colspan="8">${detailHtml}</td></tr>`
@@ -1304,7 +1312,7 @@ function renderLineupsHtml(lineups, lineupStatus, awayCode, homeCode, seasonYear
     ? `<p class="stale-note">player rates as of ${escapeHtml(lineups.stats_as_of)}</p>` : "";
   const hasLgAvg = [...(lineups.away || []), ...(lineups.home || [])].some((r) => r.source === "league_avg");
   const legend = hasLgAvg
-    ? `<p class="stale-note lg-avg-legend">* — no player-level data matched (call-up or name mismatch); league-average rates shown.</p>`
+    ? `<p class="stale-note lg-avg-legend">* No player-level data matched (call-up or name mismatch). League-average rates shown.</p>`
     : "";
   const hasAnyDetail = anyLineupRowHasDetail(lineups.away, seasonYear, h.home_sp?.name)
     || anyLineupRowHasDetail(lineups.home, seasonYear, h.away_sp?.name);
@@ -1348,8 +1356,8 @@ function compareRowHtml(label, awayVal, homeVal, opts = {}) {
   const { lowerIsBetter = false, fmt = (v) => String(v), highlight = true } = opts;
   const awayNum = typeof awayVal === "number" && Number.isFinite(awayVal);
   const homeNum = typeof homeVal === "number" && Number.isFinite(homeVal);
-  const awayDisplay = awayVal == null ? "—" : escapeHtml(awayNum ? fmt(awayVal) : String(awayVal));
-  const homeDisplay = homeVal == null ? "—" : escapeHtml(homeNum ? fmt(homeVal) : String(homeVal));
+  const awayDisplay = awayVal == null ? "-" : escapeHtml(awayNum ? fmt(awayVal) : String(awayVal));
+  const homeDisplay = homeVal == null ? "-" : escapeHtml(homeNum ? fmt(homeVal) : String(homeVal));
 
   let awayBetter = false, homeBetter = false;
   if (highlight && awayNum && homeNum && awayVal !== homeVal) {
@@ -1459,6 +1467,23 @@ function spSeasonTableHtml(s) {
   </table></div>`;
 }
 
+function spVsOpponentTableHtml(vo, oppCode) {
+  return `<div class="micro-label">vs ${escapeHtml(oppCode)}</div>
+  <div class="table-scroll"><table class="lineup-table sp-season-table">
+    <thead><tr><th>BF</th><th>IP</th><th>ERA</th><th>WHIP</th><th>K/9</th><th>BB/9</th><th>HR/9</th><th>H/9</th></tr></thead>
+    <tbody><tr>
+      <td>${fmtOrDash(vo.bf, fmt0)}</td>
+      <td>${fmtOrDash(vo.ip, fmt1)}</td>
+      <td>${fmtOrDash(vo.era, fmt2)}</td>
+      <td>${fmtOrDash(vo.whip, fmt2)}</td>
+      <td>${fmtOrDash(vo.k9, fmt1)}</td>
+      <td>${fmtOrDash(vo.bb9, fmt1)}</td>
+      <td>${fmtOrDash(vo.hr9, fmt1)}</td>
+      <td>${fmtOrDash(vo.h9, fmt1)}</td>
+    </tr></tbody>
+  </table></div>`;
+}
+
 function spWorkloadLineHtml(s) {
   const bits = [];
   if (s.days_rest != null) bits.push(`rest ${fmtOrDash(s.days_rest, fmt0)}d`);
@@ -1497,7 +1522,7 @@ function spPanelHtml(code, sp, oppCode) {
 
   const vo = sp.vs_opponent;
   const voLine = vo
-    ? `<p>vs ${escapeHtml(oppCode)}: ${fmtOrDash(vo.bf, fmt0)} BF · ERA ${fmtOrDash(vo.era, fmt2)} · WHIP ${fmtOrDash(vo.whip, fmt2)} · K/9 ${fmtOrDash(vo.k9, fmt1)} · BB/9 ${fmtOrDash(vo.bb9, fmt1)} · HR/9 ${fmtOrDash(vo.hr9, fmt1)} · H/9 ${fmtOrDash(vo.h9, fmt1)} · ${fmtOrDash(vo.ip, fmt1)} IP</p>`
+    ? spVsOpponentTableHtml(vo, oppCode)
     : `<p class="stale-note">no career history vs ${escapeHtml(oppCode)}</p>`;
 
   return `<div class="sp-panel">
@@ -1520,12 +1545,22 @@ function renderSpDetailHtml(spDetail, awayCode, homeCode) {
     </div>`;
 }
 
-function formChipHtml(entry) {
+/* data-fc-* attributes carry the raw (escaped) fields the async link-upgrade
+   pass (upgradeRecentFormLinks below) needs to reconstruct this past game's
+   matchup and disambiguate doubleheader candidates — read back via
+   el.dataset, never re-parsed out of the visible text. */
+function formChipHtml(entry, code) {
   const oppLabel = (entry.at_home ? "" : "@") + escapeHtml(entry.opp ?? "");
   const score = `${fmtOrDash(entry.rf, fmt0)}–${fmtOrDash(entry.ra, fmt0)}`;
   const cls = entry.won === true ? "result-win" : entry.won === false ? "result-loss" : "";
-  const text = entry.won === true ? "W" : entry.won === false ? "L" : "—";
-  return `<div class="form-chip">
+  const text = entry.won === true ? "W" : entry.won === false ? "L" : "-";
+  const dateAttr = escapeHtml(entry.date ?? "");
+  const teamAttr = escapeHtml(code ?? "");
+  const oppAttr = escapeHtml(entry.opp ?? "");
+  const atHomeAttr = entry.at_home ? "1" : "0";
+  const rfAttr = isFiniteNum(entry.rf) ? String(entry.rf) : "";
+  const raAttr = isFiniteNum(entry.ra) ? String(entry.ra) : "";
+  return `<div class="form-chip" data-fc-date="${dateAttr}" data-fc-team="${teamAttr}" data-fc-opp="${oppAttr}" data-fc-at-home="${atHomeAttr}" data-fc-rf="${rfAttr}" data-fc-ra="${raAttr}">
     <span class="fc-date" title="${escapeHtml(entry.date ?? "")}">${escapeHtml(fmtShortDate(entry.date))}</span>
     <span class="fc-opp">${oppLabel}</span>
     <span class="fc-score">${score}</span>
@@ -1537,7 +1572,128 @@ function formColumnHtml(code, entries) {
   if (!entries || entries.length === 0) {
     return `<div class="form-col"><h3>${teamTagHtml(code)}</h3><p class="stale-note">No recent games.</p></div>`;
   }
-  return `<div class="form-col"><h3>${teamTagHtml(code)}</h3>${entries.map(formChipHtml).join("")}</div>`;
+  return `<div class="form-col"><h3>${teamTagHtml(code)}</h3>${entries.map((entry) => formChipHtml(entry, code)).join("")}</div>`;
+}
+
+/* Per-page-session memo of data/predictions/<date>.json fetches made for the
+   recent-form link upgrade (below) — keyed by date, storing the in-flight/
+   settled promise itself (not just the resolved value) so concurrent
+   upgrade passes for the same date share one fetch instead of racing two. */
+const _formLinkPredictionsCache = new Map();
+
+function fetchPredictionsForFormLink(date) {
+  if (!_formLinkPredictionsCache.has(date)) {
+    _formLinkPredictionsCache.set(date, fetchJSON(`${REPO_ROOT}/data/predictions/${date}.json`).catch(() => null));
+  }
+  return _formLinkPredictionsCache.get(date);
+}
+
+/* True when a graded result's scores (viewed from the chip's own at_home
+   perspective) match the chip's own rf/ra. Used to disambiguate doubleheader
+   candidates and, for a single candidate, to guard against wrongly linking
+   an unpublished sibling game's chip to a same-matchup published game. */
+function chipScoreMatchesResult(atHome, rf, ra, result) {
+  if (!result || !isFiniteNum(result.home_score) || !isFiniteNum(result.away_score)) return false;
+  const entryRf = atHome ? result.home_score : result.away_score;
+  const entryRa = atHome ? result.away_score : result.home_score;
+  return entryRf === rf && entryRa === ra;
+}
+
+/* Reconstructs the past matchup a single form-chip's data-fc-* attributes
+   describe and finds its game.html link, or null when it can't be resolved
+   unambiguously. `dayDataByDate` is the already-fetched
+   date -> predictions-file-or-null map built by upgradeRecentFormLinks.
+   Multiple same-day candidates (a true doubleheader) are disambiguated by
+   matching the entry's own rf/ra (from its at_home perspective) against
+   each candidate's graded result — never guessed. A single candidate is
+   normally linked on team-code match alone, but if it's already graded and
+   the chip carries its own rf/ra, those must also match — otherwise this
+   could be an unpublished doubleheader sibling wrongly matched to its
+   published twin, and we leave it unlinked rather than guess. */
+function resolveFormChipLink(chip, dayDataByDate) {
+  const date = chip.dataset.fcDate;
+  if (!isValidDateParam(date)) return null;
+  const day = dayDataByDate.get(date);
+  if (!day || !Array.isArray(day.games)) return null;
+
+  const team = chip.dataset.fcTeam;
+  const opp = chip.dataset.fcOpp;
+  if (!team || !opp) return null;
+  const atHome = chip.dataset.fcAtHome === "1";
+  const away = atHome ? opp : team;
+  const home = atHome ? team : opp;
+
+  const candidates = day.games.filter((g) => g && g.away === away && g.home === home);
+  if (candidates.length === 0) return null;
+
+  const rf = chip.dataset.fcRf === "" ? null : Number(chip.dataset.fcRf);
+  const ra = chip.dataset.fcRa === "" ? null : Number(chip.dataset.fcRa);
+  const hasChipScores = isFiniteNum(rf) && isFiniteNum(ra);
+
+  let winner;
+  if (candidates.length === 1) {
+    const only = candidates[0];
+    const r = only.result;
+    const isGraded = r && isFiniteNum(r.home_score) && isFiniteNum(r.away_score);
+    if (isGraded && hasChipScores && !chipScoreMatchesResult(atHome, rf, ra, r)) return null;
+    winner = only;
+  } else {
+    if (!hasChipScores) return null;
+    const matches = candidates.filter((g) => chipScoreMatchesResult(atHome, rf, ra, g.result));
+    if (matches.length !== 1) return null;
+    winner = matches[0];
+  }
+  const dh = Number.isInteger(winner.dh_game_number) ? winner.dh_game_number : 0;
+  const key = `${away}-${home}-${dh}`;
+  return `game.html?date=${encodeURIComponent(date)}&g=${encodeURIComponent(key)}`;
+}
+
+/* Progressive-enhancement upgrade pass for the "Recent form" chips: runs
+   AFTER renderRecentFormHtml has already painted plain <div class="form-chip">
+   rows (so it never slows/blocks the initial render), and swaps a chip for
+   an <a class="form-chip"> only when its past game resolves to exactly one
+   published prediction. Dates outside the published index (data/index.json,
+   via the shared memoized fetchDateIndex) cost zero extra fetches — those
+   chips simply stay plain divs. Never throws: any unexpected shape in the
+   index/predictions payloads degrades individual chips to unlinked rather
+   than breaking the section. */
+async function upgradeRecentFormLinks(containerEl) {
+  try {
+    if (!containerEl || typeof containerEl.querySelectorAll !== "function") return;
+    const chips = Array.from(containerEl.querySelectorAll(".form-chip[data-fc-date]"));
+    if (chips.length === 0) return;
+
+    const indexData = await fetchDateIndex();
+    const publishedDates = indexData ? new Set(indexData.dates.map((d) => d.date)) : new Set();
+
+    const datesNeeded = new Set();
+    for (const chip of chips) {
+      const date = chip.dataset.fcDate;
+      if (isValidDateParam(date) && publishedDates.has(date)) datesNeeded.add(date);
+    }
+    if (datesNeeded.size === 0) return;
+
+    const dayDataByDate = new Map();
+    await Promise.all(Array.from(datesNeeded).map(async (date) => {
+      dayDataByDate.set(date, await fetchPredictionsForFormLink(date));
+    }));
+
+    for (const chip of chips) {
+      try {
+        const href = resolveFormChipLink(chip, dayDataByDate);
+        if (!href) continue;
+        const a = document.createElement("a");
+        a.className = chip.className;
+        a.href = href;
+        a.innerHTML = chip.innerHTML;
+        chip.replaceWith(a);
+      } catch {
+        /* leave this one chip unlinked rather than abort the whole pass */
+      }
+    }
+  } catch {
+    /* best-effort only — recent form itself already rendered as plain chips */
+  }
 }
 
 function renderRecentFormHtml(recentForm, awayCode, homeCode) {
@@ -1555,6 +1711,74 @@ function renderDetailEmptyHtml() {
 
 function isGraded(g) {
   return !!(g?.result && typeof g.result.home_won === "boolean");
+}
+
+/* Wired once per page load (guarded by dataset.wired — renderGameDetail()
+   itself only runs once today, but this matches the codebase's existing
+   wiring discipline in case that ever changes). The anchor's ./?date=<date>
+   href is left untouched — that's both the fallback nav target and what
+   right-click/middle-click/copy-link still see. document.referrer never
+   changes during the life of this document, so it's parsed exactly once
+   here and closed over, rather than re-parsed on every click. A same-origin
+   referrer pointing at another game.html means this back link would return
+   to that other game's detail page, not the predictions slate — the label
+   is relabeled once, at wiring time, to stop lying about the destination. */
+function wireBackLink(el) {
+  if (!el || el.dataset.wired) return;
+  el.dataset.wired = "1";
+
+  let sameOriginReferrer = null;
+  try {
+    if (document.referrer) {
+      const ref = new URL(document.referrer);
+      if (ref.origin === location.origin) sameOriginReferrer = ref;
+    }
+  } catch {
+    /* malformed referrer: sameOriginReferrer stays null, default nav wins */
+  }
+
+  if (sameOriginReferrer && /(?:^|\/)game\.html$/.test(sameOriginReferrer.pathname)) {
+    el.textContent = "‹ back";
+  }
+
+  el.addEventListener("click", (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    if (!sameOriginReferrer) return;
+
+    /* The Navigation API's canGoBack reflects actual history POSITION, not
+       just history.length (a tab opened fresh on this page, then navigated
+       forward via a same-origin link and back again, can have length > 1
+       while still sitting at entry 0 — history.back() there is a spec-ignored
+       no-op). Where supported, treat it as authoritative in both directions. */
+    let canGoBack = null;
+    try {
+      if (window.navigation) canGoBack = window.navigation.canGoBack;
+    } catch {
+      canGoBack = null;
+    }
+    if (canGoBack === false) return;
+    if (canGoBack === true) {
+      e.preventDefault();
+      history.back();
+      return;
+    }
+
+    /* No Navigation API: fall back to the history.length heuristic, plus a
+       timer fallback in case history.back() turns out to be a no-op (same
+       position-0-despite-length>1 case above). pagehide fires once the
+       traversal actually lands, cancelling the fallback; the !document.hidden
+       check stops a slow/late timer from firing a spurious nav after the
+       user has left (and possibly returned via bfcache). */
+    if (history.length > 1) {
+      e.preventDefault();
+      const href = el.href;
+      const timer = setTimeout(() => {
+        if (!document.hidden) location.assign(href);
+      }, 300);
+      window.addEventListener("pagehide", () => clearTimeout(timer), { once: true });
+      history.back();
+    }
+  });
 }
 
 let _detailCtx = null;
@@ -1586,7 +1810,10 @@ async function renderGameDetail() {
 
     const { away, home, dh } = parsed;
     if (crumbEl) crumbEl.textContent = `${away} @ ${home}`;
-    if (crumbHomeEl) crumbHomeEl.href = `./?date=${encodeURIComponent(date)}`;
+    if (crumbHomeEl) {
+      crumbHomeEl.href = `./?date=${encodeURIComponent(date)}`;
+      wireBackLink(crumbHomeEl);
+    }
 
     const [predictions, details] = await Promise.all([
       fetchJSON(`${REPO_ROOT}/data/predictions/${date}.json`).catch(() => null),
@@ -1597,7 +1824,7 @@ async function renderGameDetail() {
     const gameKey = `${away}-${home}-${dh}`;
     const gameDetail = details?.games?.[gameKey] ?? null;
 
-    document.title = `${away} @ ${home} — ml.ball`;
+    document.title = `${away} @ ${home} · ml.ball`;
 
     headerEl.innerHTML = renderGameHeaderHtml({ away, home, dh }, matchGame, gameDetail?.header ?? null);
     if (stickyEl) stickyEl.innerHTML = gameStickyHtml(away, home, matchGame);
@@ -1627,7 +1854,10 @@ async function renderGameDetail() {
     }
     if (statsEl) statsEl.innerHTML = renderTeamStatsHtml(gameDetail.team_stats, away, home);
     if (spEl) spEl.innerHTML = renderSpDetailHtml(gameDetail.sp_detail, away, home);
-    if (formEl) formEl.innerHTML = renderRecentFormHtml(gameDetail.recent_form, away, home);
+    if (formEl) {
+      formEl.innerHTML = renderRecentFormHtml(gameDetail.recent_form, away, home);
+      upgradeRecentFormLinks(formEl);
+    }
   } catch (e) {
     if (emptyEl) {
       emptyEl.style.display = "";
@@ -1737,15 +1967,46 @@ function _accThinToMax(arr, max) {
 function _accReadoutText(pt) {
   const dayPct = Math.round(pt.dayAcc * 100);
   const cumPct = (pt.cumAcc * 100).toFixed(1);
-  return `${fmtShortDate(pt.date)} — day ${pt.dayCorrect}/${pt.dayGraded} (${dayPct}%) · cumulative ${pt.cumCorrect}/${pt.cumGraded} (${cumPct}%)`;
+  return `${fmtShortDate(pt.date)} · day ${pt.dayCorrect}/${pt.dayGraded} (${dayPct}%) · cumulative ${pt.cumCorrect}/${pt.cumGraded} (${cumPct}%)`;
+}
+
+/* Two size buckets for accuracyChartSvg: "wide" (desktop/tablet) keeps the
+   original geometry; "narrow" (mobile) uses a viewBox much closer to the
+   panel's actual rendered pixel width so the SVG's own font-size units end
+   up close to real on-screen px instead of being shrunk by the wide/narrow
+   viewBox-to-container scale ratio — see renderAccuracyPanel's resize
+   handling below for how the bucket is picked. */
+const ACC_CHART_DIMS = {
+  wide: {
+    W: 640, H: 220,
+    margin: { top: 16, right: 54, bottom: 28, left: 16 },
+    font: { hair: 9, tick: 10, end: 12 },
+    dotR: 3.5, endR: 4, lineWidth: 2, tickMax: 5,
+  },
+  narrow: {
+    W: 340, H: 240,
+    margin: { top: 14, right: 50, bottom: 32, left: 10 },
+    font: { hair: 11, tick: 12, end: 13 },
+    dotR: 4, endR: 5, lineWidth: 2.5, tickMax: 3,
+  },
+};
+const ACC_CHART_NARROW_BREAKPOINT = 480;
+
+/* panelEl.clientWidth < ACC_CHART_NARROW_BREAKPOINT (and > 0, i.e. actually
+   laid out) selects the "narrow" bucket; anything else (including a
+   not-yet-laid-out panel, clientWidth 0) falls back to "wide". */
+function accChartBucket(panelEl) {
+  const w = panelEl ? panelEl.clientWidth : 0;
+  return w > 0 && w < ACC_CHART_NARROW_BREAKPOINT ? "narrow" : "wide";
 }
 
 /* Pure string -> inline SVG. Colors/fonts are set via inline `style` (not
    new CSS classes) so this stays a self-contained, independently testable
-   string builder — same reasoning as teamTagHtml's inline --team-color. */
-function accuracyChartSvg(series) {
-  const W = 640, H = 220;
-  const margin = { top: 16, right: 54, bottom: 28, left: 16 };
+   string builder — same reasoning as teamTagHtml's inline --team-color.
+   `bucket` selects ACC_CHART_DIMS ("wide" default). */
+function accuracyChartSvg(series, bucket = "wide") {
+  const dims = ACC_CHART_DIMS[bucket] || ACC_CHART_DIMS.wide;
+  const { W, H, margin, font, dotR, endR, lineWidth, tickMax } = dims;
   const plotW = W - margin.left - margin.right;
   const plotH = H - margin.top - margin.bottom;
 
@@ -1773,13 +2034,13 @@ function accuracyChartSvg(series) {
 
   const y50 = yOf(50);
   const hairlineHtml = `<line x1="${margin.left}" y1="${y50.toFixed(1)}" x2="${(margin.left + plotW).toFixed(1)}" y2="${y50.toFixed(1)}" style="stroke:var(--faint);stroke-width:1;stroke-dasharray:3 3" />
-    <text x="${margin.left + 2}" y="${(y50 - 4).toFixed(1)}" style="fill:var(--faint);font-family:var(--font-mono);font-size:9px">50%</text>`;
+    <text x="${margin.left + 2}" y="${(y50 - 4).toFixed(1)}" style="fill:var(--faint);font-family:var(--font-mono);font-size:${font.hair}px">50%</text>`;
 
   const pointsAttr = series.map((s) => `${xOf(s.date).toFixed(1)},${yOf(s.cumAcc * 100).toFixed(1)}`).join(" ");
-  const lineHtml = `<polyline class="acc-line" points="${pointsAttr}" style="fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round" />`;
+  const lineHtml = `<polyline class="acc-line" points="${pointsAttr}" style="fill:none;stroke:var(--accent);stroke-width:${lineWidth};stroke-linejoin:round;stroke-linecap:round" />`;
 
   const dotsHtml = showDots
-    ? series.map((s) => `<circle cx="${xOf(s.date).toFixed(1)}" cy="${yOf(s.dayAcc * 100).toFixed(1)}" r="3.5" style="fill:var(--faint);stroke:var(--paper);stroke-width:2" />`).join("")
+    ? series.map((s) => `<circle cx="${xOf(s.date).toFixed(1)}" cy="${yOf(s.dayAcc * 100).toFixed(1)}" r="${dotR}" style="fill:var(--faint);stroke:var(--paper);stroke-width:2" />`).join("")
     : "";
 
   const last = series[series.length - 1];
@@ -1787,8 +2048,8 @@ function accuracyChartSvg(series) {
   const lastX = xOf(last.date);
   const lastY = yOf(last.cumAcc * 100);
   const endPct = (last.cumAcc * 100).toFixed(1);
-  const endMarkHtml = `<circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="4" style="fill:var(--accent)" />
-    <text x="${(lastX + 8).toFixed(1)}" y="${(lastY + 4).toFixed(1)}" style="fill:var(--ink);font-family:var(--font-mono);font-size:12px;font-weight:600">${endPct}%</text>`;
+  const endMarkHtml = `<circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="${endR}" style="fill:var(--accent)" />
+    <text x="${(lastX + 8).toFixed(1)}" y="${(lastY + 4).toFixed(1)}" style="fill:var(--ink);font-family:var(--font-mono);font-size:${font.end}px;font-weight:600">${endPct}%</text>`;
 
   const monthBoundaries = [];
   let lastMonth = null;
@@ -1802,11 +2063,11 @@ function accuracyChartSvg(series) {
     if (!seen.has(d)) { seen.add(d); candidateDates.push(d); }
   }
   candidateDates.sort();
-  const tickDates = _accThinToMax(candidateDates, 5);
+  const tickDates = _accThinToMax(candidateDates, tickMax);
   const xTicksHtml = tickDates
     .map((d, i) => {
       const anchor = i === 0 ? "start" : i === tickDates.length - 1 ? "end" : "middle";
-      return `<text x="${xOf(d).toFixed(1)}" y="${H - 8}" text-anchor="${anchor}" style="fill:var(--muted);font-family:var(--font-mono);font-size:10px">${escapeHtml(fmtShortDate(d))}</text>`;
+      return `<text x="${xOf(d).toFixed(1)}" y="${H - 8}" text-anchor="${anchor}" style="fill:var(--muted);font-family:var(--font-mono);font-size:${font.tick}px">${escapeHtml(fmtShortDate(d))}</text>`;
     })
     .join("");
 
@@ -1840,8 +2101,39 @@ function accuracyChartSvg(series) {
   </svg>`;
 }
 
+/* Last indexData renderAccuracyPanel was actually asked to render — reused
+   by the resize-driven re-render below (accChartResizeWired's listener) so
+   crossing the narrow/wide breakpoint re-lays-out the existing data instead
+   of triggering a network refetch; renderAccuracyPage's own 12-minute
+   auto-refresh keeps calling renderAccuracyPanel directly with freshly
+   fetched data, entirely independent of this. */
+let _lastAccIndexData = null;
+
+/* Wires a single debounced window resize listener per panelEl (guarded via
+   a dataset flag so re-rendering panelEl's innerHTML on every call never
+   stacks a second listener) that re-invokes renderAccuracyPanel only when
+   the narrow/wide bucket actually changes — a resize that doesn't cross the
+   breakpoint is a no-op. */
+function wireAccChartResize(panelEl) {
+  if (!panelEl || panelEl.dataset.accResizeWired) return;
+  panelEl.dataset.accResizeWired = "1";
+  let resizeTimer = null;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (accChartBucket(panelEl) !== panelEl.dataset.accChartBucket) {
+        renderAccuracyPanel(panelEl, _lastAccIndexData);
+      }
+    }, 150);
+  });
+}
+
 function renderAccuracyPanel(panelEl, indexData) {
   if (!panelEl) return;
+  _lastAccIndexData = indexData;
+  wireAccChartResize(panelEl);
+  const bucket = accChartBucket(panelEl);
+  panelEl.dataset.accChartBucket = bucket;
   if (!indexData || !Array.isArray(indexData.dates)) {
     panelEl.innerHTML = `<p class="stale-note">History unavailable.</p>`;
     return;
@@ -1855,7 +2147,7 @@ function renderAccuracyPanel(panelEl, indexData) {
     const s = series[0];
     const dayPct = (s.dayAcc * 100).toFixed(1);
     panelEl.innerHTML = `<div class="acc-chart-readout">
-      <span aria-hidden="true" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:6px;vertical-align:middle"></span>${escapeHtml(fmtShortDate(s.date))} — ${s.dayCorrect} of ${s.dayGraded} correct (${dayPct}%)
+      <span aria-hidden="true" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:6px;vertical-align:middle"></span>${escapeHtml(fmtShortDate(s.date))} · ${s.dayCorrect} of ${s.dayGraded} correct (${dayPct}%)
     </div>`;
     return;
   }
@@ -1863,8 +2155,8 @@ function renderAccuracyPanel(panelEl, indexData) {
   const last = series[series.length - 1];
   panelEl.innerHTML = `
     <div class="acc-chart-readout" id="acc-chart-readout">${escapeHtml(_accReadoutText(last))}</div>
-    ${accuracyChartSvg(series)}
-    <p class="slate-note">Cumulative accuracy after each day's graded games. Dots are single-day accuracy — small samples, mostly noise.</p>`;
+    ${accuracyChartSvg(series, bucket)}
+    <p class="slate-note">Cumulative accuracy after each day's graded games. Dots are single-day accuracy (small samples, mostly noise).</p>`;
 
   const svgEl = panelEl.querySelector("svg");
   const readoutEl = panelEl.querySelector("#acc-chart-readout");
@@ -1873,10 +2165,11 @@ function renderAccuracyPanel(panelEl, indexData) {
   const hoverDot = svgEl.querySelector(".acc-hover-dot");
   const hitRects = Array.from(svgEl.querySelectorAll(".acc-hit"));
 
+  const chartW = ACC_CHART_DIMS[bucket].W;
   const toSvgX = (clientX) => {
     const rect = svgEl.getBoundingClientRect();
     if (!rect.width) return 0;
-    return (clientX - rect.left) * (640 / rect.width);
+    return (clientX - rect.left) * (chartW / rect.width);
   };
   const nearestIndex = (svgX) => {
     let bestI = 0, bestD = Infinity;
@@ -1939,25 +2232,27 @@ function confidenceRowHtml(key, bucket) {
     <div class="acc-conf-label">${escapeHtml(label)}</div>
     <div class="acc-conf-bar-wrap"><div class="acc-conf-bar-ref"></div><div class="acc-conf-bar" style="width:${barPct.toFixed(1)}%"></div></div>
     <div class="acc-conf-value">${fmtPctVal(acc)}</div>
-    <div class="acc-conf-n">${n != null ? `${n} game${n === 1 ? "" : "s"}` : "—"}</div>
+    <div class="acc-conf-n">${n != null ? `${n} game${n === 1 ? "" : "s"}` : "-"}</div>
   </div>`;
 }
 
-function renderConfidenceSection(container, byConfidence) {
+function renderConfidenceSection(container, byConfidence, headEl) {
   if (!container) return;
   if (!byConfidence || typeof byConfidence !== "object" || Object.keys(byConfidence).length === 0) {
-    container.innerHTML = `<p class="stale-note">Not available yet — check back soon.</p>`;
+    container.innerHTML = `<p class="stale-note">Not available yet. Check back soon.</p>`;
+    if (headEl) headEl.hidden = true;
     return;
   }
   const keys = orderedConfidenceBucketKeys(byConfidence);
   container.innerHTML = keys.map((k) => confidenceRowHtml(k, byConfidence[k])).join("");
+  if (headEl) headEl.hidden = false;
 }
 
 function renderLogLossStats(container, rec) {
   if (!container) return;
   const overall = isFiniteNum(rec?.overall?.log_loss) ? rec.overall.log_loss.toFixed(4) : null;
   if (overall == null) {
-    container.innerHTML = `<p class="stale-note">Not available yet — check back soon.</p>`;
+    container.innerHTML = `<p class="stale-note">Not available yet. Check back soon.</p>`;
     return;
   }
   const parts = [`Overall: <strong>${overall}</strong>`];
@@ -1973,14 +2268,14 @@ function renderLogLossStats(container, rec) {
 function renderHomeBaselineSection(container, homeBaseline) {
   if (!container) return;
   if (!homeBaseline || typeof homeBaseline !== "object") {
-    container.innerHTML = `<p class="stale-note">Not available yet — check back soon.</p>`;
+    container.innerHTML = `<p class="stale-note">Not available yet. Check back soon.</p>`;
     return;
   }
   const winRate = fmtPctVal(homeBaseline.home_win_rate);
   const pickRate = fmtPctVal(homeBaseline.home_pick_rate);
   const n = isFiniteNum(homeBaseline.n_graded) ? homeBaseline.n_graded : null;
   const onText = n != null ? `On the ${n} games graded here` : "On the games graded here";
-  container.innerHTML = `<p class="acc-explainer">Home teams win roughly 52–54% of MLB games, so a &ldquo;model&rdquo; that always picks the home team gets ~53% accuracy for free — raw accuracy only means something against that baseline. ${onText}, always picking home would have scored ${winRate}. The model picked the home side in ${pickRate} of games. We watch that gap: a well-calibrated model shouldn't lean on home teams far beyond the real home-win rate for cheap accuracy.</p>`;
+  container.innerHTML = `<p class="acc-explainer">Home teams win roughly 52–54% of MLB games, so a &ldquo;model&rdquo; that always picks the home team gets ~53% accuracy for free. Raw accuracy only means something against that baseline. ${onText}, always picking home would have scored ${winRate}. The model picked the home side in ${pickRate} of games. We watch that gap: a well-calibrated model shouldn't lean on home teams far beyond the real home-win rate for cheap accuracy.</p>`;
 }
 
 const ACCURACY_TEAM_STORAGE_KEY = "mlball-accuracy-team";
@@ -1990,8 +2285,8 @@ function teamDisplayName(code) {
 }
 
 const TEAM_SPLIT_ROWS = [
-  { key: "picked", label: "Picked them" },
-  { key: "faded", label: "Picked against them" },
+  { key: "picked", label: "Model picked them" },
+  { key: "faded", label: "Model picked against them" },
   { key: "home", label: "Home games" },
   { key: "away", label: "Road games" },
 ];
@@ -2001,10 +2296,16 @@ function teamSplitRowHtml(row, split) {
   const acc = isFiniteNum(split?.accuracy) ? split.accuracy : null;
   return `<div class="acc-team-split-row">
     <div class="acc-team-split-label">${escapeHtml(row.label)}</div>
-    <div class="acc-team-split-n">${n != null ? `${n} game${n === 1 ? "" : "s"}` : "—"}</div>
+    <div class="acc-team-split-n">${n != null ? `${n} game${n === 1 ? "" : "s"}` : "-"}</div>
     <div class="acc-team-split-value">${fmtPctVal(acc)}</div>
   </div>`;
 }
+
+const TEAM_SPLIT_HEAD_HTML = `<div class="acc-team-split-row acc-team-split-head" aria-hidden="true">
+    <div class="acc-team-split-label">Split</div>
+    <div class="acc-team-split-n">Games</div>
+    <div class="acc-team-split-value">Model acc</div>
+  </div>`;
 
 /* Inner HTML for one team's expanded detail (summary stats + split rows +
    small-sample note) — used inline inside a division panel, under the row
@@ -2015,16 +2316,16 @@ function teamDetailContentHtml(entry) {
   }
   const n = isFiniteNum(entry.n_graded) ? entry.n_graded : null;
   const wins = isFiniteNum(entry.wins) ? entry.wins : null;
-  const record = n != null && wins != null ? `${wins}–${Math.max(0, n - wins)}` : "—";
+  const record = n != null && wins != null ? `${wins}–${Math.max(0, n - wins)}` : "-";
   const splitsHtml = TEAM_SPLIT_ROWS.map((row) => teamSplitRowHtml(row, entry[row.key])).join("");
   return `
     <div class="acc-team-summary">
-      <div class="acc-team-stat"><div class="label">Games graded</div><div class="value">${n != null ? n : "—"}</div></div>
-      <div class="acc-team-stat"><div class="label">Team record</div><div class="value">${record}</div></div>
-      <div class="acc-team-stat"><div class="label">Model accuracy</div><div class="value">${fmtPctVal(entry.accuracy)}</div></div>
+      <div class="acc-team-stat"><div class="label">Games graded</div><div class="value">${n != null ? n : "-"}</div></div>
+      <div class="acc-team-stat"><div class="label">Team W-L (actual)</div><div class="value">${record}</div></div>
+      <div class="acc-team-stat"><div class="label">Model accuracy (their games)</div><div class="value">${fmtPctVal(entry.accuracy)}</div></div>
     </div>
-    <div class="acc-team-splits">${splitsHtml}</div>
-    <p class="stale-note">A team appears in only a handful of graded games so far — treat these as noise until the sample grows.</p>`;
+    <div class="acc-team-splits">${TEAM_SPLIT_HEAD_HTML}${splitsHtml}</div>
+    <p class="stale-note">A team appears in only a handful of graded games so far. Treat these as noise until the sample grows.</p>`;
 }
 
 /* Looks up a division-mapped code's by_team entry, resolving any raw code
@@ -2063,7 +2364,7 @@ function accTeamIdSafe(code) {
 }
 
 function accTeamRowHtml(code, entry, isExpanded) {
-  const acc = entry ? fmtPctVal(entry.accuracy) : "—";
+  const acc = entry ? fmtPctVal(entry.accuracy) : "-";
   const n = entry && isFiniteNum(entry.n_graded) ? entry.n_graded : null;
   const rowId = `acc-team-row-${accTeamIdSafe(code)}`;
   const detailId = `acc-team-detail-${accTeamIdSafe(code)}`;
@@ -2072,7 +2373,7 @@ function accTeamRowHtml(code, entry, isExpanded) {
       <span class="acc-team-row-name">${escapeHtml(teamDisplayName(code))}</span>
       <span class="acc-team-row-stats">
         <span class="acc-team-row-acc">${acc}</span>
-        <span class="acc-team-row-n">${n != null ? `${n}g` : "—"}</span>
+        <span class="acc-team-row-n">${n != null ? n : "-"}</span>
         <span class="expand-caret" aria-hidden="true">${isExpanded ? "▾" : "▸"}</span>
       </span>
     </button>
@@ -2080,11 +2381,21 @@ function accTeamRowHtml(code, entry, isExpanded) {
   </div>`;
 }
 
+const ACC_DIVISION_HEAD_HTML = `<div class="acc-division-head" aria-hidden="true">
+    <span class="acc-division-head-name">Team</span>
+    <span class="acc-division-head-stats">
+      <span class="acc-division-head-acc">Acc</span>
+      <span class="acc-division-head-n">GP</span>
+      <span class="acc-division-head-caret-spacer"></span>
+    </span>
+  </div>`;
+
 function accPanelHtml(label, codes, byTeam, expandedCode, resolveEntry) {
   const sorted = [...codes].sort((a, b) => teamDisplayName(a).localeCompare(teamDisplayName(b)));
   const rowsHtml = sorted.map((code) => accTeamRowHtml(code, resolveEntry(code, byTeam), expandedCode === code)).join("");
   return `<div class="acc-division-panel">
     <div class="acc-division-label micro-label">${escapeHtml(label)}</div>
+    ${ACC_DIVISION_HEAD_HTML}
     <div class="acc-division-teams">${rowsHtml}</div>
   </div>`;
 }
@@ -2159,6 +2470,7 @@ async function renderAccuracyPage() {
   const loglossEl = document.getElementById("acc-logloss-stats");
   const homeBaselineEl = document.getElementById("acc-home-baseline");
   const confidenceEl = document.getElementById("acc-confidence-rows");
+  const confidenceHeadEl = document.getElementById("acc-confidence-head");
   const teamPanelsEl = document.getElementById("acc-team-panels");
   const teamStaleEl = document.getElementById("acc-team-stale");
   loadStoredExpandedTeam();
@@ -2166,13 +2478,13 @@ async function renderAccuracyPage() {
   try {
     const rec = await fetchJSON(`${REPO_ROOT}/data/record.json`);
     if (!isCurrent()) return;
-    setStat("acc-stat-acc", isFiniteNum(rec.overall?.accuracy) ? (rec.overall.accuracy * 100).toFixed(1) + "%" : "—");
-    setStat("acc-stat-30d", isFiniteNum(rec.last_30d?.accuracy) ? (rec.last_30d.accuracy * 100).toFixed(1) + "%" : "—");
-    setStat("acc-stat-n", rec.overall?.n_graded ?? "—");
-    setStat("acc-stat-ll", isFiniteNum(rec.overall?.log_loss) ? rec.overall.log_loss.toFixed(4) : "—");
+    setStat("acc-stat-acc", isFiniteNum(rec.overall?.accuracy) ? (rec.overall.accuracy * 100).toFixed(1) + "%" : "-");
+    setStat("acc-stat-30d", isFiniteNum(rec.last_30d?.accuracy) ? (rec.last_30d.accuracy * 100).toFixed(1) + "%" : "-");
+    setStat("acc-stat-n", rec.overall?.n_graded ?? "-");
+    setStat("acc-stat-ll", isFiniteNum(rec.overall?.log_loss) ? rec.overall.log_loss.toFixed(4) : "-");
 
     renderLogLossStats(loglossEl, rec);
-    renderConfidenceSection(confidenceEl, rec.by_confidence);
+    renderConfidenceSection(confidenceEl, rec.by_confidence, confidenceHeadEl);
     renderHomeBaselineSection(homeBaselineEl, rec.home_baseline);
 
     _accuracyByTeamCache = rec.by_team && typeof rec.by_team === "object" ? rec.by_team : null;
@@ -2180,9 +2492,9 @@ async function renderAccuracyPage() {
     wireTeamPanels(teamPanelsEl, () => _accuracyByTeamCache);
   } catch {
     if (!isCurrent()) return;
-    ["acc-stat-acc", "acc-stat-30d", "acc-stat-n", "acc-stat-ll"].forEach((id) => setStat(id, "—"));
+    ["acc-stat-acc", "acc-stat-30d", "acc-stat-n", "acc-stat-ll"].forEach((id) => setStat(id, "-"));
     renderLogLossStats(loglossEl, null);
-    renderConfidenceSection(confidenceEl, null);
+    renderConfidenceSection(confidenceEl, null, confidenceHeadEl);
     renderHomeBaselineSection(homeBaselineEl, null);
     _accuracyByTeamCache = null;
     renderTeamSection(teamPanelsEl, teamStaleEl, null, _accuracyExpandedTeam);

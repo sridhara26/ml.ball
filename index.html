@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ml.ball — MLB win probabilities</title>
+  <title>ml.ball · MLB win probabilities</title>
   <meta name="description" content="Daily MLB win probabilities from a neural-network model. Every prediction is graded against final scores and published before first pitch." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚾</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/site.css?v=51f4eda2" />
+  <link rel="stylesheet" href="assets/site.css?v=641101bc" />
 </head>
 <body>
   <header class="nav">
@@ -52,26 +52,26 @@
       <div class="legend-rows">
         <div class="legend-row"><span class="flag win">✓ correct</span><span class="legend-text">the model's prediction was correct</span></div>
         <div class="legend-row"><span class="flag loss">✗ missed</span><span class="legend-text">it wasn't</span></div>
-        <div class="legend-row"><span class="contested-chip">toss-up</span><span class="legend-text">the model's ten runs don't agree on a favorite — effectively a coin flip</span></div>
+        <div class="legend-row"><span class="contested-chip">toss-up</span><span class="legend-text">the model's ten runs don't agree on a favorite: effectively a coin flip</span></div>
         <div class="legend-row"><span class="flag ok">lineups: announced</span><span class="legend-text">official starting lineups were posted before the prediction</span></div>
-        <div class="legend-row"><span class="flag warn">lineups: projected</span><span class="legend-text">not posted yet — the previous game's lineup was used</span></div>
-        <div class="legend-row"><span class="flag warn">lineups: unavailable</span><span class="legend-text">no lineup data — league-average assumptions</span></div>
+        <div class="legend-row"><span class="flag warn">lineups: projected</span><span class="legend-text">not posted yet, so the previous game's lineup was used</span></div>
+        <div class="legend-row"><span class="flag warn">lineups: unavailable</span><span class="legend-text">no lineup data: league-average assumptions used</span></div>
         <div class="legend-row"><span class="flag warn">SP: TBD</span><span class="legend-text">a starting pitcher hadn't been named</span></div>
-        <div class="legend-row"><span class="flag warn">SP: sources disagree</span><span class="legend-text">sources disagreed on the probable starter — the one shown was used</span></div>
+        <div class="legend-row"><span class="flag warn">SP: sources disagree</span><span class="legend-text">sources disagreed on the probable starter; the one shown was used</span></div>
         <div class="legend-row"><span class="flag">SP: single-source</span><span class="legend-text">the starter was named by only one source</span></div>
-        <div class="legend-row"><span class="flag warn">low confidence</span><span class="legend-text">no named starter, a disputed starter, or a missing lineup — trust this number less</span></div>
+        <div class="legend-row"><span class="flag warn">low confidence</span><span class="legend-text">no named starter, a disputed starter, or a missing lineup: trust this number less</span></div>
       </div>
     </details>
   </main>
 
   <footer>
     <div class="disclaimer">
-      Model output for research/entertainment — not betting advice.
+      Model output for research and entertainment only, not betting advice.
       Predictions may update before first pitch as lineups and starting
       pitchers are announced; once a game starts, its prediction is frozen.
     </div>
   </footer>
 
-  <script src="assets/app.js?v=bb818586" data-root="."></script>
+  <script src="assets/app.js?v=e9296641" data-root="."></script>
 </body>
 </html>

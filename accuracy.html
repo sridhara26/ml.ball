@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Accuracy — ml.ball</title>
+  <title>Accuracy · ml.ball</title>
   <meta name="description" content="How accurate are ml.ball's MLB win-probability predictions? Track record, calibration, and per-team breakdowns." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚾</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/site.css?v=51f4eda2" />
+  <link rel="stylesheet" href="assets/site.css?v=641101bc" />
 </head>
 <body>
   <header class="nav">
@@ -30,10 +30,10 @@
     <p class="slate-note">How the model's predictions have performed against final scores, across every published game.</p>
 
     <section class="record-strip" aria-label="Track record">
-      <div class="stat"><div class="label">Accuracy (all time)</div><div class="value" id="acc-stat-acc">—</div></div>
-      <div class="stat"><div class="label">Accuracy (30d)</div><div class="value" id="acc-stat-30d">—</div></div>
-      <div class="stat"><div class="label">Games graded</div><div class="value" id="acc-stat-n">—</div></div>
-      <div class="stat"><div class="label">Log loss</div><div class="value" id="acc-stat-ll">—</div></div>
+      <div class="stat"><div class="label">Accuracy (all time)</div><div class="value" id="acc-stat-acc">-</div></div>
+      <div class="stat"><div class="label">Accuracy (30d)</div><div class="value" id="acc-stat-30d">-</div></div>
+      <div class="stat"><div class="label">Games graded</div><div class="value" id="acc-stat-n">-</div></div>
+      <div class="stat"><div class="label">Log loss</div><div class="value" id="acc-stat-ll">-</div></div>
     </section>
 
     <section class="acc-section" aria-label="Accuracy over time">
@@ -43,7 +43,7 @@
 
     <section class="acc-section" aria-label="What log loss means">
       <h2>What log loss means</h2>
-      <p class="acc-explainer">Log loss grades the probabilities, not just the picks. Every prediction is scored on the probability placed on the team that actually won — a right call costs a little, a wrong one costs more, and a confidently wrong one costs the most. Lower is better: 0.693 is pure coin flips and the high .60s is where solid MLB models land — a useful model lives below the coin-flip line.</p>
+      <p class="acc-explainer">Log loss grades the probabilities, not just the picks. Every prediction is scored on the probability placed on the team that actually won: a right call costs a little, a wrong one costs more, and a confidently wrong one costs the most. Lower is better: 0.693 is pure coin flips and the high .60s is where solid MLB models land. A useful model lives below the coin-flip line.</p>
       <div id="acc-logloss-stats"></div>
     </section>
 
@@ -54,7 +54,13 @@
 
     <section class="acc-section" aria-label="Accuracy by confidence">
       <h2>Accuracy by confidence</h2>
-      <p class="acc-explainer">When the model is more confident, it should be right more often.</p>
+      <p class="acc-explainer">Confidence is the win probability the model gave the team it picked, whichever side that was. Accuracy is the share of those picks that were right, and games is how many graded games fell in that range.</p>
+      <div class="acc-conf-head" id="acc-confidence-head" aria-hidden="true" hidden>
+        <div class="acc-conf-head-label">Confidence</div>
+        <div class="acc-conf-head-bar"></div>
+        <div class="acc-conf-head-value">Accuracy</div>
+        <div class="acc-conf-head-n">Games</div>
+      </div>
       <div id="acc-confidence-rows"></div>
     </section>
 
@@ -62,18 +68,18 @@
       <h2>By team</h2>
       <p class="acc-explainer">Tap or click a team below to see how the model has done, and how confident it's been, in that team's games.</p>
       <div class="acc-team-panels" id="acc-team-panels"></div>
-      <p class="stale-note" id="acc-team-stale" hidden>Not available yet — check back soon.</p>
+      <p class="stale-note" id="acc-team-stale" hidden>Not available yet. Check back soon.</p>
     </section>
   </main>
 
   <footer>
     <div class="disclaimer">
-      Model output for research/entertainment — not betting advice.
+      Model output for research and entertainment only, not betting advice.
       Predictions may update before first pitch as lineups and starting
       pitchers are announced; once a game starts, its prediction is frozen.
     </div>
   </footer>
 
-  <script src="assets/app.js?v=bb818586" data-root="."></script>
+  <script src="assets/app.js?v=e9296641" data-root="."></script>
 </body>
 </html>
