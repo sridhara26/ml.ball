@@ -67,7 +67,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T22:44:27.630004+00:00"
+      }
     },
     {
       "home": "TOR",
@@ -85,7 +89,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T22:44:27.630004+00:00"
+      }
     },
     {
       "home": "NYM",
@@ -103,7 +111,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T22:44:27.630004+00:00"
+      }
     },
     {
       "home": "ATL",
@@ -121,7 +133,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T22:44:27.630004+00:00"
+      }
     },
     {
       "home": "SFG",
@@ -139,7 +155,11 @@
         "home": "announced",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T22:44:27.630004+00:00"
+      }
     }
   ]
 }
