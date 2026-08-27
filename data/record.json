@@ -1,15 +1,15 @@
 {
   "overall": {
-    "accuracy": 0.5567567567567567,
-    "log_loss": 0.68292178846097,
-    "brier": 0.24489973575521845,
-    "n_graded": 185
+    "accuracy": 0.5585106382978723,
+    "log_loss": 0.6838043084990673,
+    "brier": 0.24531356676029908,
+    "n_graded": 188
   },
   "last_30d": {
-    "accuracy": 0.5567567567567567,
-    "log_loss": 0.68292178846097,
-    "brier": 0.24489973575521845,
-    "n_graded": 185
+    "accuracy": 0.5585106382978723,
+    "log_loss": 0.6838043084990673,
+    "brier": 0.24531356676029908,
+    "n_graded": 188
   },
   "by_confidence": {
     "[0.50,0.55)": {
@@ -19,22 +19,22 @@
       "n_graded": 99
     },
     "[0.55,0.60)": {
-      "accuracy": 0.5757575757575758,
-      "log_loss": 0.6838991910675211,
-      "brier": 0.24537266424961082,
-      "n_graded": 66
+      "accuracy": 0.5882352941176471,
+      "log_loss": 0.6810029277684316,
+      "brier": 0.2439312791117702,
+      "n_graded": 68
     },
     "[0.60,1.00]": {
-      "accuracy": 0.7,
-      "log_loss": 0.63853147099532,
-      "brier": 0.22280248755086324,
-      "n_graded": 20
+      "accuracy": 0.6666666666666666,
+      "log_loss": 0.6578312416502223,
+      "brier": 0.2321818118148579,
+      "n_graded": 21
     }
   },
   "home_baseline": {
-    "n_graded": 185,
-    "home_pick_rate": 0.6756756756756757,
-    "home_win_rate": 0.5567567567567567
+    "n_graded": 188,
+    "home_pick_rate": 0.675531914893617,
+    "home_win_rate": 0.5531914893617021
   },
   "by_team": {
     "ARI": {
@@ -206,24 +206,24 @@
       }
     },
     "COL": {
-      "n_graded": 11,
-      "wins": 4,
-      "accuracy": 0.6363636363636364,
+      "n_graded": 12,
+      "wins": 5,
+      "accuracy": 0.5833333333333334,
       "picked": {
         "n": 0,
         "accuracy": null
       },
       "faded": {
-        "n": 11,
-        "accuracy": 0.6363636363636364
+        "n": 12,
+        "accuracy": 0.5833333333333334
       },
       "home": {
         "n": 6,
         "accuracy": 1.0
       },
       "away": {
-        "n": 5,
-        "accuracy": 0.2
+        "n": 6,
+        "accuracy": 0.16666666666666666
       }
     },
     "DET": {
@@ -269,24 +269,24 @@
       }
     },
     "KCR": {
-      "n_graded": 12,
+      "n_graded": 13,
       "wins": 10,
-      "accuracy": 0.5,
+      "accuracy": 0.5384615384615384,
       "picked": {
         "n": 4,
         "accuracy": 1.0
       },
       "faded": {
-        "n": 8,
-        "accuracy": 0.25
+        "n": 9,
+        "accuracy": 0.3333333333333333
       },
       "home": {
         "n": 7,
         "accuracy": 0.5714285714285714
       },
       "away": {
-        "n": 5,
-        "accuracy": 0.4
+        "n": 6,
+        "accuracy": 0.5
       }
     },
     "LAA": {
@@ -353,12 +353,12 @@
       }
     },
     "MIL": {
-      "n_graded": 12,
-      "wins": 7,
-      "accuracy": 0.5,
+      "n_graded": 13,
+      "wins": 8,
+      "accuracy": 0.5384615384615384,
       "picked": {
-        "n": 7,
-        "accuracy": 0.5714285714285714
+        "n": 8,
+        "accuracy": 0.625
       },
       "faded": {
         "n": 5,
@@ -369,8 +369,8 @@
         "accuracy": 0.6666666666666666
       },
       "away": {
-        "n": 6,
-        "accuracy": 0.3333333333333333
+        "n": 7,
+        "accuracy": 0.42857142857142855
       }
     },
     "MIN": {
@@ -395,20 +395,20 @@
       }
     },
     "NYM": {
-      "n_graded": 11,
+      "n_graded": 12,
       "wins": 7,
-      "accuracy": 0.6363636363636364,
+      "accuracy": 0.6666666666666666,
       "picked": {
         "n": 3,
         "accuracy": 1.0
       },
       "faded": {
-        "n": 8,
-        "accuracy": 0.5
+        "n": 9,
+        "accuracy": 0.5555555555555556
       },
       "home": {
-        "n": 7,
-        "accuracy": 0.5714285714285714
+        "n": 8,
+        "accuracy": 0.625
       },
       "away": {
         "n": 4,
@@ -626,20 +626,20 @@
       }
     },
     "TOR": {
-      "n_graded": 12,
-      "wins": 6,
-      "accuracy": 0.4166666666666667,
+      "n_graded": 13,
+      "wins": 7,
+      "accuracy": 0.46153846153846156,
       "picked": {
-        "n": 1,
-        "accuracy": 0.0
+        "n": 2,
+        "accuracy": 0.5
       },
       "faded": {
         "n": 11,
         "accuracy": 0.45454545454545453
       },
       "home": {
-        "n": 6,
-        "accuracy": 0.3333333333333333
+        "n": 7,
+        "accuracy": 0.42857142857142855
       },
       "away": {
         "n": 6,
@@ -647,11 +647,11 @@
       }
     },
     "WSN": {
-      "n_graded": 12,
+      "n_graded": 13,
       "wins": 2,
-      "accuracy": 0.75,
+      "accuracy": 0.6923076923076923,
       "picked": {
-        "n": 1,
+        "n": 2,
         "accuracy": 0.0
       },
       "faded": {
@@ -659,8 +659,8 @@
         "accuracy": 0.8181818181818182
       },
       "home": {
-        "n": 3,
-        "accuracy": 0.3333333333333333
+        "n": 4,
+        "accuracy": 0.25
       },
       "away": {
         "n": 9,
@@ -668,5 +668,5 @@
       }
     }
   },
-  "updated_at_utc": "2026-08-27T01:42:39.623984+00:00"
+  "updated_at_utc": "2026-08-27T02:12:39.617804+00:00"
 }
