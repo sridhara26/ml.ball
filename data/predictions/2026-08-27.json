@@ -1,0 +1,133 @@
+{
+  "date": "2026-08-27",
+  "generated_at_utc": "2026-08-27T14:21:27.809035+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "WSN",
+      "away": "COL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6475606441497803,
+      "seed_std": 0.020591049926403482,
+      "home_sp": "Jake Irvin",
+      "away_sp": "Gabriel Hughes",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "STL",
+      "away": "BAL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5393520534038544,
+      "seed_std": 0.02230755239744219,
+      "home_sp": null,
+      "away_sp": "Trevor Rogers",
+      "sp_status": {
+        "home": "tbd",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true
+    },
+    {
+      "home": "NYY",
+      "away": "HOU",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6295262515544892,
+      "seed_std": 0.018722659001742498,
+      "home_sp": "Gerrit Cole",
+      "away_sp": "Hayden Wesneski",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "TOR",
+      "away": "KCR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5667119026184082,
+      "seed_std": 0.02890411473821999,
+      "home_sp": "Spencer Arrighetti",
+      "away_sp": "Noah Cameron",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "NYM",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4693110466003418,
+      "seed_std": 0.014693077708567932,
+      "home_sp": "Sean Manaea",
+      "away_sp": "Jacob Misiorowski",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "ATL",
+      "away": "LAD",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5144267618656159,
+      "seed_std": 0.014963236562383221,
+      "home_sp": "Chris Sale",
+      "away_sp": "Yoshinobu Yamamoto",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "SFG",
+      "away": "ARI",
+      "dh_game_number": 0,
+      "prob_home_win": 0.49653705060482023,
+      "seed_std": 0.025762018180231452,
+      "home_sp": "Landen Roupp",
+      "away_sp": "Jose Cabrera",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    }
+  ]
+}
