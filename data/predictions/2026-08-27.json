@@ -19,7 +19,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T16:44:27.623033+00:00"
+      }
     },
     {
       "home": "STL",
@@ -37,7 +41,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T16:44:27.623033+00:00"
+      }
     },
     {
       "home": "NYY",
@@ -55,7 +63,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T16:44:27.623033+00:00"
+      }
     },
     {
       "home": "TOR",
@@ -73,7 +85,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T16:44:27.623033+00:00"
+      }
     },
     {
       "home": "NYM",
@@ -91,7 +107,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T16:44:27.623033+00:00"
+      }
     },
     {
       "home": "ATL",
@@ -109,7 +129,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T16:44:27.623033+00:00"
+      }
     },
     {
       "home": "SFG",
@@ -127,7 +151,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-27T16:44:27.623033+00:00"
+      }
     }
   ]
 }
