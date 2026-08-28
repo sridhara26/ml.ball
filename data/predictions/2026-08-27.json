@@ -155,7 +155,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T01:14:27.625298+00:00"
+      }
     }
   ]
 }
