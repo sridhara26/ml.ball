@@ -1,6 +1,6 @@
 {
   "date": "2026-08-27",
-  "generated_at_utc": "2026-08-27T22:21:23.204720+00:00",
+  "generated_at_utc": "2026-08-28T01:00:26.189167+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -143,8 +143,8 @@
       "home": "SFG",
       "away": "ARI",
       "dh_game_number": 0,
-      "prob_home_win": 0.4965301603078842,
-      "seed_std": 0.025763145316871856,
+      "prob_home_win": 0.48383723199367523,
+      "seed_std": 0.027209262253320477,
       "home_sp": "Landen Roupp",
       "away_sp": "Jose Cabrera",
       "sp_status": {
@@ -153,13 +153,9 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-27T22:44:27.630004+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
