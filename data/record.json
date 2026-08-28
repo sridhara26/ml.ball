@@ -1,15 +1,15 @@
 {
   "overall": {
-    "accuracy": 0.56,
-    "log_loss": 0.6850139574557634,
-    "brier": 0.24591158288088372,
-    "n_graded": 200
+    "accuracy": 0.5572139303482587,
+    "log_loss": 0.6865368130966022,
+    "brier": 0.24665547133977644,
+    "n_graded": 201
   },
   "last_30d": {
-    "accuracy": 0.56,
-    "log_loss": 0.6850139574557634,
-    "brier": 0.24591158288088372,
-    "n_graded": 200
+    "accuracy": 0.5572139303482587,
+    "log_loss": 0.6865368130966022,
+    "brier": 0.24665547133977644,
+    "n_graded": 201
   },
   "by_confidence": {
     "[0.50,0.55)": {
@@ -25,16 +25,16 @@
       "n_graded": 71
     },
     "[0.60,1.00]": {
-      "accuracy": 0.6521739130434783,
-      "log_loss": 0.6641446295742363,
-      "brier": 0.23529346274162685,
-      "n_graded": 23
+      "accuracy": 0.625,
+      "log_loss": 0.6777681008946569,
+      "brier": 0.2419659502573225,
+      "n_graded": 24
     }
   },
   "home_baseline": {
-    "n_graded": 200,
-    "home_pick_rate": 0.68,
-    "home_win_rate": 0.56
+    "n_graded": 201,
+    "home_pick_rate": 0.681592039800995,
+    "home_win_rate": 0.5572139303482587
   },
   "by_team": {
     "ARI": {
@@ -122,20 +122,20 @@
       }
     },
     "CHC": {
-      "n_graded": 13,
+      "n_graded": 14,
       "wins": 5,
-      "accuracy": 0.5384615384615384,
+      "accuracy": 0.5,
       "picked": {
-        "n": 11,
-        "accuracy": 0.45454545454545453
+        "n": 12,
+        "accuracy": 0.4166666666666667
       },
       "faded": {
         "n": 2,
         "accuracy": 1.0
       },
       "home": {
-        "n": 6,
-        "accuracy": 0.5
+        "n": 7,
+        "accuracy": 0.42857142857142855
       },
       "away": {
         "n": 7,
@@ -164,24 +164,24 @@
       }
     },
     "CIN": {
-      "n_graded": 15,
-      "wins": 6,
-      "accuracy": 0.5333333333333333,
+      "n_graded": 16,
+      "wins": 7,
+      "accuracy": 0.5,
       "picked": {
         "n": 1,
         "accuracy": 0.0
       },
       "faded": {
-        "n": 14,
-        "accuracy": 0.5714285714285714
+        "n": 15,
+        "accuracy": 0.5333333333333333
       },
       "home": {
         "n": 8,
         "accuracy": 0.5
       },
       "away": {
-        "n": 7,
-        "accuracy": 0.5714285714285714
+        "n": 8,
+        "accuracy": 0.5
       }
     },
     "CLE": {
@@ -668,5 +668,5 @@
       }
     }
   },
-  "updated_at_utc": "2026-08-28T04:42:27.611533+00:00"
+  "updated_at_utc": "2026-08-28T21:43:27.636495+00:00"
 }
