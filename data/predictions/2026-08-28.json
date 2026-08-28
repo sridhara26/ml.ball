@@ -43,7 +43,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "WSN",
@@ -61,7 +65,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "CLE",
@@ -79,7 +87,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "NYM",
@@ -97,7 +109,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "TBR",
@@ -115,7 +131,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "TOR",
@@ -133,7 +153,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "ATL",
@@ -151,7 +175,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "NYY",
@@ -169,7 +197,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "MIL",
@@ -187,7 +219,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "MIN",
@@ -205,7 +241,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "STL",
@@ -223,7 +263,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "LAA",
@@ -241,7 +285,11 @@
         "home": "announced",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "OAK",
@@ -259,7 +307,11 @@
         "home": "announced",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     },
     {
       "home": "SFG",
@@ -277,7 +329,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-28T22:14:27.631879+00:00"
+      }
     }
   ]
 }
