@@ -1,6 +1,6 @@
 {
   "date": "2026-08-28",
-  "generated_at_utc": "2026-08-28T23:30:28.687131+00:00",
+  "generated_at_utc": "2026-08-29T01:30:26.193652+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -317,8 +317,8 @@
       "home": "SFG",
       "away": "ARI",
       "dh_game_number": 0,
-      "prob_home_win": 0.4850041210651398,
-      "seed_std": 0.025122470816425865,
+      "prob_home_win": 0.4819455623626709,
+      "seed_std": 0.025637498144900964,
       "home_sp": "Blade Tidwell",
       "away_sp": "Kohl Drake",
       "sp_status": {
@@ -329,11 +329,7 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-28T23:43:27.639576+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
