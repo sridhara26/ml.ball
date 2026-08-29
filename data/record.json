@@ -1,15 +1,15 @@
 {
   "overall": {
-    "accuracy": 0.5767441860465117,
-    "log_loss": 0.6843315916921391,
-    "brier": 0.24558094868414249,
-    "n_graded": 215
+    "accuracy": 0.5740740740740741,
+    "log_loss": 0.6849941644718276,
+    "brier": 0.245910595131529,
+    "n_graded": 216
   },
   "last_30d": {
-    "accuracy": 0.5767441860465117,
-    "log_loss": 0.6843315916921391,
-    "brier": 0.24558094868414249,
-    "n_graded": 215
+    "accuracy": 0.5740740740740741,
+    "log_loss": 0.6849941644718276,
+    "brier": 0.245910595131529,
+    "n_graded": 216
   },
   "by_confidence": {
     "[0.50,0.55)": {
@@ -19,10 +19,10 @@
       "n_graded": 117
     },
     "[0.55,0.60)": {
-      "accuracy": 0.5753424657534246,
-      "log_loss": 0.6841253352591596,
-      "brier": 0.24548444607398925,
-      "n_graded": 73
+      "accuracy": 0.5675675675675675,
+      "log_loss": 0.6860621187300474,
+      "brier": 0.2464479614151464,
+      "n_graded": 74
     },
     "[0.60,1.00]": {
       "accuracy": 0.64,
@@ -32,9 +32,9 @@
     }
   },
   "home_baseline": {
-    "n_graded": 215,
-    "home_pick_rate": 0.6697674418604651,
-    "home_win_rate": 0.5534883720930233
+    "n_graded": 216,
+    "home_pick_rate": 0.6712962962962963,
+    "home_win_rate": 0.5509259259259259
   },
   "by_team": {
     "ARI": {
@@ -101,24 +101,24 @@
       }
     },
     "BOS": {
-      "n_graded": 14,
-      "wins": 8,
-      "accuracy": 0.6428571428571429,
+      "n_graded": 15,
+      "wins": 9,
+      "accuracy": 0.6,
       "picked": {
         "n": 13,
         "accuracy": 0.6153846153846154
       },
       "faded": {
-        "n": 1,
-        "accuracy": 1.0
+        "n": 2,
+        "accuracy": 0.5
       },
       "home": {
         "n": 6,
         "accuracy": 0.8333333333333334
       },
       "away": {
-        "n": 8,
-        "accuracy": 0.5
+        "n": 9,
+        "accuracy": 0.4444444444444444
       }
     },
     "CHC": {
@@ -416,20 +416,20 @@
       }
     },
     "NYY": {
-      "n_graded": 15,
+      "n_graded": 16,
       "wins": 9,
-      "accuracy": 0.6,
+      "accuracy": 0.5625,
       "picked": {
-        "n": 15,
-        "accuracy": 0.6
+        "n": 16,
+        "accuracy": 0.5625
       },
       "faded": {
         "n": 0,
         "accuracy": null
       },
       "home": {
-        "n": 9,
-        "accuracy": 0.5555555555555556
+        "n": 10,
+        "accuracy": 0.5
       },
       "away": {
         "n": 6,
@@ -668,5 +668,5 @@
       }
     }
   },
-  "updated_at_utc": "2026-08-29T05:43:27.636209+00:00"
+  "updated_at_utc": "2026-08-29T20:12:27.684359+00:00"
 }
