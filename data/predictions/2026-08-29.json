@@ -1,6 +1,6 @@
 {
   "date": "2026-08-29",
-  "generated_at_utc": "2026-08-29T22:30:26.573225+00:00",
+  "generated_at_utc": "2026-08-30T01:20:26.072698+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -197,23 +197,19 @@
       "home": "SFG",
       "away": "ARI",
       "dh_game_number": 2,
-      "prob_home_win": 0.4691795825958252,
-      "seed_std": 0.025713971505504696,
-      "home_sp": null,
+      "prob_home_win": 0.4685172259807587,
+      "seed_std": 0.02797861286617919,
+      "home_sp": "Yunior Marte",
       "away_sp": "Mitch Bratt",
       "sp_status": {
-        "home": "tbd",
+        "home": "confirmed",
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-29T22:43:27.664845+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "WSN",
@@ -361,8 +357,8 @@
       "home": "OAK",
       "away": "BAL",
       "dh_game_number": 0,
-      "prob_home_win": 0.42230452597141266,
-      "seed_std": 0.026144392495893704,
+      "prob_home_win": 0.422296991944313,
+      "seed_std": 0.026143644858772238,
       "home_sp": "Jack Perkins",
       "away_sp": "Shane Baz",
       "sp_status": {
@@ -373,18 +369,14 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-29T22:43:27.664845+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "LAA",
       "away": "PHI",
       "dh_game_number": 0,
-      "prob_home_win": 0.459836009144783,
-      "seed_std": 0.019362761268042296,
+      "prob_home_win": 0.4598332464694977,
+      "seed_std": 0.019358824784943975,
       "home_sp": "Ryan Johnson",
       "away_sp": "Cristopher Sanchez",
       "sp_status": {
@@ -393,13 +385,9 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-29T22:43:27.664845+00:00"
-      }
+      "low_confidence": true
     }
   ]
 }
