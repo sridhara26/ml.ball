@@ -163,8 +163,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-30T15:42:27.668054+00:00"
+        "home_won": true,
+        "home_score": 5,
+        "away_score": 4,
+        "graded_at_utc": "2026-08-30T21:13:27.674008+00:00"
       }
     },
     {
@@ -185,8 +187,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+        "home_won": true,
+        "home_score": 5,
+        "away_score": 1,
+        "graded_at_utc": "2026-08-30T21:13:27.674008+00:00"
       }
     },
     {
