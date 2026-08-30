@@ -1,6 +1,6 @@
 {
   "date": "2026-08-30",
-  "generated_at_utc": "2026-08-30T19:20:27.834928+00:00",
+  "generated_at_utc": "2026-08-30T22:30:26.673817+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -313,8 +313,8 @@
       "home": "CHC",
       "away": "CIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.651384562253952,
-      "seed_std": 0.01761357045973207,
+      "prob_home_win": 0.6492930233478547,
+      "seed_std": 0.021240945132256554,
       "home_sp": "Shota Imanaga",
       "away_sp": "Chase Burns",
       "sp_status": {
@@ -322,14 +322,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-30T19:43:27.629088+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
