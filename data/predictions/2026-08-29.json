@@ -209,7 +209,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T01:44:27.733057+00:00"
+      }
     },
     {
       "home": "WSN",
@@ -369,7 +373,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T01:44:27.733057+00:00"
+      }
     },
     {
       "home": "LAA",
@@ -387,7 +395,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": true
+      "low_confidence": true,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T01:44:27.733057+00:00"
+      }
     }
   ]
 }
