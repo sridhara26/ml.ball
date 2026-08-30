@@ -21,8 +21,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-30T15:42:27.668054+00:00"
+        "home_won": false,
+        "home_score": 2,
+        "away_score": 6,
+        "graded_at_utc": "2026-08-30T19:43:27.629088+00:00"
       }
     },
     {
@@ -261,7 +263,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T19:43:27.629088+00:00"
+      }
     },
     {
       "home": "LAA",
@@ -279,7 +285,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T19:43:27.629088+00:00"
+      }
     },
     {
       "home": "CHC",
@@ -297,7 +307,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T19:43:27.629088+00:00"
+      }
     }
   ]
 }
