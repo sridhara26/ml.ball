@@ -1,6 +1,6 @@
 {
   "date": "2026-08-30",
-  "generated_at_utc": "2026-08-30T17:20:27.612476+00:00",
+  "generated_at_utc": "2026-08-30T19:20:27.834928+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -249,8 +249,8 @@
       "home": "OAK",
       "away": "BAL",
       "dh_game_number": 0,
-      "prob_home_win": 0.45874735713005066,
-      "seed_std": 0.025459722571477935,
+      "prob_home_win": 0.4587479144334793,
+      "seed_std": 0.02545926879886795,
       "home_sp": "Jeffrey Springs",
       "away_sp": "Chris Bassitt",
       "sp_status": {
@@ -261,18 +261,14 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "LAA",
       "away": "PHI",
       "dh_game_number": 0,
-      "prob_home_win": 0.4671325653791428,
-      "seed_std": 0.0223157171272274,
+      "prob_home_win": 0.4695811182260513,
+      "seed_std": 0.019342014631978367,
       "home_sp": "Yusei Kikuchi",
       "away_sp": "Zack Wheeler",
       "sp_status": {
@@ -280,21 +276,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "CHC",
       "away": "CIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.6513839602470398,
-      "seed_std": 0.01761349855432673,
+      "prob_home_win": 0.651384562253952,
+      "seed_std": 0.01761357045973207,
       "home_sp": "Shota Imanaga",
       "away_sp": "Chase Burns",
       "sp_status": {
@@ -305,11 +297,7 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
