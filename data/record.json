@@ -1,22 +1,22 @@
 {
   "overall": {
-    "accuracy": 0.5857740585774058,
-    "log_loss": 0.6795391988840443,
-    "brier": 0.24324321992881134,
-    "n_graded": 239
+    "accuracy": 0.5809128630705395,
+    "log_loss": 0.6798394479938425,
+    "brier": 0.24339291996672843,
+    "n_graded": 241
   },
   "last_30d": {
-    "accuracy": 0.5857740585774058,
-    "log_loss": 0.6795391988840443,
-    "brier": 0.24324321992881134,
-    "n_graded": 239
+    "accuracy": 0.5809128630705395,
+    "log_loss": 0.6798394479938425,
+    "brier": 0.24339291996672843,
+    "n_graded": 241
   },
   "by_confidence": {
     "[0.50,0.55)": {
-      "accuracy": 0.5648854961832062,
-      "log_loss": 0.6871565439960851,
-      "brier": 0.24701021324538017,
-      "n_graded": 131
+      "accuracy": 0.556390977443609,
+      "log_loss": 0.6875860578700494,
+      "brier": 0.2472248277003041,
+      "n_graded": 133
     },
     "[0.55,0.60)": {
       "accuracy": 0.5875,
@@ -32,9 +32,9 @@
     }
   },
   "home_baseline": {
-    "n_graded": 239,
-    "home_pick_rate": 0.6778242677824268,
-    "home_win_rate": 0.5648535564853556
+    "n_graded": 241,
+    "home_pick_rate": 0.6804979253112033,
+    "home_win_rate": 0.5601659751037344
   },
   "by_team": {
     "ARI": {
@@ -227,20 +227,20 @@
       }
     },
     "DET": {
-      "n_graded": 15,
+      "n_graded": 16,
       "wins": 4,
-      "accuracy": 0.26666666666666666,
+      "accuracy": 0.25,
       "picked": {
-        "n": 11,
-        "accuracy": 0.18181818181818182
+        "n": 12,
+        "accuracy": 0.16666666666666666
       },
       "faded": {
         "n": 4,
         "accuracy": 0.5
       },
       "home": {
-        "n": 9,
-        "accuracy": 0.3333333333333333
+        "n": 10,
+        "accuracy": 0.3
       },
       "away": {
         "n": 6,
@@ -311,24 +311,24 @@
       }
     },
     "LAD": {
-      "n_graded": 16,
-      "wins": 9,
-      "accuracy": 0.6875,
+      "n_graded": 17,
+      "wins": 10,
+      "accuracy": 0.6470588235294118,
       "picked": {
         "n": 14,
         "accuracy": 0.6428571428571429
       },
       "faded": {
-        "n": 2,
-        "accuracy": 1.0
+        "n": 3,
+        "accuracy": 0.6666666666666666
       },
       "home": {
         "n": 8,
         "accuracy": 0.625
       },
       "away": {
-        "n": 8,
-        "accuracy": 0.75
+        "n": 9,
+        "accuracy": 0.6666666666666666
       }
     },
     "MIA": {
@@ -479,24 +479,24 @@
       }
     },
     "PIT": {
-      "n_graded": 15,
-      "wins": 7,
-      "accuracy": 0.5333333333333333,
+      "n_graded": 16,
+      "wins": 8,
+      "accuracy": 0.5,
       "picked": {
         "n": 2,
         "accuracy": 0.5
       },
       "faded": {
-        "n": 13,
-        "accuracy": 0.5384615384615384
+        "n": 14,
+        "accuracy": 0.5
       },
       "home": {
         "n": 6,
         "accuracy": 0.3333333333333333
       },
       "away": {
-        "n": 9,
-        "accuracy": 0.6666666666666666
+        "n": 10,
+        "accuracy": 0.6
       }
     },
     "SDP": {
@@ -563,20 +563,20 @@
       }
     },
     "STL": {
-      "n_graded": 17,
+      "n_graded": 18,
       "wins": 8,
-      "accuracy": 0.5882352941176471,
+      "accuracy": 0.5555555555555556,
       "picked": {
-        "n": 11,
-        "accuracy": 0.5454545454545454
+        "n": 12,
+        "accuracy": 0.5
       },
       "faded": {
         "n": 6,
         "accuracy": 0.6666666666666666
       },
       "home": {
-        "n": 6,
-        "accuracy": 0.5
+        "n": 7,
+        "accuracy": 0.42857142857142855
       },
       "away": {
         "n": 11,
@@ -668,5 +668,5 @@
       }
     }
   },
-  "updated_at_utc": "2026-08-30T21:13:27.677047+00:00"
+  "updated_at_utc": "2026-08-30T21:42:27.663277+00:00"
 }
