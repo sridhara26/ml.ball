@@ -85,7 +85,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     },
     {
       "home": "CLE",
@@ -103,7 +107,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     },
     {
       "home": "DET",
@@ -121,7 +129,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     },
     {
       "home": "TBR",
@@ -161,7 +173,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     },
     {
       "home": "MIL",
@@ -179,7 +195,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     },
     {
       "home": "STL",
@@ -197,7 +217,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     },
     {
       "home": "NYM",
@@ -215,7 +239,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     },
     {
       "home": "OAK",
@@ -233,7 +261,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     },
     {
       "home": "LAA",
@@ -251,7 +283,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     },
     {
       "home": "CHC",
@@ -269,7 +305,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-08-30T17:43:27.702902+00:00"
+      }
     }
   ]
 }
