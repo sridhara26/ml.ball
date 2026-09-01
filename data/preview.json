@@ -1,189 +1,48 @@
 {
-  "date": "2026-09-01",
-  "generated_at_utc": "2026-08-31T14:21:08.664082+00:00",
+  "date": "2026-09-02",
+  "generated_at_utc": "2026-09-01T14:31:37.596873+00:00",
   "n_games": 15,
   "games": [
-    {
-      "away": "NYM",
-      "home": "TBR",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-01T22:40:00Z",
-      "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "Tropicana Field",
-      "series_game": 2,
-      "series_of": 3,
-      "away_record": {
-        "wins": 61,
-        "losses": 76
-      },
-      "home_record": {
-        "wins": 82,
-        "losses": 54
-      },
-      "away_sp": {
-        "name": "Sean Manaea",
-        "season": {
-          "starts": 14,
-          "ip": 79.7,
-          "era": 4.29,
-          "k9": 8.47,
-          "bb9": 2.6,
-          "hr9": 1.69,
-          "days_rest": 5
-        }
-      },
-      "home_sp": {
-        "name": "Freddy Peralta",
-        "season": {
-          "starts": 27,
-          "ip": 141.0,
-          "era": 5.11,
-          "k9": 8.49,
-          "bb9": 3.45,
-          "hr9": 1.4,
-          "days_rest": 6
-        }
-      },
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      }
-    },
     {
       "away": "SDP",
       "home": "CIN",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-01T22:40:00Z",
+      "first_pitch_utc": "2026-09-02T16:40:00Z",
       "start_time_tbd": false,
-      "day_night": "night",
+      "day_night": "day",
       "venue": "Great American Ball Park",
-      "series_game": 2,
+      "series_game": 3,
       "series_of": 3,
       "away_record": {
-        "wins": 72,
+        "wins": 73,
         "losses": 65
       },
       "home_record": {
         "wins": 65,
-        "losses": 72
+        "losses": 73
       },
       "away_sp": {
-        "name": "Randy Vasquez",
+        "name": "Casey Mize",
         "season": {
           "starts": 21,
-          "ip": 106.3,
-          "era": 3.81,
-          "k9": 5.59,
-          "bb9": 2.62,
-          "hr9": 1.1,
-          "days_rest": 6
-        }
-      },
-      "home_sp": {
-        "name": "Nick Lodolo",
-        "season": {
-          "starts": 16,
-          "ip": 79.0,
-          "era": 5.24,
-          "k9": 7.29,
-          "bb9": 3.76,
-          "hr9": 1.71,
-          "days_rest": 6
-        }
-      },
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      }
-    },
-    {
-      "away": "SFG",
-      "home": "PIT",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-01T22:40:00Z",
-      "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "PNC Park",
-      "series_game": 1,
-      "series_of": 3,
-      "away_record": {
-        "wins": 56,
-        "losses": 81
-      },
-      "home_record": {
-        "wins": 67,
-        "losses": 71
-      },
-      "away_sp": {
-        "name": "Logan Webb",
-        "season": {
-          "starts": 24,
-          "ip": 147.7,
-          "era": 3.72,
-          "k9": 7.19,
-          "bb9": 2.19,
-          "hr9": 0.67,
-          "days_rest": 6
-        }
-      },
-      "home_sp": {
-        "name": "Paul Skenes",
-        "season": {
-          "starts": 27,
-          "ip": 145.0,
-          "era": 3.79,
-          "k9": 10.86,
-          "bb9": 2.54,
-          "hr9": 0.87,
-          "days_rest": 7
-        }
-      },
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      }
-    },
-    {
-      "away": "TOR",
-      "home": "CLE",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-01T22:40:00Z",
-      "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "Progressive Field",
-      "series_game": 1,
-      "series_of": 3,
-      "away_record": {
-        "wins": 68,
-        "losses": 70
-      },
-      "home_record": {
-        "wins": 69,
-        "losses": 68
-      },
-      "away_sp": {
-        "name": "Spencer Arrighetti",
-        "season": {
-          "starts": 18,
-          "ip": 92.0,
-          "era": 4.7,
-          "k9": 8.9,
-          "bb9": 5.09,
-          "hr9": 1.27,
+          "ip": 109.7,
+          "era": 3.45,
+          "k9": 7.88,
+          "bb9": 2.22,
+          "hr9": 0.9,
           "days_rest": 5
         }
       },
       "home_sp": {
-        "name": "Gavin Williams",
+        "name": "Brandon Williamson",
         "season": {
-          "starts": 27,
-          "ip": 156.0,
-          "era": 3.98,
-          "k9": 11.77,
-          "bb9": 2.83,
-          "hr9": 1.56,
-          "days_rest": 7
+          "starts": 6,
+          "ip": 28.0,
+          "era": 6.11,
+          "k9": 6.11,
+          "bb9": 6.43,
+          "hr9": 1.29,
+          "days_rest": 126
         }
       },
       "sp_status": {
@@ -195,77 +54,30 @@
       "away": "ATL",
       "home": "WSN",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-01T22:45:00Z",
+      "first_pitch_utc": "2026-09-02T17:05:00Z",
       "start_time_tbd": false,
-      "day_night": "night",
+      "day_night": "day",
       "venue": "Nationals Park",
-      "series_game": 1,
+      "series_game": 2,
       "series_of": 2,
       "away_record": {
         "wins": 82,
-        "losses": 55
+        "losses": 56
       },
       "home_record": {
-        "wins": 65,
+        "wins": 66,
         "losses": 74
       },
       "away_sp": {
-        "name": "AJ Smith-Shawver",
-        "season": {
-          "starts": 3,
-          "ip": 13.7,
-          "era": 5.93,
-          "k9": 6.59,
-          "bb9": 5.27,
-          "hr9": 0.66,
-          "days_rest": 6
-        }
-      },
-      "home_sp": {
-        "name": "Jake Irvin",
-        "season": {
-          "starts": 17,
-          "ip": 81.7,
-          "era": 5.62,
-          "k9": 9.04,
-          "bb9": 4.3,
-          "hr9": 1.54,
-          "days_rest": 5
-        }
-      },
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      }
-    },
-    {
-      "away": "SEA",
-      "home": "BOS",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-01T22:45:00Z",
-      "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "Fenway Park",
-      "series_game": 2,
-      "series_of": 3,
-      "away_record": {
-        "wins": 64,
-        "losses": 73
-      },
-      "home_record": {
-        "wins": 74,
-        "losses": 63
-      },
-      "away_sp": {
-        "name": "Bryan Woo",
+        "name": "Grant Holmes",
         "season": {
           "starts": 25,
-          "ip": 142.3,
-          "era": 4.36,
-          "k9": 8.98,
-          "bb9": 1.9,
-          "hr9": 1.07,
-          "days_rest": 6
+          "ip": 124.7,
+          "era": 3.83,
+          "k9": 7.15,
+          "bb9": 3.97,
+          "hr9": 1.37,
+          "days_rest": 5
         }
       },
       "home_sp": null,
@@ -275,45 +87,333 @@
       }
     },
     {
-      "away": "DET",
-      "home": "MIN",
+      "away": "OAK",
+      "home": "TEX",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-01T23:40:00Z",
+      "first_pitch_utc": "2026-09-02T18:35:00Z",
       "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "Target Field",
-      "series_game": 2,
+      "day_night": "day",
+      "venue": "Globe Life Field",
+      "series_game": 3,
       "series_of": 3,
       "away_record": {
-        "wins": 63,
-        "losses": 73
+        "wins": 53,
+        "losses": 85
       },
       "home_record": {
-        "wins": 65,
-        "losses": 72
+        "wins": 68,
+        "losses": 70
       },
       "away_sp": {
-        "name": "Troy Melton",
+        "name": "Jacob Lopez",
         "season": {
-          "starts": 16,
-          "ip": 97.0,
-          "era": 1.95,
-          "k9": 7.42,
-          "bb9": 2.6,
-          "hr9": 0.93,
+          "starts": 19,
+          "ip": 90.3,
+          "era": 4.68,
+          "k9": 8.77,
+          "bb9": 4.58,
+          "hr9": 1.49,
+          "days_rest": 5
+        }
+      },
+      "home_sp": {
+        "name": "Cody Bradford",
+        "season": {
+          "starts": 5,
+          "ip": 26.3,
+          "era": 3.42,
+          "k9": 4.44,
+          "bb9": 2.05,
+          "hr9": 0.34,
+          "days_rest": 5
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      }
+    },
+    {
+      "away": "BAL",
+      "home": "COL",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-02T19:10:00Z",
+      "start_time_tbd": false,
+      "day_night": "day",
+      "venue": "Coors Field",
+      "series_game": 3,
+      "series_of": 3,
+      "away_record": {
+        "wins": 69,
+        "losses": 69
+      },
+      "home_record": {
+        "wins": 52,
+        "losses": 86
+      },
+      "away_sp": {
+        "name": "Trevor Rogers",
+        "season": {
+          "starts": 25,
+          "ip": 137.7,
+          "era": 4.38,
+          "k9": 7.91,
+          "bb9": 2.42,
+          "hr9": 1.05,
           "days_rest": 6
         }
       },
       "home_sp": {
-        "name": "Connor Prielipp",
+        "name": "Tomoyuki Sugano",
         "season": {
-          "starts": 19,
-          "ip": 99.0,
-          "era": 5.55,
-          "k9": 9.64,
-          "bb9": 3.55,
-          "hr9": 1.18,
+          "starts": 24,
+          "ip": 125.7,
+          "era": 5.23,
+          "k9": 5.37,
+          "bb9": 2.08,
+          "hr9": 1.93,
+          "days_rest": 5
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      }
+    },
+    {
+      "away": "PHI",
+      "home": "ARI",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-02T19:40:00Z",
+      "start_time_tbd": false,
+      "day_night": "day",
+      "venue": "Chase Field",
+      "series_game": 3,
+      "series_of": 3,
+      "away_record": {
+        "wins": 78,
+        "losses": 60
+      },
+      "home_record": {
+        "wins": 73,
+        "losses": 66
+      },
+      "away_sp": {
+        "name": "Andrew Painter",
+        "season": {
+          "starts": 18,
+          "ip": 88.3,
+          "era": 6.01,
+          "k9": 7.64,
+          "bb9": 3.36,
+          "hr9": 1.63,
+          "days_rest": 5
+        }
+      },
+      "home_sp": null,
+      "sp_status": {
+        "home": "tbd",
+        "away": "confirmed"
+      }
+    },
+    {
+      "away": "SEA",
+      "home": "BOS",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-02T20:10:00Z",
+      "start_time_tbd": false,
+      "day_night": "day",
+      "venue": "Fenway Park",
+      "series_game": 3,
+      "series_of": 3,
+      "away_record": {
+        "wins": 64,
+        "losses": 74
+      },
+      "home_record": {
+        "wins": 75,
+        "losses": 63
+      },
+      "away_sp": null,
+      "home_sp": {
+        "name": "Patrick Sandoval",
+        "season": {
+          "starts": 9,
+          "ip": 45.0,
+          "era": 4.2,
+          "k9": 9.6,
+          "bb9": 4.4,
+          "hr9": 1.2,
+          "days_rest": 5
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      }
+    },
+    {
+      "away": "NYM",
+      "home": "TBR",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-02T22:40:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "Tropicana Field",
+      "series_game": 3,
+      "series_of": 3,
+      "away_record": {
+        "wins": 62,
+        "losses": 76
+      },
+      "home_record": {
+        "wins": 82,
+        "losses": 55
+      },
+      "away_sp": {
+        "name": "Justin Hagenman",
+        "season": null
+      },
+      "home_sp": null,
+      "sp_status": {
+        "home": "tbd",
+        "away": "confirmed"
+      }
+    },
+    {
+      "away": "SFG",
+      "home": "PIT",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-02T22:40:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "PNC Park",
+      "series_game": 2,
+      "series_of": 3,
+      "away_record": {
+        "wins": 57,
+        "losses": 81
+      },
+      "home_record": {
+        "wins": 67,
+        "losses": 71
+      },
+      "away_sp": {
+        "name": "Landen Roupp",
+        "season": {
+          "starts": 26,
+          "ip": 139.7,
+          "era": 4.25,
+          "k9": 8.57,
+          "bb9": 4.25,
+          "hr9": 0.71,
           "days_rest": 6
+        }
+      },
+      "home_sp": {
+        "name": "Jared Jones",
+        "season": {
+          "starts": 16,
+          "ip": 72.7,
+          "era": 4.83,
+          "k9": 10.28,
+          "bb9": 3.34,
+          "hr9": 1.49,
+          "days_rest": 5
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      }
+    },
+    {
+      "away": "TOR",
+      "home": "CLE",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-02T22:40:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "Progressive Field",
+      "series_game": 2,
+      "series_of": 3,
+      "away_record": {
+        "wins": 68,
+        "losses": 70
+      },
+      "home_record": {
+        "wins": 69,
+        "losses": 68
+      },
+      "away_sp": {
+        "name": "Dylan Cease",
+        "season": {
+          "starts": 25,
+          "ip": 150.3,
+          "era": 2.33,
+          "k9": 12.99,
+          "bb9": 3.89,
+          "hr9": 0.6,
+          "days_rest": 5
+        }
+      },
+      "home_sp": {
+        "name": "Joey Cantillo",
+        "season": {
+          "starts": 28,
+          "ip": 136.3,
+          "era": 3.7,
+          "k9": 9.57,
+          "bb9": 4.62,
+          "hr9": 0.99,
+          "days_rest": 7
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      }
+    },
+    {
+      "away": "DET",
+      "home": "MIN",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-02T23:40:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "Target Field",
+      "series_game": 3,
+      "series_of": 3,
+      "away_record": {
+        "wins": 63,
+        "losses": 74
+      },
+      "home_record": {
+        "wins": 66,
+        "losses": 72
+      },
+      "away_sp": {
+        "name": "Drew Anderson",
+        "season": {
+          "starts": 7,
+          "ip": 29.7,
+          "era": 2.43,
+          "k9": 9.1,
+          "bb9": 4.55,
+          "hr9": 1.21,
+          "days_rest": 5
+        }
+      },
+      "home_sp": {
+        "name": "Dean Kremer",
+        "season": {
+          "starts": 12,
+          "ip": 62.7,
+          "era": 5.6,
+          "k9": 8.76,
+          "bb9": 3.16,
+          "hr9": 2.15,
+          "days_rest": 5
         }
       },
       "sp_status": {
@@ -325,41 +425,41 @@
       "away": "MIA",
       "home": "KCR",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-01T23:40:00Z",
+      "first_pitch_utc": "2026-09-02T23:40:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Kauffman Stadium",
-      "series_game": 1,
+      "series_game": 2,
       "series_of": 3,
       "away_record": {
         "wins": 69,
-        "losses": 68
+        "losses": 69
       },
       "home_record": {
         "wins": 62,
         "losses": 76
       },
       "away_sp": {
-        "name": "Tyler Phillips",
+        "name": "Eury Perez",
         "season": {
-          "starts": 15,
-          "ip": 68.7,
-          "era": 4.46,
-          "k9": 6.95,
-          "bb9": 3.15,
-          "hr9": 1.57,
-          "days_rest": 7
+          "starts": 24,
+          "ip": 130.7,
+          "era": 3.44,
+          "k9": 9.78,
+          "bb9": 3.86,
+          "hr9": 0.96,
+          "days_rest": 5
         }
       },
       "home_sp": {
-        "name": "Randy Dobnak",
+        "name": "Noah Cameron",
         "season": {
-          "starts": 8,
-          "ip": 42.0,
-          "era": 1.93,
-          "k9": 6.43,
-          "bb9": 3.64,
-          "hr9": 0.43,
+          "starts": 25,
+          "ip": 142.3,
+          "era": 4.17,
+          "k9": 7.78,
+          "bb9": 2.85,
+          "hr9": 0.95,
           "days_rest": 6
         }
       },
@@ -372,89 +472,42 @@
       "away": "MIL",
       "home": "CHC",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-01T23:40:00Z",
+      "first_pitch_utc": "2026-09-02T23:40:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Wrigley Field",
-      "series_game": 2,
+      "series_game": 3,
       "series_of": 4,
       "away_record": {
         "wins": 85,
-        "losses": 52
+        "losses": 53
       },
       "home_record": {
-        "wins": 77,
+        "wins": 78,
         "losses": 60
       },
       "away_sp": {
-        "name": "Robert Gasser",
+        "name": "Jacob Misiorowski",
         "season": {
-          "starts": 15,
-          "ip": 77.0,
-          "era": 4.79,
-          "k9": 8.42,
-          "bb9": 2.69,
-          "hr9": 1.52,
-          "days_rest": 12
-        }
-      },
-      "home_sp": {
-        "name": "Matthew Boyd",
-        "season": {
-          "starts": 17,
-          "ip": 97.0,
-          "era": 3.99,
-          "k9": 7.05,
-          "bb9": 2.78,
-          "hr9": 1.39,
-          "days_rest": 6
-        }
-      },
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      }
-    },
-    {
-      "away": "OAK",
-      "home": "TEX",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-02T00:05:00Z",
-      "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "Globe Life Field",
-      "series_game": 2,
-      "series_of": 3,
-      "away_record": {
-        "wins": 53,
-        "losses": 84
-      },
-      "home_record": {
-        "wins": 67,
-        "losses": 70
-      },
-      "away_sp": {
-        "name": "J.T. Ginn",
-        "season": {
-          "starts": 24,
-          "ip": 131.3,
-          "era": 3.63,
-          "k9": 8.02,
-          "bb9": 3.77,
-          "hr9": 1.1,
+          "starts": 25,
+          "ip": 151.0,
+          "era": 1.73,
+          "k9": 13.23,
+          "bb9": 2.09,
+          "hr9": 0.77,
           "days_rest": 6
         }
       },
       "home_sp": {
-        "name": "MacKenzie Gore",
+        "name": "David Peterson",
         "season": {
-          "starts": 28,
-          "ip": 149.3,
-          "era": 4.4,
-          "k9": 9.94,
-          "bb9": 3.38,
-          "hr9": 1.08,
-          "days_rest": 6
+          "starts": 18,
+          "ip": 91.3,
+          "era": 5.52,
+          "k9": 8.18,
+          "bb9": 4.14,
+          "hr9": 0.89,
+          "days_rest": 5
         }
       },
       "sp_status": {
@@ -466,67 +519,31 @@
       "away": "CHW",
       "home": "HOU",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-02T00:10:00Z",
+      "first_pitch_utc": "2026-09-03T00:10:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Daikin Park",
-      "series_game": 2,
+      "series_game": 3,
       "series_of": 4,
       "away_record": {
         "wins": 72,
-        "losses": 64
+        "losses": 65
       },
       "home_record": {
-        "wins": 69,
+        "wins": 70,
         "losses": 68
-      },
-      "away_sp": {
-        "name": "Sean Burke",
-        "season": {
-          "starts": 23,
-          "ip": 124.0,
-          "era": 3.63,
-          "k9": 9.8,
-          "bb9": 3.19,
-          "hr9": 1.09,
-          "days_rest": 6
-        }
-      },
-      "home_sp": null,
-      "sp_status": {
-        "home": "tbd",
-        "away": "confirmed"
-      }
-    },
-    {
-      "away": "BAL",
-      "home": "COL",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-02T00:40:00Z",
-      "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "Coors Field",
-      "series_game": 2,
-      "series_of": 3,
-      "away_record": {
-        "wins": 68,
-        "losses": 69
-      },
-      "home_record": {
-        "wins": 52,
-        "losses": 85
       },
       "away_sp": null,
       "home_sp": {
-        "name": "Gabriel Hughes",
+        "name": "Hayden Wesneski",
         "season": {
-          "starts": 9,
-          "ip": 44.7,
-          "era": 7.05,
-          "k9": 7.46,
-          "bb9": 3.63,
-          "hr9": 1.01,
-          "days_rest": 5
+          "starts": 6,
+          "ip": 32.7,
+          "era": 3.86,
+          "k9": 7.71,
+          "bb9": 3.31,
+          "hr9": 0.55,
+          "days_rest": 6
         }
       },
       "sp_status": {
@@ -538,42 +555,42 @@
       "away": "NYY",
       "home": "LAA",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-02T01:38:00Z",
+      "first_pitch_utc": "2026-09-03T01:38:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Angel Stadium",
-      "series_game": 2,
+      "series_game": 3,
       "series_of": 3,
       "away_record": {
         "wins": 78,
-        "losses": 59
+        "losses": 60
       },
       "home_record": {
-        "wins": 52,
+        "wins": 53,
         "losses": 85
       },
       "away_sp": {
-        "name": "Gerrit Cole",
+        "name": "Cam Schlittler",
         "season": {
-          "starts": 17,
-          "ip": 98.7,
-          "era": 3.19,
-          "k9": 9.58,
-          "bb9": 1.92,
-          "hr9": 1.19,
+          "starts": 28,
+          "ip": 163.7,
+          "era": 2.09,
+          "k9": 11.05,
+          "bb9": 2.31,
+          "hr9": 0.77,
           "days_rest": 5
         }
       },
       "home_sp": {
-        "name": "Grayson Rodriguez",
+        "name": "Reid Detmers",
         "season": {
-          "starts": 15,
-          "ip": 71.7,
-          "era": 6.03,
-          "k9": 8.16,
-          "bb9": 3.89,
-          "hr9": 1.26,
-          "days_rest": 6
+          "starts": 27,
+          "ip": 155.0,
+          "era": 3.54,
+          "k9": 10.1,
+          "bb9": 2.55,
+          "hr9": 0.99,
+          "days_rest": 5
         }
       },
       "sp_status": {
@@ -582,50 +599,14 @@
       }
     },
     {
-      "away": "PHI",
-      "home": "ARI",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-02T01:40:00Z",
-      "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "Chase Field",
-      "series_game": 2,
-      "series_of": 3,
-      "away_record": {
-        "wins": 77,
-        "losses": 60
-      },
-      "home_record": {
-        "wins": 73,
-        "losses": 65
-      },
-      "away_sp": {
-        "name": "Jesus Luzardo",
-        "season": {
-          "starts": 27,
-          "ip": 163.0,
-          "era": 3.2,
-          "k9": 11.21,
-          "bb9": 2.76,
-          "hr9": 0.77,
-          "days_rest": 6
-        }
-      },
-      "home_sp": null,
-      "sp_status": {
-        "home": "tbd",
-        "away": "confirmed"
-      }
-    },
-    {
       "away": "STL",
       "home": "LAD",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-02T02:10:00Z",
+      "first_pitch_utc": "2026-09-03T02:10:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "UNIQLO Field at Dodger Stadium",
-      "series_game": 1,
+      "series_game": 2,
       "series_of": 3,
       "away_record": {
         "wins": 68,
@@ -635,33 +616,22 @@
         "wins": 82,
         "losses": 55
       },
-      "away_sp": {
-        "name": "Michael McGreevy",
-        "season": {
-          "starts": 26,
-          "ip": 142.3,
-          "era": 3.86,
-          "k9": 6.2,
-          "bb9": 2.4,
-          "hr9": 1.26,
-          "days_rest": 6
-        }
-      },
+      "away_sp": null,
       "home_sp": {
-        "name": "Eric Lauer",
+        "name": "Yoshinobu Yamamoto",
         "season": {
-          "starts": 17,
-          "ip": 87.3,
-          "era": 4.74,
-          "k9": 6.08,
-          "bb9": 2.68,
-          "hr9": 1.96,
-          "days_rest": 14
+          "starts": 24,
+          "ip": 158.0,
+          "era": 2.56,
+          "k9": 8.72,
+          "bb9": 2.05,
+          "hr9": 0.91,
+          "days_rest": 6
         }
       },
       "sp_status": {
         "home": "confirmed",
-        "away": "confirmed"
+        "away": "tbd"
       }
     }
   ]

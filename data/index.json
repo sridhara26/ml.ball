@@ -1,5 +1,5 @@
 {
-  "latest_date": "2026-08-31",
+  "latest_date": "2026-09-01",
   "dates": [
     {
       "date": "2026-08-12",
@@ -114,10 +114,16 @@
       "n_games": 12,
       "n_graded": 12,
       "n_correct": 6
+    },
+    {
+      "date": "2026-09-01",
+      "n_games": 15,
+      "n_graded": 0,
+      "n_correct": 0
     }
   ],
   "preview": {
-    "date": "2026-09-01",
+    "date": "2026-09-02",
     "n_games": 15
   }
 }
