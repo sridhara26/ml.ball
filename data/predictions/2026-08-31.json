@@ -1,6 +1,6 @@
 {
   "date": "2026-08-31",
-  "generated_at_utc": "2026-08-31T22:50:59.085370+00:00",
+  "generated_at_utc": "2026-09-01T00:51:02.835637+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -227,8 +227,8 @@
       "home": "LAA",
       "away": "NYY",
       "dh_game_number": 0,
-      "prob_home_win": 0.44882266223430634,
-      "seed_std": 0.025184833072694302,
+      "prob_home_win": 0.4488240033388138,
+      "seed_std": 0.02518531168348253,
       "home_sp": "Walbert Urena",
       "away_sp": "Elmer Rodriguez",
       "sp_status": {
@@ -237,20 +237,16 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-31T23:12:58.109038+00:00"
-      }
+      "low_confidence": true
     },
     {
       "home": "ARI",
       "away": "PHI",
       "dh_game_number": 0,
-      "prob_home_win": 0.49950418174266814,
-      "seed_std": 0.0093314415128404,
+      "prob_home_win": 0.5015435874462127,
+      "seed_std": 0.01255442336097752,
       "home_sp": "Brandon Pfaadt",
       "away_sp": "Aaron Nola",
       "sp_status": {
@@ -258,14 +254,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
+        "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-08-31T23:12:58.109038+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
