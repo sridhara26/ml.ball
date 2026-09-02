@@ -21,8 +21,10 @@
       },
       "low_confidence": true,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": true,
+        "home_score": 4,
+        "away_score": 3,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -43,8 +45,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": true,
+        "home_score": 13,
+        "away_score": 12,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -65,8 +69,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": true,
+        "home_score": 6,
+        "away_score": 2,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -87,8 +93,10 @@
       },
       "low_confidence": true,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": true,
+        "home_score": 6,
+        "away_score": 1,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -109,8 +117,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": false,
+        "home_score": 6,
+        "away_score": 9,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -131,8 +141,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": true,
+        "home_score": 9,
+        "away_score": 5,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -153,8 +165,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": true,
+        "home_score": 15,
+        "away_score": 2,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -175,8 +189,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": false,
+        "home_score": 3,
+        "away_score": 6,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -197,8 +213,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": false,
+        "home_score": 4,
+        "away_score": 9,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -219,8 +237,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-01T22:13:11.800499+00:00"
+        "home_won": true,
+        "home_score": 8,
+        "away_score": 5,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
       }
     },
     {
@@ -239,7 +259,13 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "home_won": false,
+        "home_score": 1,
+        "away_score": 5,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
+      }
     },
     {
       "home": "COL",
@@ -257,7 +283,13 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "home_won": true,
+        "home_score": 4,
+        "away_score": 2,
+        "graded_at_utc": "2026-09-02T03:43:58.568642+00:00"
+      }
     },
     {
       "home": "LAA",
@@ -275,7 +307,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-02T03:43:58.568642+00:00"
+      }
     },
     {
       "home": "ARI",
@@ -293,7 +329,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": true
+      "low_confidence": true,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-02T03:43:58.568642+00:00"
+      }
     },
     {
       "home": "LAD",
@@ -311,7 +351,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-02T03:43:58.568642+00:00"
+      }
     }
   ]
 }
