@@ -1,0 +1,169 @@
+{
+  "date": "2026-09-03",
+  "generated_at_utc": "2026-09-03T14:30:16.420833+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "PIT",
+      "away": "SFG",
+      "dh_game_number": 0,
+      "prob_home_win": 0.628017258644104,
+      "seed_std": 0.022789841061759013,
+      "home_sp": "Lake Bachar",
+      "away_sp": "Blade Tidwell",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "announced"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "CLE",
+      "away": "TOR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5698209702968597,
+      "seed_std": 0.018862613781755105,
+      "home_sp": "Tanner Bibee",
+      "away_sp": "Jose Soriano",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "cross_check_mismatch"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true
+    },
+    {
+      "home": "HOU",
+      "away": "CHW",
+      "dh_game_number": 0,
+      "prob_home_win": 0.49110002517700196,
+      "seed_std": 0.017780282456095916,
+      "home_sp": "Hunter Brown",
+      "away_sp": "Luis Castillo",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "BAL",
+      "away": "BOS",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4890734165906906,
+      "seed_std": 0.0179231315169624,
+      "home_sp": "Brandon Young",
+      "away_sp": "Jake Bennett",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "CHC",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5528174936771393,
+      "seed_std": 0.01973436961278793,
+      "home_sp": "Kevin Gausman",
+      "away_sp": "Logan Henderson",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "KCR",
+      "away": "MIA",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4916774868965149,
+      "seed_std": 0.023188775842618536,
+      "home_sp": "Michael Wacha",
+      "away_sp": "Sandy Alcantara",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "TEX",
+      "away": "TBR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5047797858715057,
+      "seed_std": 0.013248094814865942,
+      "home_sp": "Cal Quantrill",
+      "away_sp": "Shane McClanahan",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "SEA",
+      "away": "OAK",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5839137196540832,
+      "seed_std": 0.03073233667820239,
+      "home_sp": "Kade Anderson",
+      "away_sp": "Jack Perkins",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "LAD",
+      "away": "STL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5907317101955414,
+      "seed_std": 0.011620507113875746,
+      "home_sp": "Tarik Skubal",
+      "away_sp": "Quinn Mathews",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    }
+  ]
+}
