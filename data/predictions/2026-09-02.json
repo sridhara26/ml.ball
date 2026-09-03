@@ -1,6 +1,6 @@
 {
   "date": "2026-09-02",
-  "generated_at_utc": "2026-09-02T21:51:04.202628+00:00",
+  "generated_at_utc": "2026-09-03T00:50:34.093348+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -305,8 +305,8 @@
       "home": "LAA",
       "away": "NYY",
       "dh_game_number": 0,
-      "prob_home_win": 0.46626922488212585,
-      "seed_std": 0.02469348928237977,
+      "prob_home_win": 0.48150835633277894,
+      "seed_std": 0.02303953174074105,
       "home_sp": "Reid Detmers",
       "away_sp": "Cam Schlittler",
       "sp_status": {
@@ -315,35 +315,27 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-02T22:14:58.257172+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "LAD",
       "away": "STL",
       "dh_game_number": 0,
-      "prob_home_win": 0.6241240203380585,
-      "seed_std": 0.018890209523026898,
+      "prob_home_win": 0.6276881277561188,
+      "seed_std": 0.019431627126152796,
       "home_sp": "Yoshinobu Yamamoto",
-      "away_sp": null,
+      "away_sp": "Brycen Mautz",
       "sp_status": {
         "home": "confirmed",
-        "away": "tbd"
+        "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-02T22:14:58.257172+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
