@@ -165,8 +165,10 @@
       },
       "low_confidence": true,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-02T22:14:58.257172+00:00"
+        "home_won": false,
+        "home_score": 4,
+        "away_score": 5,
+        "graded_at_utc": "2026-09-03T03:42:46.788219+00:00"
       }
     },
     {
@@ -187,8 +189,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-02T22:14:58.257172+00:00"
+        "home_won": false,
+        "home_score": 4,
+        "away_score": 10,
+        "graded_at_utc": "2026-09-03T03:42:46.788219+00:00"
       }
     },
     {
@@ -209,8 +213,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-02T22:14:58.257172+00:00"
+        "home_won": false,
+        "home_score": 0,
+        "away_score": 11,
+        "graded_at_utc": "2026-09-03T03:42:46.788219+00:00"
       }
     },
     {
@@ -253,8 +259,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-02T22:14:58.257172+00:00"
+        "home_won": false,
+        "home_score": 6,
+        "away_score": 9,
+        "graded_at_utc": "2026-09-03T03:42:46.788219+00:00"
       }
     },
     {
@@ -275,8 +283,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-02T22:14:58.257172+00:00"
+        "home_won": false,
+        "home_score": 5,
+        "away_score": 9,
+        "graded_at_utc": "2026-09-03T03:42:46.788219+00:00"
       }
     },
     {
@@ -297,8 +307,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-02T22:14:58.257172+00:00"
+        "home_won": true,
+        "home_score": 2,
+        "away_score": 0,
+        "graded_at_utc": "2026-09-03T03:42:46.788219+00:00"
       }
     },
     {
@@ -317,7 +329,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-03T03:42:46.788219+00:00"
+      }
     },
     {
       "home": "LAD",
@@ -335,7 +351,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-03T03:42:46.788219+00:00"
+      }
     }
   ]
 }
