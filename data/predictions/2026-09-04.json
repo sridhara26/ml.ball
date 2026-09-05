@@ -309,8 +309,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-04T23:42:46.998763+00:00"
+        "home_won": false,
+        "home_score": 6,
+        "away_score": 7,
+        "graded_at_utc": "2026-09-05T05:45:55.967698+00:00"
       }
     },
     {
@@ -331,8 +333,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-04T23:42:46.998763+00:00"
+        "home_won": true,
+        "home_score": 3,
+        "away_score": 2,
+        "graded_at_utc": "2026-09-05T05:45:55.967698+00:00"
       }
     },
     {
@@ -353,8 +357,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-04T23:42:46.998763+00:00"
+        "home_won": true,
+        "home_score": 5,
+        "away_score": 3,
+        "graded_at_utc": "2026-09-05T05:45:55.967698+00:00"
       }
     },
     {
@@ -375,8 +381,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-04T23:42:46.998763+00:00"
+        "home_won": false,
+        "home_score": 6,
+        "away_score": 7,
+        "graded_at_utc": "2026-09-05T05:45:55.967698+00:00"
       }
     }
   ]

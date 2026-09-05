@@ -1,40 +1,40 @@
 {
   "overall": {
-    "accuracy": 0.5631067961165048,
-    "log_loss": 0.6851350607844472,
-    "brier": 0.2459949581613196,
-    "n_graded": 309
+    "accuracy": 0.5623003194888179,
+    "log_loss": 0.6851344604822893,
+    "brier": 0.24599023917487664,
+    "n_graded": 313
   },
   "last_30d": {
-    "accuracy": 0.5631067961165048,
-    "log_loss": 0.6851350607844472,
-    "brier": 0.2459949581613196,
-    "n_graded": 309
+    "accuracy": 0.5623003194888179,
+    "log_loss": 0.6851344604822893,
+    "brier": 0.24599023917487664,
+    "n_graded": 313
   },
   "by_confidence": {
     "[0.50,0.55)": {
-      "accuracy": 0.5491329479768786,
-      "log_loss": 0.6868608777512408,
-      "brier": 0.2468631394028361,
-      "n_graded": 173
+      "accuracy": 0.5459770114942529,
+      "log_loss": 0.687032794747148,
+      "brier": 0.2469490493342032,
+      "n_graded": 174
     },
     "[0.55,0.60)": {
-      "accuracy": 0.56,
-      "log_loss": 0.6907124490826879,
-      "brier": 0.24873853975280535,
-      "n_graded": 100
+      "accuracy": 0.5643564356435643,
+      "log_loss": 0.6892312166652431,
+      "brier": 0.24800487057887483,
+      "n_graded": 101
     },
     "[0.60,1.00]": {
-      "accuracy": 0.6388888888888888,
-      "log_loss": 0.6613488061989095,
-      "brier": 0.23420180499657192,
-      "n_graded": 36
+      "accuracy": 0.631578947368421,
+      "log_loss": 0.6655533410990336,
+      "brier": 0.2362452197136495,
+      "n_graded": 38
     }
   },
   "home_baseline": {
-    "n_graded": 309,
-    "home_pick_rate": 0.6634304207119741,
-    "home_win_rate": 0.5372168284789643
+    "n_graded": 313,
+    "home_pick_rate": 0.6613418530351438,
+    "home_win_rate": 0.536741214057508
   },
   "by_team": {
     "ARI": {
@@ -206,20 +206,20 @@
       }
     },
     "COL": {
-      "n_graded": 19,
+      "n_graded": 20,
       "wins": 7,
-      "accuracy": 0.631578947368421,
+      "accuracy": 0.65,
       "picked": {
         "n": 0,
         "accuracy": null
       },
       "faded": {
-        "n": 19,
-        "accuracy": 0.631578947368421
+        "n": 20,
+        "accuracy": 0.65
       },
       "home": {
-        "n": 9,
-        "accuracy": 0.7777777777777778
+        "n": 10,
+        "accuracy": 0.8
       },
       "away": {
         "n": 10,
@@ -311,20 +311,20 @@
       }
     },
     "LAD": {
-      "n_graded": 20,
-      "wins": 11,
-      "accuracy": 0.6,
+      "n_graded": 21,
+      "wins": 12,
+      "accuracy": 0.6190476190476191,
       "picked": {
-        "n": 17,
-        "accuracy": 0.5882352941176471
+        "n": 18,
+        "accuracy": 0.6111111111111112
       },
       "faded": {
         "n": 3,
         "accuracy": 0.6666666666666666
       },
       "home": {
-        "n": 11,
-        "accuracy": 0.5454545454545454
+        "n": 12,
+        "accuracy": 0.5833333333333334
       },
       "away": {
         "n": 9,
@@ -416,12 +416,12 @@
       }
     },
     "NYY": {
-      "n_graded": 21,
+      "n_graded": 22,
       "wins": 13,
-      "accuracy": 0.6190476190476191,
+      "accuracy": 0.5909090909090909,
       "picked": {
-        "n": 21,
-        "accuracy": 0.6190476190476191
+        "n": 22,
+        "accuracy": 0.5909090909090909
       },
       "faded": {
         "n": 0,
@@ -432,29 +432,29 @@
         "accuracy": 0.5833333333333334
       },
       "away": {
-        "n": 9,
-        "accuracy": 0.6666666666666666
+        "n": 10,
+        "accuracy": 0.6
       }
     },
     "OAK": {
-      "n_graded": 20,
-      "wins": 8,
-      "accuracy": 0.6,
+      "n_graded": 21,
+      "wins": 9,
+      "accuracy": 0.5714285714285714,
       "picked": {
         "n": 0,
         "accuracy": null
       },
       "faded": {
-        "n": 20,
-        "accuracy": 0.6
+        "n": 21,
+        "accuracy": 0.5714285714285714
       },
       "home": {
         "n": 9,
         "accuracy": 0.5555555555555556
       },
       "away": {
-        "n": 11,
-        "accuracy": 0.6363636363636364
+        "n": 12,
+        "accuracy": 0.5833333333333334
       }
     },
     "PHI": {
@@ -500,20 +500,20 @@
       }
     },
     "SDP": {
-      "n_graded": 18,
-      "wins": 9,
-      "accuracy": 0.6666666666666666,
+      "n_graded": 19,
+      "wins": 10,
+      "accuracy": 0.631578947368421,
       "picked": {
         "n": 15,
         "accuracy": 0.6
       },
       "faded": {
-        "n": 3,
-        "accuracy": 1.0
+        "n": 4,
+        "accuracy": 0.75
       },
       "home": {
-        "n": 6,
-        "accuracy": 0.8333333333333334
+        "n": 7,
+        "accuracy": 0.7142857142857143
       },
       "away": {
         "n": 12,
@@ -521,20 +521,20 @@
       }
     },
     "SEA": {
-      "n_graded": 20,
+      "n_graded": 21,
       "wins": 9,
-      "accuracy": 0.55,
+      "accuracy": 0.5238095238095238,
       "picked": {
-        "n": 2,
-        "accuracy": 0.5
+        "n": 3,
+        "accuracy": 0.3333333333333333
       },
       "faded": {
         "n": 18,
         "accuracy": 0.5555555555555556
       },
       "home": {
-        "n": 6,
-        "accuracy": 0.5
+        "n": 7,
+        "accuracy": 0.42857142857142855
       },
       "away": {
         "n": 14,
@@ -563,12 +563,12 @@
       }
     },
     "STL": {
-      "n_graded": 21,
-      "wins": 10,
-      "accuracy": 0.5238095238095238,
+      "n_graded": 22,
+      "wins": 11,
+      "accuracy": 0.5454545454545454,
       "picked": {
-        "n": 12,
-        "accuracy": 0.5
+        "n": 13,
+        "accuracy": 0.5384615384615384
       },
       "faded": {
         "n": 9,
@@ -579,8 +579,8 @@
         "accuracy": 0.42857142857142855
       },
       "away": {
-        "n": 14,
-        "accuracy": 0.5714285714285714
+        "n": 15,
+        "accuracy": 0.6
       }
     },
     "TBR": {
@@ -647,26 +647,26 @@
       }
     },
     "WSN": {
-      "n_graded": 20,
+      "n_graded": 21,
       "wins": 7,
-      "accuracy": 0.6,
+      "accuracy": 0.6190476190476191,
       "picked": {
         "n": 5,
         "accuracy": 0.4
       },
       "faded": {
-        "n": 15,
-        "accuracy": 0.6666666666666666
+        "n": 16,
+        "accuracy": 0.6875
       },
       "home": {
         "n": 11,
         "accuracy": 0.36363636363636365
       },
       "away": {
-        "n": 9,
-        "accuracy": 0.8888888888888888
+        "n": 10,
+        "accuracy": 0.9
       }
     }
   },
-  "updated_at_utc": "2026-09-05T03:12:46.591506+00:00"
+  "updated_at_utc": "2026-09-05T05:45:55.971306+00:00"
 }
