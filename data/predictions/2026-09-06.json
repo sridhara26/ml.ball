@@ -1,6 +1,6 @@
 {
   "date": "2026-09-06",
-  "generated_at_utc": "2026-09-06T19:21:23.845634+00:00",
+  "generated_at_utc": "2026-09-06T21:30:21.541596+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -309,8 +309,8 @@
       "home": "CHW",
       "away": "MIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.5377566695213318,
-      "seed_std": 0.019194336705983406,
+      "prob_home_win": 0.5444677591323852,
+      "seed_std": 0.021924517652521205,
       "home_sp": "Bryan Hudson",
       "away_sp": "Bailey Ober",
       "sp_status": {
@@ -318,21 +318,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-06T19:43:19.764875+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "LAD",
       "away": "WSN",
       "dh_game_number": 0,
-      "prob_home_win": 0.5808193385601044,
-      "seed_std": 0.02786212905862795,
+      "prob_home_win": 0.5808228611946106,
+      "seed_std": 0.027860980537851014,
       "home_sp": "Justin Wrobleski",
       "away_sp": "Andrew Alvarez",
       "sp_status": {
@@ -343,11 +339,7 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-06T19:43:19.764875+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
