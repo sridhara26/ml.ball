@@ -189,8 +189,10 @@
       },
       "low_confidence": true,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-06T17:44:19.761580+00:00"
+        "home_won": false,
+        "home_score": 2,
+        "away_score": 3,
+        "graded_at_utc": "2026-09-06T21:44:19.799536+00:00"
       }
     },
     {
@@ -321,7 +323,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-06T21:44:19.799536+00:00"
+      }
     },
     {
       "home": "LAD",
@@ -339,7 +345,11 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-06T21:44:19.799536+00:00"
+      }
     }
   ]
 }
