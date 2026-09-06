@@ -1,0 +1,277 @@
+{
+  "date": "2026-09-06",
+  "generated_at_utc": "2026-09-06T14:24:17.424653+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "CIN",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.43953216075897217,
+      "seed_std": 0.019414982940622848,
+      "home_sp": "Brady Singer",
+      "away_sp": "Kyle Harrison",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "announced"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "PHI",
+      "away": "ATL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5378710925579071,
+      "seed_std": 0.013954316793353546,
+      "home_sp": "Aaron Nola",
+      "away_sp": "Tyler Mahle",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "BAL",
+      "away": "BOS",
+      "dh_game_number": 0,
+      "prob_home_win": 0.49918044805526735,
+      "seed_std": 0.015596493966421203,
+      "home_sp": "Kyle Bradish",
+      "away_sp": "Payton Tolle",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "PIT",
+      "away": "LAA",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6050342857837677,
+      "seed_std": 0.02387051391629991,
+      "home_sp": "Paul Skenes",
+      "away_sp": "Walbert Urena",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "cross_check_mismatch"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true
+    },
+    {
+      "home": "CLE",
+      "away": "DET",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5783817589282989,
+      "seed_std": 0.01885211329911296,
+      "home_sp": "Gavin Williams",
+      "away_sp": "Jackson Jobe",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "NYM",
+      "away": "SFG",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5878708243370057,
+      "seed_std": 0.024262661470102007,
+      "home_sp": "Christian Scott",
+      "away_sp": "Cesar Perdomo",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "MIA",
+      "away": "CHC",
+      "dh_game_number": 0,
+      "prob_home_win": 0.46060584783554076,
+      "seed_std": 0.019686342191126523,
+      "home_sp": "Tyler Phillips",
+      "away_sp": "Clay Holmes",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "HOU",
+      "away": "ARI",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5228964418172837,
+      "seed_std": 0.022072963603552227,
+      "home_sp": "Peter Lambert",
+      "away_sp": "Eduardo Rodriguez",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "cross_check_mismatch"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true
+    },
+    {
+      "home": "KCR",
+      "away": "TOR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.47827660739421846,
+      "seed_std": 0.025183126171977183,
+      "home_sp": "Randy Dobnak",
+      "away_sp": "Spencer Arrighetti",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "TEX",
+      "away": "TBR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.505617493391037,
+      "seed_std": 0.012301605992571258,
+      "home_sp": "MacKenzie Gore",
+      "away_sp": "Ian Seymour",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "COL",
+      "away": "STL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.42498739361763,
+      "seed_std": 0.025086253877896973,
+      "home_sp": "Tanner Gordon",
+      "away_sp": "Kyle Leahy",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "SEA",
+      "away": "OAK",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6392403364181518,
+      "seed_std": 0.018399245668372546,
+      "home_sp": "Bryan Woo",
+      "away_sp": "Gage Jump",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "SDP",
+      "away": "NYY",
+      "dh_game_number": 0,
+      "prob_home_win": 0.49127263128757476,
+      "seed_std": 0.014599433655567108,
+      "home_sp": "Michael King",
+      "away_sp": "Gerrit Cole",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "CHW",
+      "away": "MIN",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5377614200115204,
+      "seed_std": 0.019197919788590655,
+      "home_sp": "Bryan Hudson",
+      "away_sp": "Bailey Ober",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "LAD",
+      "away": "WSN",
+      "dh_game_number": 0,
+      "prob_home_win": 0.580833512544632,
+      "seed_std": 0.027862459285217963,
+      "home_sp": "Justin Wrobleski",
+      "away_sp": "Andrew Alvarez",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    }
+  ]
+}
