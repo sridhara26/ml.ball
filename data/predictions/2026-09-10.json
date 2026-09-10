@@ -1,0 +1,97 @@
+{
+  "date": "2026-09-10",
+  "generated_at_utc": "2026-09-10T14:02:40.869421+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "ATL",
+      "away": "TBR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5359819114208222,
+      "seed_std": 0.018047959845339596,
+      "home_sp": "Martin Perez",
+      "away_sp": "Nick Martinez",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "PHI",
+      "away": "HOU",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5710108518600464,
+      "seed_std": 0.020056594991004352,
+      "home_sp": "Zack Wheeler",
+      "away_sp": null,
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true
+    },
+    {
+      "home": "SEA",
+      "away": "TEX",
+      "dh_game_number": 0,
+      "prob_home_win": 0.498041570186615,
+      "seed_std": 0.019302627005578585,
+      "home_sp": "Logan Gilbert",
+      "away_sp": "Jacob deGrom",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "NYY",
+      "away": "COL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6740480303764343,
+      "seed_std": 0.014171855238111108,
+      "home_sp": "Max Fried",
+      "away_sp": "Ryan Feltner",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "CHW",
+      "away": "PIT",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5122645795345306,
+      "seed_std": 0.014290521729237733,
+      "home_sp": null,
+      "away_sp": "Jared Jones",
+      "sp_status": {
+        "home": "tbd",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true
+    }
+  ]
+}
