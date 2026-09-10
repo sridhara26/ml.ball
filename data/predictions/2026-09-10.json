@@ -1,6 +1,6 @@
 {
   "date": "2026-09-10",
-  "generated_at_utc": "2026-09-10T14:02:40.869421+00:00",
+  "generated_at_utc": "2026-09-10T23:15:50.226463+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -101,23 +101,19 @@
       "home": "CHW",
       "away": "PIT",
       "dh_game_number": 0,
-      "prob_home_win": 0.5122645795345306,
-      "seed_std": 0.014290521729237733,
-      "home_sp": null,
+      "prob_home_win": 0.5097105175256729,
+      "seed_std": 0.013883908919947447,
+      "home_sp": "Hagen Smith",
       "away_sp": "Jared Jones",
       "sp_status": {
-        "home": "tbd",
+        "home": "confirmed",
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-10T14:12:40.170650+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
