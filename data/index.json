@@ -166,14 +166,14 @@
     {
       "date": "2026-09-09",
       "n_games": 15,
-      "n_graded": 0,
-      "n_correct": 0
+      "n_graded": 15,
+      "n_correct": 6
     },
     {
       "date": "2026-09-10",
       "n_games": 5,
-      "n_graded": 0,
-      "n_correct": 0
+      "n_graded": 2,
+      "n_correct": 1
     }
   ],
   "preview": {
