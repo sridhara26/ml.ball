@@ -1,0 +1,277 @@
+{
+  "date": "2026-09-11",
+  "generated_at_utc": "2026-09-11T14:26:23.865150+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "CHC",
+      "away": "PIT",
+      "dh_game_number": 0,
+      "prob_home_win": 0.571063905954361,
+      "seed_std": 0.016107085573947185,
+      "home_sp": "Shota Imanaga",
+      "away_sp": "Wilber Dotel",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "DET",
+      "away": "COL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6299771964550018,
+      "seed_std": 0.03311165643864812,
+      "home_sp": "Framber Valdez",
+      "away_sp": "Mason Adams",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "WSN",
+      "away": "LAA",
+      "dh_game_number": 0,
+      "prob_home_win": 0.547243309020996,
+      "seed_std": 0.02794347590785391,
+      "home_sp": "Cade Cavalli",
+      "away_sp": "Yusei Kikuchi",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "NYY",
+      "away": "NYM",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6165849566459656,
+      "seed_std": 0.01765870292258504,
+      "home_sp": "Carlos Rodon",
+      "away_sp": "Nolan McLean",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "TOR",
+      "away": "BAL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5518000781536102,
+      "seed_std": 0.030744763253863057,
+      "home_sp": "Max Scherzer",
+      "away_sp": "Chris Bassitt",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "BOS",
+      "away": "KCR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6144667804241181,
+      "seed_std": 0.026551887542383586,
+      "home_sp": "Sonny Gray",
+      "away_sp": "Seth Lugo",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "TBR",
+      "away": "HOU",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5908379554748535,
+      "seed_std": 0.019849087646726545,
+      "home_sp": "Drew Rasmussen",
+      "away_sp": "Miguel Ullola",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "MIA",
+      "away": "LAD",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4611145585775375,
+      "seed_std": 0.02139947560147387,
+      "home_sp": "Ryan Gusto",
+      "away_sp": null,
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true
+    },
+    {
+      "home": "ATL",
+      "away": "PHI",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5394845545291901,
+      "seed_std": 0.021236875824267868,
+      "home_sp": "Chris Sale",
+      "away_sp": "Aaron Nola",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "MIL",
+      "away": "CIN",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6087755739688874,
+      "seed_std": 0.03206083805896699,
+      "home_sp": "Dustin May",
+      "away_sp": "Andrew Abbott",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "MIN",
+      "away": "CLE",
+      "dh_game_number": 0,
+      "prob_home_win": 0.48508435785770415,
+      "seed_std": 0.018615996429993,
+      "home_sp": "Taj Bradley",
+      "away_sp": "Parker Messick",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "STL",
+      "away": "CHW",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5384879589080811,
+      "seed_std": 0.014484568936905182,
+      "home_sp": "Matthew Liberatore",
+      "away_sp": "Anthony Kay",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "OAK",
+      "away": "SEA",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4956653892993927,
+      "seed_std": 0.022425958929006833,
+      "home_sp": "Jeffrey Springs",
+      "away_sp": "George Kirby",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "ARI",
+      "away": "TEX",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5361992180347442,
+      "seed_std": 0.01306582140552075,
+      "home_sp": null,
+      "away_sp": null,
+      "sp_status": {
+        "home": "tbd",
+        "away": "tbd"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true
+    },
+    {
+      "home": "SFG",
+      "away": "SDP",
+      "dh_game_number": 0,
+      "prob_home_win": 0.43911799490451814,
+      "seed_std": 0.027815954711618,
+      "home_sp": "Anthony Molina",
+      "away_sp": "Robbie Ray",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    }
+  ]
+}
