@@ -301,7 +301,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-12T23:43:06.225328+00:00"
+      }
     },
     {
       "home": "ARI",
@@ -319,7 +323,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-12T23:43:06.225328+00:00"
+      }
     },
     {
       "home": "OAK",
@@ -337,7 +345,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-12T23:43:06.225328+00:00"
+      }
     }
   ]
 }
