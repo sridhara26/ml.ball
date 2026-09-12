@@ -1,6 +1,6 @@
 {
   "date": "2026-09-12",
-  "generated_at_utc": "2026-09-12T21:21:09.382982+00:00",
+  "generated_at_utc": "2026-09-12T23:21:09.971320+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -289,8 +289,8 @@
       "home": "STL",
       "away": "CHW",
       "dh_game_number": 0,
-      "prob_home_win": 0.48946594893932344,
-      "seed_std": 0.01942908307173649,
+      "prob_home_win": 0.48947065472602846,
+      "seed_std": 0.0194283069877398,
       "home_sp": "Kyle Leahy",
       "away_sp": "Sean Newcomb",
       "sp_status": {
@@ -301,18 +301,14 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-12T21:44:06.197117+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "ARI",
       "away": "TEX",
       "dh_game_number": 0,
-      "prob_home_win": 0.5810948550701142,
-      "seed_std": 0.016713615058599012,
+      "prob_home_win": 0.5858537495136261,
+      "seed_std": 0.01609303909949462,
       "home_sp": "Brandon Pfaadt",
       "away_sp": "Kumar Rocker",
       "sp_status": {
@@ -321,20 +317,16 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-12T21:44:06.197117+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "OAK",
       "away": "SEA",
       "dh_game_number": 0,
-      "prob_home_win": 0.45250796973705293,
-      "seed_std": 0.034775084790992575,
+      "prob_home_win": 0.45106027126312254,
+      "seed_std": 0.03571018209954647,
       "home_sp": "Gage Jump",
       "away_sp": "Bryan Woo",
       "sp_status": {
@@ -342,14 +334,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-12T21:44:06.197117+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
