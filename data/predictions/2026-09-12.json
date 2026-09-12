@@ -93,8 +93,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-12T18:43:06.214305+00:00"
+        "home_won": true,
+        "home_score": 7,
+        "away_score": 3,
+        "graded_at_utc": "2026-09-12T22:14:06.215529+00:00"
       }
     },
     {
