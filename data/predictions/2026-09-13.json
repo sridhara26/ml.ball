@@ -349,7 +349,11 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false
+      "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-13T22:44:06.214433+00:00"
+      }
     }
   ]
 }
