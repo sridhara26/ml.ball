@@ -1,6 +1,6 @@
 {
   "date": "2026-09-13",
-  "generated_at_utc": "2026-09-13T17:20:10.432556+00:00",
+  "generated_at_utc": "2026-09-13T19:20:09.045063+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -251,8 +251,8 @@
       "home": "BOS",
       "away": "KCR",
       "dh_game_number": 0,
-      "prob_home_win": 0.6252774953842163,
-      "seed_std": 0.02882043404821801,
+      "prob_home_win": 0.6243805050849914,
+      "seed_std": 0.028268057652378182,
       "home_sp": "Payton Tolle",
       "away_sp": "Noah Cameron",
       "sp_status": {
@@ -260,21 +260,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
+        "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-13T17:43:06.242914+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "OAK",
       "away": "SEA",
       "dh_game_number": 0,
-      "prob_home_win": 0.46651175022125246,
-      "seed_std": 0.022888755544462226,
+      "prob_home_win": 0.463630411028862,
+      "seed_std": 0.023099178565295055,
       "home_sp": "Jacob Lopez",
       "away_sp": "Bryce Miller",
       "sp_status": {
@@ -283,20 +279,16 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-13T17:43:06.242914+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "ARI",
       "away": "TEX",
       "dh_game_number": 0,
-      "prob_home_win": 0.5779265642166138,
-      "seed_std": 0.021540924529555323,
+      "prob_home_win": 0.5833038270473481,
+      "seed_std": 0.021755406423865448,
       "home_sp": "Eduardo Rodriguez",
       "away_sp": "Cal Quantrill",
       "sp_status": {
@@ -305,20 +297,16 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-13T17:43:06.242914+00:00"
-      }
+      "low_confidence": true
     },
     {
       "home": "SFG",
       "away": "SDP",
       "dh_game_number": 0,
-      "prob_home_win": 0.46886445581912994,
-      "seed_std": 0.028624419356599578,
+      "prob_home_win": 0.468863371014595,
+      "seed_std": 0.028623991411685697,
       "home_sp": "Logan Webb",
       "away_sp": "Nick Pivetta",
       "sp_status": {
@@ -329,11 +317,7 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-13T17:43:06.242914+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
