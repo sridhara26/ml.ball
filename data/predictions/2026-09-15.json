@@ -1,6 +1,6 @@
 {
   "date": "2026-09-15",
-  "generated_at_utc": "2026-09-15T21:50:40.546419+00:00",
+  "generated_at_utc": "2026-09-15T23:50:40.987151+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -249,8 +249,8 @@
       "home": "HOU",
       "away": "KCR",
       "dh_game_number": 0,
-      "prob_home_win": 0.586915123462677,
-      "seed_std": 0.023193136777616443,
+      "prob_home_win": 0.5869086921215058,
+      "seed_std": 0.02318990367007829,
       "home_sp": "Hunter Brown",
       "away_sp": "Michael Wacha",
       "sp_status": {
@@ -261,18 +261,14 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-15T22:14:31.542786+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "COL",
       "away": "SDP",
       "dh_game_number": 0,
-      "prob_home_win": 0.4138842344284058,
-      "seed_std": 0.019808009107287767,
+      "prob_home_win": 0.4149089276790619,
+      "seed_std": 0.019841190697399813,
       "home_sp": "Kyle Freeland",
       "away_sp": "Walker Buehler",
       "sp_status": {
@@ -281,20 +277,16 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-15T22:14:31.542786+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "LAA",
       "away": "SEA",
       "dh_game_number": 0,
-      "prob_home_win": 0.501432690024376,
-      "seed_std": 0.021751693402855606,
+      "prob_home_win": 0.4987912029027939,
+      "seed_std": 0.02250314006322577,
       "home_sp": "Ryan Johnson",
       "away_sp": "Logan Gilbert",
       "sp_status": {
@@ -302,21 +294,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-15T22:14:31.542786+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "ARI",
       "away": "MIA",
       "dh_game_number": 0,
-      "prob_home_win": 0.5878956317901611,
-      "seed_std": 0.012612313144423319,
+      "prob_home_win": 0.5799381554126739,
+      "seed_std": 0.01576867285359907,
       "home_sp": "Michael Soroka",
       "away_sp": "Janson Junk",
       "sp_status": {
@@ -324,14 +312,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
+        "home": "announced",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-15T22:14:31.542786+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
