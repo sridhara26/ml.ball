@@ -1186,10 +1186,16 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
    vs SP} section, assembled into a single table by lineupStatsTableHtml. */
 function lineupRowSeasonStats(seasonYear, st, rates) {
   if (!st) return null;
+  // "avg" in st discriminates an old, pre-field JSON (fall back to the
+  // row's stored rates) from a new one where the rate is present but null
+  // (a genuine 0-AB debut, which must render as "-", not the stored rate).
+  const hasSeasonRates = typeof st === "object" && "avg" in st;
   return {
     label: `${seasonYear} season`,
     g: st.g, pa: st.pa, ab: st.ab, h: st.h, hr: st.hr, bb: st.bb, so: st.so,
-    avg: rates?.avg, obp: rates?.obp, slg: rates?.slg,
+    avg: hasSeasonRates ? st.avg : rates?.avg,
+    obp: hasSeasonRates ? st.obp : rates?.obp,
+    slg: hasSeasonRates ? st.slg : rates?.slg,
   };
 }
 
@@ -1268,6 +1274,18 @@ function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
     const badge = dim
       ? `<sup class="lg-avg-mark" title="no player-level data matched (call-up or name mismatch); league-average rates shown">*</sup>`
       : "";
+    // The collapsed table must agree with the season line in the expanded
+    // row below it, so prefer season_totals' own rates and fall back to the
+    // row's top-level (stored) rates only when season_totals lacks the rate
+    // fields entirely (an old, pre-field JSON) — "avg" in st discriminates
+    // that from a genuinely-null rate (a 0-AB debut), which must stay "-".
+    const st = r.season_totals;
+    const hasSeasonRates = !!st && typeof st === "object" && "avg" in st;
+    const avgVal = hasSeasonRates ? st.avg : r.avg;
+    const obpVal = hasSeasonRates ? st.obp : r.obp;
+    const slgVal = hasSeasonRates ? st.slg : r.slg;
+    const kVal = hasSeasonRates ? st.k_pct : r.k_pct;
+    const bbVal = hasSeasonRates ? st.bb_pct : r.bb_pct;
     const detailHtml = lineupRowDetailHtml(r, seasonYear, oppSpName);
     const hasDetail = !!detailHtml;
     const rowId = `lineup-row-${escapeHtml(code)}-${idx}`;
@@ -1279,11 +1297,11 @@ function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
       <td>${escapeHtml(r.slot ?? "")}</td>
       <td><span class="player-name" title="${escapeHtml(r.name ?? "")}">${escapeHtml(r.name ?? "")}</span>${badge}${caret}</td>
       <td>${escapeHtml(r.pos ?? "")}</td>
-      <td${cellCls}>${r.avg != null ? fmtRate(r.avg) : "-"}</td>
-      <td${cellCls}>${r.obp != null ? fmtRate(r.obp) : "-"}</td>
-      <td${cellCls}>${r.slg != null ? fmtRate(r.slg) : "-"}</td>
-      <td${cellCls}>${r.k_pct != null ? fmtPctVal(r.k_pct) : "-"}</td>
-      <td${cellCls}>${r.bb_pct != null ? fmtPctVal(r.bb_pct) : "-"}</td>
+      <td${cellCls}>${avgVal != null ? fmtRate(avgVal) : "-"}</td>
+      <td${cellCls}>${obpVal != null ? fmtRate(obpVal) : "-"}</td>
+      <td${cellCls}>${slgVal != null ? fmtRate(slgVal) : "-"}</td>
+      <td${cellCls}>${kVal != null ? fmtPctVal(kVal) : "-"}</td>
+      <td${cellCls}>${bbVal != null ? fmtPctVal(bbVal) : "-"}</td>
     </tr>`;
     const detailRow = hasDetail
       ? `<tr class="row-detail" id="${rowId}-detail" hidden><td colspan="8">${detailHtml}</td></tr>`
