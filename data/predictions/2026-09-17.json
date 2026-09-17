@@ -1,0 +1,169 @@
+{
+  "date": "2026-09-17",
+  "generated_at_utc": "2026-09-17T14:27:16.847249+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "PIT",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4555787980556488,
+      "seed_std": 0.022812654284184167,
+      "home_sp": "Wilber Dotel",
+      "away_sp": "Kyle Harrison",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "CIN",
+      "away": "LAD",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4268392503261566,
+      "seed_std": 0.02168651259266951,
+      "home_sp": "Brady Singer",
+      "away_sp": "Justin Wrobleski",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "TBR",
+      "away": "OAK",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6448811531066895,
+      "seed_std": 0.022986272155639146,
+      "home_sp": "Drew Rasmussen",
+      "away_sp": "Jeffrey Springs",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "COL",
+      "away": "SDP",
+      "dh_game_number": 0,
+      "prob_home_win": 0.42111945152282715,
+      "seed_std": 0.02326205352886913,
+      "home_sp": "Tanner Gordon",
+      "away_sp": "Michael King",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "HOU",
+      "away": "KCR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5507359087467194,
+      "seed_std": 0.02362683088892037,
+      "home_sp": null,
+      "away_sp": "Seth Lugo",
+      "sp_status": {
+        "home": "tbd",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true
+    },
+    {
+      "home": "NYM",
+      "away": "PHI",
+      "dh_game_number": 0,
+      "prob_home_win": 0.45768813192844393,
+      "seed_std": 0.019814308765472473,
+      "home_sp": "Nolan McLean",
+      "away_sp": "Aaron Nola",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "CHW",
+      "away": "DET",
+      "dh_game_number": 0,
+      "prob_home_win": 0.524784404039383,
+      "seed_std": 0.012629652843900947,
+      "home_sp": "Erick Fedde",
+      "away_sp": "Framber Valdez",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "TEX",
+      "away": "BOS",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4623470723628998,
+      "seed_std": 0.020142839171482862,
+      "home_sp": "Tyler Alexander",
+      "away_sp": "Sonny Gray",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    },
+    {
+      "home": "LAA",
+      "away": "MIN",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4899867087602615,
+      "seed_std": 0.028835962850918113,
+      "home_sp": "Walbert Urena",
+      "away_sp": "Taj Bradley",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false
+    }
+  ]
+}
