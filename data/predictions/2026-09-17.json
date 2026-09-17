@@ -1,6 +1,6 @@
 {
   "date": "2026-09-17",
-  "generated_at_utc": "2026-09-17T18:20:59.246582+00:00",
+  "generated_at_utc": "2026-09-17T22:30:59.233773+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -103,30 +103,26 @@
       "home": "HOU",
       "away": "KCR",
       "dh_game_number": 0,
-      "prob_home_win": 0.5507608413696289,
-      "seed_std": 0.02363550964796748,
-      "home_sp": null,
+      "prob_home_win": 0.5452678680419922,
+      "seed_std": 0.024081124689544677,
+      "home_sp": "Miguel Ullola",
       "away_sp": "Seth Lugo",
       "sp_status": {
-        "home": "tbd",
+        "home": "confirmed",
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T18:42:53.941046+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "NYM",
       "away": "PHI",
       "dh_game_number": 0,
-      "prob_home_win": 0.45768813192844393,
-      "seed_std": 0.019814308765472473,
+      "prob_home_win": 0.46526954472064974,
+      "seed_std": 0.019773498745663462,
       "home_sp": "Nolan McLean",
       "away_sp": "Aaron Nola",
       "sp_status": {
@@ -134,21 +130,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T18:42:53.941046+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "CHW",
       "away": "DET",
       "dh_game_number": 0,
-      "prob_home_win": 0.524782782793045,
-      "seed_std": 0.012626226441439596,
+      "prob_home_win": 0.5265720248222351,
+      "seed_std": 0.010464043110773273,
       "home_sp": "Erick Fedde",
       "away_sp": "Framber Valdez",
       "sp_status": {
@@ -156,21 +148,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T18:42:53.941046+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "TEX",
       "away": "BOS",
       "dh_game_number": 0,
-      "prob_home_win": 0.4623513549566269,
-      "seed_std": 0.02014122051351365,
+      "prob_home_win": 0.46749683916568757,
+      "seed_std": 0.020381202134761054,
       "home_sp": "Tyler Alexander",
       "away_sp": "Sonny Gray",
       "sp_status": {
@@ -178,21 +166,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T18:42:53.941046+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "LAA",
       "away": "MIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.48999308347702025,
-      "seed_std": 0.0288310373555295,
+      "prob_home_win": 0.48858724236488343,
+      "seed_std": 0.028375880598663503,
       "home_sp": "Walbert Urena",
       "away_sp": "Taj Bradley",
       "sp_status": {
@@ -200,14 +184,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T18:42:53.941046+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
