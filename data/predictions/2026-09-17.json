@@ -1,14 +1,14 @@
 {
   "date": "2026-09-17",
-  "generated_at_utc": "2026-09-17T14:27:16.847249+00:00",
+  "generated_at_utc": "2026-09-17T15:51:02.322781+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "PIT",
       "away": "MIL",
       "dh_game_number": 0,
-      "prob_home_win": 0.4555787980556488,
-      "seed_std": 0.022812654284184167,
+      "prob_home_win": 0.4797432154417038,
+      "seed_std": 0.018851148489697274,
       "home_sp": "Wilber Dotel",
       "away_sp": "Kyle Harrison",
       "sp_status": {
@@ -16,21 +16,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T14:42:54.329985+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "CIN",
       "away": "LAD",
       "dh_game_number": 0,
-      "prob_home_win": 0.4268392503261566,
-      "seed_std": 0.02168651259266951,
+      "prob_home_win": 0.4312066972255707,
+      "seed_std": 0.02149904379225465,
       "home_sp": "Brady Singer",
       "away_sp": "Justin Wrobleski",
       "sp_status": {
@@ -39,20 +35,16 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T14:42:54.329985+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "TBR",
       "away": "OAK",
       "dh_game_number": 0,
-      "prob_home_win": 0.6448811531066895,
-      "seed_std": 0.022986272155639146,
+      "prob_home_win": 0.6509536802768707,
+      "seed_std": 0.02269845078273688,
       "home_sp": "Drew Rasmussen",
       "away_sp": "Jeffrey Springs",
       "sp_status": {
@@ -60,21 +52,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T14:42:54.329985+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "COL",
       "away": "SDP",
       "dh_game_number": 0,
-      "prob_home_win": 0.42111945152282715,
-      "seed_std": 0.02326205352886913,
+      "prob_home_win": 0.421118837594986,
+      "seed_std": 0.023260100914650396,
       "home_sp": "Tanner Gordon",
       "away_sp": "Michael King",
       "sp_status": {
@@ -85,18 +73,14 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T14:42:54.329985+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "HOU",
       "away": "KCR",
       "dh_game_number": 0,
-      "prob_home_win": 0.5507359087467194,
-      "seed_std": 0.02362683088892037,
+      "prob_home_win": 0.5507607340812684,
+      "seed_std": 0.02363411325254835,
       "home_sp": null,
       "away_sp": "Seth Lugo",
       "sp_status": {
@@ -107,11 +91,7 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T14:42:54.329985+00:00"
-      }
+      "low_confidence": true
     },
     {
       "home": "NYM",
@@ -129,18 +109,14 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T14:42:54.329985+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "CHW",
       "away": "DET",
       "dh_game_number": 0,
-      "prob_home_win": 0.524784404039383,
-      "seed_std": 0.012629652843900947,
+      "prob_home_win": 0.5247825562953949,
+      "seed_std": 0.012626951690515838,
       "home_sp": "Erick Fedde",
       "away_sp": "Framber Valdez",
       "sp_status": {
@@ -151,18 +127,14 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T14:42:54.329985+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "TEX",
       "away": "BOS",
       "dh_game_number": 0,
-      "prob_home_win": 0.4623470723628998,
-      "seed_std": 0.020142839171482862,
+      "prob_home_win": 0.4623513549566269,
+      "seed_std": 0.02014122051351365,
       "home_sp": "Tyler Alexander",
       "away_sp": "Sonny Gray",
       "sp_status": {
@@ -173,18 +145,14 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T14:42:54.329985+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "LAA",
       "away": "MIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.4899867087602615,
-      "seed_std": 0.028835962850918113,
+      "prob_home_win": 0.48999392092227934,
+      "seed_std": 0.028830386803160055,
       "home_sp": "Walbert Urena",
       "away_sp": "Taj Bradley",
       "sp_status": {
@@ -195,11 +163,7 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-17T14:42:54.329985+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
