@@ -15,6 +15,13 @@
   --warn: #9a6b00;
   --radius: 8px;
   --nav-h: 64px;
+  /* the live .nav element overwrites --nav-h on document.documentElement
+     (updateNavHeightVar/initNavHeightSync in app.js), so this fallback only
+     governs first paint before JS runs; --sticky-top is the single pin point
+     every sticky element below the nav uses, with 8px of deliberate
+     breathing room so a sticky bar reads as its own element rather than
+     flush against the nav's bottom rule. */
+  --sticky-top: calc(var(--nav-h, 64px) + 8px);
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   color-scheme: light;
@@ -278,7 +285,9 @@ a.slate-row:hover::after { color: var(--accent); }
 /* minimal column-header row (#slate-head) — shares .slate-row's own grid
    template so its two labels sit exactly over the pct/runs columns below;
    rows 2-4 of that template stay empty here, so the row collapses to a
-   single visible line. */
+   single visible line. Shown only when the slate renders as one flat list:
+   a bucketed slate gives every section header the same labels instead (see
+   .slate-section-label below and setSlateHeadVisible in app.js). */
 .slate-head {
   padding: 0 16px 6px 10px;
   border-bottom-color: var(--rule-strong);
@@ -289,7 +298,11 @@ a.slate-row:hover::after { color: var(--accent); }
    here to make the `el.hidden = true` toggle in setSlateHeadVisible actually
    hide the element. */
 .slate-head[hidden] { display: none; }
-.slate-head .col-label {
+/* the column labels themselves are shared by both carriers — the global
+   #slate-head row and each per-bucket .slate-section-label header — since
+   both sit on .slate-row's grid and only differ in which of them is on
+   screen. Unscoped so the two can't drift apart. */
+.col-label {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.1em;
@@ -298,30 +311,63 @@ a.slate-row:hover::after { color: var(--accent); }
   text-align: right;
   align-self: end;
 }
-.slate-head .col-win { grid-area: apct; }
-.slate-head .col-final { grid-area: aruns; min-width: 80px; }
+.col-win { grid-area: apct; }
+.col-final { grid-area: aruns; min-width: 80px; }
 
 /* fully-ungraded slate: the FINAL column has nothing to show (times moved
    into the mid-line separator), so collapse its reserved width and hide the
    header label — set/removed on #games and #slate-head each render (see
    renderDashboard). Slates with at least one graded game keep the default
-   80px reservation above so mixed slates stay column-aligned. */
-.no-finals .runs-cell, .slate-head.no-finals .col-final { min-width: 0; }
+   80px reservation above so mixed slates stay column-aligned. The width
+   half of this has to reach the per-bucket section headers inside #games
+   too, since each of them reserves the same runs column its own rows do
+   (slateSectionHeadHtml) and would otherwise hold 80px open while the rows
+   under it collapsed to nothing. The label half doesn't: only the finished
+   bucket is ever given a FINAL label, and that bucket is non-empty under
+   exactly the condition (some game has a final score) that keeps .no-finals
+   off in the first place, so a section header's cell is empty here anyway. */
+.no-finals .runs-cell, .no-finals .col-final, .slate-head.no-finals .col-final { min-width: 0; }
 .slate-head.no-finals .col-final { display: none; }
 
-/* slate divider (buildSlateGamesHtml in app.js) — labels the upcoming /
-   finished / in-progress sections, only inserted when at least two of those
-   three buckets are non-empty; styled to match #slate-head's own label
-   rhythm. */
+/* slate section header (slateSectionHeadHtml in app.js) — heads the
+   upcoming / finished / in-progress sections, one above every non-empty
+   bucket, a single-bucket day included. It carries .slate-row too, so
+   the bucket name and its column labels ride the same grid as the rows
+   beneath and land over the columns they name; its horizontal padding
+   therefore has to match .slate-row's own (10px left, 16px right) or the
+   labels drift off their columns. Each header lives inside its own
+   <section class="slate-section"> wrapping that bucket's rows, so position:
+   sticky constrains it to that bucket alone — it sticks under the nav while
+   its own rows scroll past, then gets pushed out by the next section
+   instead of the three piling up on top of each other (which is what
+   happens if a sticky element's containing block is shared with its
+   siblings). */
 .slate-section-label {
+  position: sticky;
+  top: var(--sticky-top);
+  z-index: 3;
+  background: var(--paper);
+  /* --sticky-top is nav height + 8px, and unlike the shadowed floating
+     .game-sticky bar this header is flat and full-width, so that 8px reads as
+     a transparent slot with row text scrolling through it. Paint it with the
+     page background instead of moving the shared pin point. */
+  box-shadow: 0 -8px 0 var(--paper);
+  padding: 14px 16px 4px 10px;
+  border-bottom: 1px solid var(--rule-strong);
+}
+/* the bucket name keeps the mono uppercase letter-spaced treatment this
+   header has always had, but it lives on the name itself rather than on the
+   container: as a container rule it inherited into the .col-label spans and
+   overrode their lighter, smaller look (weight above all). */
+.slate-section-label .section-name {
+  grid-area: away;
   font-family: var(--font-mono);
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-  padding: 14px 10px 4px;
-  border-bottom: 1px solid var(--rule);
+  align-self: end;
 }
 
 .team-cell { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
@@ -530,35 +576,84 @@ a.slate-row:hover::after { color: var(--accent); }
 .preview-banner-copy { color: var(--muted); font-size: 13.5px; }
 .preview-banner-updated { color: var(--faint); font-size: 12px; font-family: var(--font-mono); flex-basis: 100%; }
 
-.game-card {
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  background: var(--paper-2);
-  padding: 18px 18px 16px;
-  margin-bottom: 16px;
+/* preview rows (previewGameCard) reuse .slate-row's grid wholesale — same
+   away/apct/aruns, mid, home/hpct/hruns, flags areas — plus one full-width
+   row under each team's line (adet/hdet) for that starter's own collapsed
+   season expander. One shared expander at the bottom of the row read as if
+   it belonged to both teams; a row per starter keeps each table attached to
+   the pitcher's line directly above it. The FINAL column (aruns/hruns) is
+   simply never given content here (a preview never has a result), so that
+   grid track collapses to zero width on its own, same as any other empty
+   grid track. */
+.preview-row {
+  grid-template-areas:
+    "away apct aruns"
+    "adet adet adet"
+    "mid  mid  ."
+    "home hpct hruns"
+    "hdet hdet hdet"
+    "flags flags flags";
+  /* dashed, not solid: the same preview-vs-prediction cue the old
+     .preview-card border used, now carried by the row rhythm instead of a
+     card edge. */
+  border-bottom-style: dashed;
+  border-bottom-color: var(--rule-strong);
 }
-.preview-card { border-style: dashed; border-color: var(--rule-strong); }
 
-/* stacked, not side-by-side: a preview card is much narrower than
-   game.html's .detail-grid, so the 6-column season table needs the full
-   card width to avoid clipping */
-.preview-sp-grid {
+/* records + venue collapsed into one line (previewGameCard's metaHtml),
+   stacked above the flag chips inside the row's own "flags" grid area
+   rather than claiming a template row of its own. */
+.preview-foot {
+  grid-area: flags;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 12px;
+  gap: 6px;
+  margin-top: 8px;
 }
-.preview-sp + .preview-sp { padding-top: 10px; border-top: 1px solid var(--rule); }
-.preview-sp h4 {
-  font-family: var(--font-sans);
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin: 0 0 6px;
-  color: var(--muted);
+.preview-foot .meta-row { font-size: 13px; }
+.preview-foot .row-flags { margin-top: 0; }
+
+/* the small "ERA" unit label riding a preview row's pct-cell (previewEraHtml)
+   — the column has no dedicated header on this page (see the #slate-head
+   discussion in app.js), so the unit rides every cell instead. */
+.pct-cell .pct-unit {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-left: 3px;
 }
-.preview-sp .sp-name { font-weight: 600; color: var(--ink); margin: 0 0 4px; font-size: 13.5px; }
-.preview-sp .lineup-table { margin-top: 4px; }
+
+/* collapsed season expander, one per starter (previewGameCard) — summary
+   styling mirrors #chip-legend's own disclosure triangle so the two
+   collapsible affordances on the site read as the same control. min-width: 0
+   keeps a wide expanded table from growing the row's auto tracks out from
+   under the two team lines instead of scrolling inside .table-scroll. */
+.preview-det { margin-top: 4px; min-width: 0; }
+.preview-det.away { grid-area: adet; }
+.preview-det.home { grid-area: hdet; }
+.preview-det summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  list-style: none;
+}
+.preview-det summary::-webkit-details-marker { display: none; }
+.preview-det summary::before { content: "▸ " / ""; }
+.preview-det[open] summary::before { content: "▾ " / ""; }
+.preview-det summary:hover { color: var(--muted); }
+.preview-det summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* the 6-column season table spans the whole row width (a ledger row is much
+   narrower than game.html's .detail-grid) and keeps .table-scroll's
+   max-width: 100%, so at 360px it wraps/scrolls within the row rather than
+   widening it. */
+.preview-det-body { padding-top: 8px; }
+.preview-det-body .lineup-table { margin-top: 4px; }
 
 /* ---------- footer ---------- */
 
@@ -643,7 +738,17 @@ footer a { color: var(--muted); }
   .detail-grid { grid-template-columns: 1fr 1fr; }
 }
 
+/* min-width: 0 is LOAD-BEARING — do not delete it as a no-op.
+   These panels are grid items (.detail-grid) and flex items, which default to
+   min-width: auto: that floors an item at its *min-content* width instead of
+   letting it shrink. The SP season table is wider than a phone viewport, so
+   .sp-panel's min-content is ~352px inside a 332px column at 360px wide; the
+   panel then refuses to shrink, pushes the grid past the viewport, and the
+   whole page scrolls sideways (measured document.scrollWidth 366 vs 360).
+   min-width: 0 lets the panel shrink to its column so the wide table scrolls
+   inside its own .table-scroll, which is where the scrolling belongs. */
 .lineup-panel, .sp-panel, .form-col {
+  min-width: 0;
   border: 1px solid var(--rule);
   border-radius: var(--radius);
   background: var(--paper-2);
@@ -686,14 +791,45 @@ footer a { color: var(--muted); }
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   max-width: 100%;
-  container-type: inline-size;
 }
 .table-scroll th, .table-scroll td { white-space: nowrap; }
 
 .sp-season-table th, .sp-season-table td { text-align: center; }
 
+/* The collapsed lineup table (game.html) is the one table-scroll consumer
+   cut down to fit 360px without horizontal scrolling (5 columns instead of
+   8 — see lineupPanelHtml in app.js), so it's the one deliberately NOT
+   wrapped in .table-scroll: overflow-x: auto there would compute
+   overflow-y to auto too (CSS spec), turning the table into its own scroll
+   container and making a sticky thead stick to that box instead of the
+   viewport. Scoped to .lineup-panel so this never touches the SP tables or
+   the preview page's lineup table, which still scroll and don't want a
+   sticky header. z-index stays below .game-sticky's 5 so the identity bar
+   always wins when both are pinned at the top at once; the var(--sticky-top)
+   fallback covers the instant before JS measures the real bar (or on any
+   page without one). Background is .lineup-panel's own --paper-2, fully
+   opaque so rows can't ghost through underneath while scrolling. The bottom
+   rule has to be an inset shadow rather than the th's border: with
+   border-collapse the border is painted by the table, not the cell, so it
+   doesn't travel with the sticky th in Chromium/WebKit and pinned rows
+   would slide flush against the header with no separating line. */
+.lineup-panel .lineup-table thead th {
+  position: sticky;
+  top: var(--detail-sticky-top, var(--sticky-top));
+  z-index: 4;
+  background: var(--paper-2);
+  box-shadow: inset 0 -1px 0 var(--rule);
+}
+
 /* ---------- expandable lineup rows ---------- */
 
+/* has-detail rows are tabindex="0", so tabbing upward would otherwise scroll
+   the focused row under the pinned thead (~29px: 10.5px/1.55 line box, 6px
+   padding either side, 1px rule) and the .game-sticky bar already folded
+   into --detail-sticky-top. */
+.lineup-table tr.lineup-row {
+  scroll-margin-top: calc(var(--detail-sticky-top, var(--sticky-top)) + 44px);
+}
 .lineup-table tr.lineup-row.has-detail { cursor: pointer; }
 .lineup-table tr.lineup-row.has-detail:hover { background: var(--paper-2); }
 .lineup-table tr.lineup-row.has-detail:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
@@ -711,43 +847,181 @@ footer a { color: var(--muted); }
 }
 .expand-caret { display: inline-block; margin-left: 6px; color: var(--faint); font-size: 11px; }
 .lineup-table tr.row-detail > td { background: var(--paper-2); border-left: 2px solid var(--accent); padding: 10px 12px; white-space: normal; }
-.row-detail-wrap {
-  position: sticky;
-  left: 0;
-  max-width: calc(100cqw - 20px);
+
+.row-detail-section + .row-detail-section { margin-top: 12px; }
+.row-detail-heading {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 6px;
 }
-.row-detail-table { margin-top: 0; }
-.row-detail-table th, .row-detail-table td { text-align: center; }
-.row-detail-table th:first-child, .row-detail-table td:first-child { text-align: left; white-space: nowrap; }
+/* auto-fill wraps to whatever the available width allows: ~3-4 pairs/line
+   at a 360px phone, more on desktop, zero horizontal overflow either way. */
+.stat-pair-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 8px 10px;
+}
+.stat-pair { display: flex; flex-direction: column; gap: 2px; }
+.stat-pair-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+.stat-pair-val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 13px; color: var(--ink); }
 
 .lg-avg-mark { color: var(--warn); font-family: var(--font-mono); margin-left: 2px; cursor: help; line-height: 0; }
+
+/* the numeral and its marker are one unit: an inline-block is a line-break
+   opportunity even with no whitespace before it, and these columns are
+   narrow enough that the marker would otherwise drop to a second line and
+   double the row's height (see lineupPanelHtml's .rate-cell comment). */
+.lineup-table td.rate-cell { white-space: nowrap; }
+
+/* the marker's 10px comes out of these two columns' own left padding rather
+   than out of the name column. At 360px the name cell is the one that gives
+   way, and taking ~20px off it dropped the longest names' expand caret onto
+   a second line, doubling those rows' height; paying for the markers here
+   keeps every row one line tall and the table inside its panel. The numerals
+   are left-aligned under a left-aligned header, so the header cells take the
+   same padding or they stop lining up with the column they label. */
+.lineup-table th.rate-cell, .lineup-table td.rate-cell { padding-left: 4px; }
+
+/* quintile triangles on the collapsed lineup table's AVG/OPS cells
+   (lineupRateMarkHtml). The span is a fixed width and renders on every row,
+   empty in the neutral case, so a column never resizes as marks come and go
+   between rows and the numerals above and below stay in one line. 8px of
+   glyph plus a 2px gap is the whole cost per rate column: that table was cut
+   to five columns to clear 360px without a horizontal scrollbar, and it
+   still does. Deliberately smaller than the numeral it sits beside, so a
+   marked row reads as a number with a mark next to it rather than as a
+   coloured cell. Colours are the site's existing result tokens; green-up and
+   red-down mean the same thing here as on a graded pick. */
+.rate-mark {
+  display: inline-block;
+  width: 8px;
+  margin-left: 2px;
+  font-size: 8px;
+  line-height: 1;
+  vertical-align: 1px;
+}
+/* cursor: help only on a marker that actually has a title to show: the
+   neutral span is an empty width reservation and must not advertise a
+   tooltip it doesn't have. */
+.rate-mark.up, .rate-mark.down { cursor: help; }
+.rate-mark.up { color: var(--win); }
+.rate-mark.down { color: var(--loss); }
 .stale-note.lg-avg-legend { margin-top: 4px; }
 
-/* ---------- game-detail page-level sticky identity bar ---------- */
+/* the visible quintile legend under the lineup grid (renderLineupsHtml) —
+   the same quiet .stale-note footnote treatment as the .lg-avg-legend line
+   beside it, so it explains the tables without competing with them, and the
+   glyphs inside it are the table's own .rate-mark spans, so a mark in the
+   legend renders identically to the one in a cell. Each glyph stays on one
+   line with the words it explains while the sentence itself wraps normally:
+   the legend sits under a table that has to clear 360px without a
+   horizontal scrollbar, so it must never establish a width of its own. */
+.stale-note.quintile-legend { margin-top: 4px; }
+.quintile-legend .ql-item { white-space: nowrap; }
+/* the legend's glyphs are the only .rate-mark spans with no title of their
+   own (the words next to them say it instead), so they drop the help cursor
+   rather than advertise a tooltip that isn't there. */
+.quintile-legend .rate-mark { cursor: auto; }
 
-/* #game-sticky must not be a positioned/sized box of its own — display:
-   contents makes .game-sticky's containing block the tall main.game-detail
-   so the sticky bar actually has scroll travel instead of scrolling away
-   with its zero-height wrapper */
-#game-sticky { display: contents; }
+/* ---------- game-detail page-level floating identity bar ---------- */
+
+/* #game-sticky is the bar's frame, and it sits outside the page flow. It
+   used to be display: contents wrapped around a position: sticky bar, which
+   took its scroll travel from the tall main.game-detail around it. The bar
+   now has to be able to disappear while the real win-probability block in
+   #game-header is still on screen (observeGameHeader in app.js), and an
+   in-flow bar can only do that by leaving a hole where it was or by
+   shifting every section below it at the moment it toggles. Out of flow it
+   reserves nothing in either state, so revealing it is pure paint and the
+   page never jumps. left/right: 0 with auto margins, plus .game-detail's
+   own max-width and page padding, reproduce that content column exactly, so
+   the bar still lines up with the sections it labels — the one thing that
+   has to be kept in step by hand is that padding, which is repeated in the
+   small-screen pass below because .game-detail's own is. Pointer events pass
+   through the frame so the gutters beside the bar stay clickable; the bar
+   itself takes them back below, as it had them when it was in flow. */
+#game-sticky {
+  position: fixed;
+  top: var(--sticky-top);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  margin: 0 auto;
+  max-width: 1120px;
+  padding: 0 clamp(20px, 5vw, 56px);
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease, visibility 0s;
+}
+
+/* tucked = #game-header's own win-probability block is still on screen, so
+   this bar would be repeating it a few hundred pixels further down.
+   visibility (not display) is what takes it out of the focus order and out
+   of the accessibility tree; the opacity and the small lift are what the
+   eye sees, and both are compositor-only, so neither costs a layout on a
+   phone mid-scroll. The delay on visibility here lets the fade finish
+   before the bar goes away; the undelayed one on the base rule brings it
+   back the instant it is revealed. Without IntersectionObserver this class
+   is never applied at all (app.js), so the bar just stays visible the way
+   it always was. */
+#game-sticky.tucked {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 160ms ease, transform 160ms ease, visibility 0s linear 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #game-sticky, #game-sticky.tucked { transition: none; }
+}
 
 .game-sticky {
-  position: sticky;
-  top: var(--nav-h, 64px);
-  z-index: 5;
+  position: relative;
+  pointer-events: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin: 0 0 16px;
+  margin: 0;
   padding: 8px 14px;
   border: 1px solid var(--rule-strong);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  backdrop-filter: blur(6px);
+  /* solid, not translucent: a blurred/translucent bar over scrolling page
+     content is what made this read as fused with the nav above it. A solid
+     paper fill plus a shadow reads as one floating element instead. */
+  background: var(--paper);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--ink) 12%, transparent);
   font-family: var(--font-mono);
   font-size: 12.5px;
   font-weight: 600;
+}
+
+/* --sticky-top is nav height + 8px, and those 8px are bare page: with the
+   article scrolling underneath, the band between the nav's bottom rule and
+   the bar reads as a transparent slot with text passing through it.
+   .slate-section-label paints its own copy of this gap with a block shadow,
+   but that label is flat and square, while this bar is bordered, radiused
+   and already carries a drop shadow that a second, opaque shadow layer
+   would have to be ordered against. A pseudo-element is simpler here: it
+   covers the gap (running 1px up under the nav, so a fractional --nav-h
+   can't leave a hairline seam) and keeps going down behind the bar, so the
+   corner notches the border radius leaves open are opaque too, rather than
+   the two places content still shows through. z-index: -1 puts it behind
+   the bar's own background, border and drop shadow, which holds because
+   .game-sticky is position: relative at z-index: auto and so creates no
+   stacking context of its own — which is also why the fade above lives on
+   the #game-sticky frame and not on this element: an opacity or transform
+   here would create one and flip this band in front of the bar. */
+.game-sticky::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -9px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--paper);
 }
 .game-sticky .sticky-sep { color: var(--faint); font-weight: 400; }
 .side { color: var(--ink); }
@@ -841,9 +1115,8 @@ a.form-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: -2
   .nav-arrow { width: 24px; height: 24px; font-size: 13px; }
   .section-head .date { font-size: 12.5px; }
   .slate-list { padding: 6px 16px 40px; }
-  .game-card { padding: 14px 14px 12px; }
   .preview-banner { padding: 10px 12px; gap: 8px; }
-  .preview-sp-grid { gap: 8px; }
+  .preview-det-body { padding-top: 6px; }
   .legend-row { grid-template-columns: 1fr; }
   .legend-rows { gap: 10px; }
 
@@ -853,8 +1126,22 @@ a.form-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: -2
   .table-scroll th, .table-scroll td { padding: 4px 6px; }
   .lineup-table, .sp-season-table { font-size: 12px; }
   .lineup-table tr.lineup-row.has-detail td { padding-top: 11px; padding-bottom: 11px; }
-  .lineup-table .player-name { max-width: 14ch; }
+  /* the base 19ch cap (.lineup-table .player-name above) holds down to
+     360px: the 5-column collapsed table (# | Name | Pos | AVG | OPS) fits
+     that width whatever the names are. It does not hold at 320px. The
+     collapsed table is not wrapped in .table-scroll (so its thead can pin
+     to the viewport), so the page's min-content width is the table's, and
+     the table's is name-length dependent: the longest published names push
+     it past 320px. Below 340px the narrower cap is what holds those pages
+     at zero horizontal overflow; the breakpoint stays under 360 so 360px
+     phones keep the 19ch cap. */
+  @media (max-width: 340px) {
+    .lineup-table .player-name { max-width: 14ch; }
+  }
 
+  /* tracks .game-detail's own narrow-screen padding above, so the floating
+     bar keeps lining up with the content column it labels. */
+  #game-sticky { padding: 0 14px; }
   .game-sticky { font-size: 11.5px; padding: 6px 10px; gap: 6px; }
   .compare-group h3 { font-size: 13.5px; }
   .compare-row { grid-template-columns: 1fr 60px 60px; gap: 6px; font-size: 12.5px; }

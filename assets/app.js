@@ -57,7 +57,9 @@ function contestedTagHtml(g) {
 /* index.html's minimal column-header row (#slate-head) sits above the games
    list and must track #slate-note's own visibility exactly — hidden on
    every empty/no-slate/preview state, shown whenever the slate itself is
-   shown. */
+   shown. One exception, applied last in renderDashboard: a bucketed slate
+   gives every section its own header carrying the same labels
+   (slateSectionHeadHtml), and this row is then redundant above them. */
 function setSlateHeadVisible(visible) {
   const el = document.getElementById("slate-head");
   if (el) el.hidden = !visible;
@@ -346,6 +348,34 @@ function gameRowInnerHtml(g, shortTime = null) {
     ${flagsHtml ? `<div class="row-flags">${flagsHtml}</div>` : ""}`;
 }
 
+/* One bucket's sticky section header: the bucket's own name plus the column
+   labels that actually apply to it. Laid out on .slate-row's grid (see
+   .slate-section-label in site.css), so "Win prob" and "Final" sit exactly
+   over the pct and runs columns of the rows underneath, the same way the
+   global #slate-head row does — a single header above all three sections
+   scrolled away long before the reader reached the finished bucket, and
+   claimed a FINAL column for buckets that have no finals.
+
+   The runs-column label is per-bucket data (buckets, below) rather than a
+   branch here: when live scores start arriving in the payload, giving the
+   in-progress bucket a runsLabel of "Live" is the whole change.
+
+   A bucket with no label for that column still gets the cell, empty: every
+   .slate-row is its own grid, so the columns only line up across rows
+   because each row reserves the same width for the runs column (80px, or
+   nothing at all on a slate with no finals — see .no-finals in site.css).
+   A header that simply left the cell out would let its "Win prob" label
+   slide right into the space the rows below it keep for their own FINAL
+   column. */
+function slateSectionHeadHtml(bucket) {
+  const runsLabel = bucket.runsLabel ? escapeHtml(bucket.runsLabel) : "";
+  return `<div class="slate-row slate-section-label">`
+    + `<span class="section-name">${escapeHtml(bucket.label)}</span>`
+    + `<span class="col-label col-win">Win prob</span>`
+    + `<span class="col-label col-final">${runsLabel}</span>`
+    + `</div>`;
+}
+
 /* Three-section slate ordering (index.html's games list only):
      - finished    = gameHasFinalScore(g.result)
      - upcoming    = not finished AND (epoch unknown OR now < epoch)
@@ -367,14 +397,18 @@ function gameRowInnerHtml(g, shortTime = null) {
    still sort LAST, never first (sorting ascending and then reversing only
    the known-epoch portion would get the null handling backwards), known
    epochs descending, ties (including two Infinity keys) by idx ascending.
-   Small section-label divider rows (labeling every non-empty bucket) are
-   inserted only when at least TWO of the three buckets are non-empty; a
-   single-bucket slate (the common case) renders as a flat, unlabeled list
-   in that bucket's own sort order (ascending for upcoming/finished,
-   descending for inProgress), and when detailsGames is absent entirely (no
-   times known for anything) this falls back to a flat, unsorted,
-   published-order list — the pre-existing behavior. Called fresh on every
-   render (including auto-refresh ticks), so a game crossing buckets
+   A sticky section header (slateSectionHeadHtml — bucket name plus the
+   column labels that apply to that bucket) is inserted above every
+   non-empty bucket, whatever the bucket count: a day whose games have all
+   finished gets the same sticky header, pinned under the nav with the same
+   column labels, that the finished bucket of a mixed slate gets, instead of
+   a bare list whose labels scroll away with the top of the page. The global
+   #slate-head row is what stands down there (renderDashboard). One flat
+   path remains: detailsGames absent entirely means no start time is known
+   for anything and no bucketing is possible, so that case still renders a
+   flat, unsorted, published-order list under the global row — the
+   pre-existing behavior. Called fresh on every render (including
+   auto-refresh ticks), so a game crossing buckets
    naturally changes cardsHtml and trips the _lastGamesHtml repaint guard in
    renderDashboard. Known accepted edge: a postponed past game (no final
    score, but its known first-pitch epoch has passed) sits under "in
@@ -418,17 +452,23 @@ function buildSlateGamesHtml(games, detailsGames, detailsAvailable, date) {
   finished.sort(byEpochThenPublishedOrder);
   inProgress.sort(byEpochDescThenPublishedOrder);
 
+  // runsLabel = that bucket's own label for the runs column (null = the
+  // column is reserved but left unlabeled). "Live" for in progress is the
+  // one-line change that lights the column up once a live score is in the
+  // payload; there is no live score today, so it stays null.
   const buckets = [
-    { label: "upcoming", entries: upcoming },
-    { label: "finished", entries: finished },
-    { label: "in progress", entries: inProgress },
+    { label: "upcoming", runsLabel: null, entries: upcoming },
+    { label: "finished", runsLabel: "Final", entries: finished },
+    { label: "in progress", runsLabel: null, entries: inProgress },
   ];
   const nonEmpty = buckets.filter((b) => b.entries.length > 0);
-  if (nonEmpty.length < 2) {
-    return nonEmpty.flatMap((b) => b.entries).map((e) => rowHtml(e.g)).join("");
-  }
+  // each bucket wrapped in its own <section> so .slate-section-label's
+  // position: sticky is contained by that section alone (see site.css) —
+  // the label sticks while its own rows scroll past, then scrolls away with
+  // the section once the next one takes over, instead of every label
+  // sharing #games as a containing block and piling up on top of each other.
   return nonEmpty
-    .map((b) => `<div class="slate-section-label">${b.label}</div>` + b.entries.map((e) => rowHtml(e.g)).join(""))
+    .map((b) => `<section class="slate-section" aria-label="${b.label}">${slateSectionHeadHtml(b)}${b.entries.map((e) => rowHtml(e.g)).join("")}</section>`)
     .join("");
 }
 
@@ -863,6 +903,13 @@ async function renderDashboard() {
     gamesEl.innerHTML = cardsHtml;
     _lastGamesHtml = cardsHtml;
   }
+  // a bucketed slate repeats the column labels in every section header, so
+  // the one global row above the list is redundant there (and its FINAL
+  // label would be speaking for buckets that have no finals). Read the
+  // sectioned/flat question off what actually rendered rather than
+  // re-deriving the bucket counts here; the flat path keeps the global row
+  // exactly as before.
+  setSlateHeadVisible(!gamesEl.querySelector(".slate-section"));
   if (statusEl) {
     statusEl.textContent = `Predictions for ${fmtShortDate(day.date)}, ${day.games.length} game${day.games.length === 1 ? "" : "s"}`;
   }
@@ -919,7 +966,7 @@ async function refreshRecordStrip(isCurrent) {
 
 /* ---------- next-day preview (index.html?date=<preview_date>) ---------- */
 
-const PREVIEW_COPY = "Preview, not a prediction: no model output yet. Matchups and probable starters can change until win probabilities are published before first pitch.";
+const PREVIEW_COPY = "Preview, not a prediction: no model output yet. Matchups and probable starters can still change before first pitch.";
 
 function previewBannerHtml(generatedAtUtc) {
   const updatedHtml = typeof generatedAtUtc === "string"
@@ -938,17 +985,63 @@ function isValidPreviewGame(g) {
     && typeof g.home === "string" && g.home.length > 0;
 }
 
-function previewSpHtml(sp) {
-  if (!sp || typeof sp !== "object" || !sp.name) {
-    return `<p class="stale-note">TBD</p>`;
-  }
-  const nameHtml = `<p class="sp-name">${escapeHtml(sp.name)}</p>`;
-  const s = sp.season && typeof sp.season === "object" ? sp.season : null;
-  if (!s) return `${nameHtml}<p class="stale-note">no starts yet this season</p>`;
-  const workload = spWorkloadLineHtml(s);
-  return `${nameHtml}${spSeasonTableHtml(s)}${workload ? `<p class="stale-note">${workload}</p>` : ""}`;
+/* That starter's season line, or null when the starter itself or its season
+   object is missing/malformed — shared by previewEraHtml (the row's
+   headline number) and previewSpDetailHtml (the expander's full table) so
+   the two can't disagree about what counts as "no season data yet". */
+function previewSpSeason(sp) {
+  return sp && typeof sp === "object" && sp.season && typeof sp.season === "object" ? sp.season : null;
 }
 
+/* Headline number for a preview row's pct-cell column — the slot the slate
+   uses for win probability, which a preview has no model output for yet.
+   ERA is the one season number a reader already associates with a starting
+   pitcher; fmtOrDash's "-" fallback covers a TBD starter or an empty season
+   line the same way every other cross-repo-boundary stat on this page does. */
+function previewEraHtml(sp, isHome) {
+  const cls = isHome ? "pct-cell home" : "pct-cell";
+  const era = previewSpSeason(sp)?.era;
+  return `<div class="${cls}">${fmtOrDash(era, fmt2)}<span class="pct-unit">ERA</span></div>`;
+}
+
+/* One starter's own season table + workload line, as a collapsed <details>
+   that opens directly beneath that pitcher's line in the preview row
+   (previewGameCard) — `isHome` picks the row grid area (adet/hdet in
+   site.css) that places it there. The summary is bare "season to date" and
+   names nobody: that pitcher's name is already on his own team line
+   directly above the expander, so a name in the summary printed the same
+   name twice in a row. With no starter named yet there is no season to
+   expand, so the summary says that instead, matching the "TBD"/"-" the row
+   itself already shows; the expander still renders rather than being
+   dropped, so the two sides of the row keep the same shape whether or not
+   both starters are known. */
+function previewSpDetailHtml(sp, isHome) {
+  const side = isHome ? "home" : "away";
+  const name = sp && typeof sp === "object" && sp.name ? String(sp.name) : null;
+  const summary = name ? "season to date" : "starter TBD";
+  const season = name ? previewSpSeason(sp) : null;
+  let body;
+  if (!name) {
+    body = `<p class="stale-note">no probable starter named yet</p>`;
+  } else if (!season) {
+    body = `<p class="stale-note">no starts yet this season</p>`;
+  } else {
+    const workload = spWorkloadLineHtml(season);
+    body = `${spSeasonTableHtml(season)}${workload ? `<p class="stale-note">${workload}</p>` : ""}`;
+  }
+  return `<details class="preview-det ${side}">
+      <summary>${summary}</summary>
+      <div class="preview-det-body">${body}</div>
+    </details>`;
+}
+
+/* Renders a preview game in the same ledger row shape the slate itself uses
+   (gameRowInnerHtml) instead of the old, much fatter .game-card, so tomorrow's
+   page reads as a continuation of today's rather than a different site. A
+   plain div, not an <a>: there is no game-detail page for a not-yet-predicted
+   date, and site.css's a.slate-row::after chevron is scoped to an actual
+   <a class="slate-row"> link (see the comment there), so a div suppresses
+   that affordance for free. */
 function previewGameCard(g) {
   const awayCode = escapeHtml(g.away);
   const homeCode = escapeHtml(g.home);
@@ -960,39 +1053,47 @@ function previewGameCard(g) {
   if (Number.isInteger(g.series_game) && Number.isInteger(g.series_of) && g.series_of > 0) {
     flags.push(`<span class="flag">Game ${g.series_game} of ${g.series_of}</span>`);
   }
+  const flagsHtml = flags.join("");
 
-  const metaRows = [];
+  // records + venue collapsed to one compact line, in place of the three
+  // stacked .meta-row divs the old card used. day/night deliberately isn't
+  // repeated here: the row's own mid-line already shows the local start
+  // time, which says which one it is, so the suffix was a second encoding of
+  // a fact the reader already has. game.html's header (renderGameHeaderHtml)
+  // still carries it, where it qualifies a full weekday/date line instead.
+  const metaParts = [];
   const recs = recordsHtml(g.away, g.home, g.away_record, g.home_record);
-  if (recs) metaRows.push(`<div class="meta-row">${recs}</div>`);
-  if (g.venue) metaRows.push(`<div class="meta-row">${escapeHtml(String(g.venue))}</div>`);
-  const dn = g.day_night ? ` · ${escapeHtml(String(g.day_night))}` : "";
-  const timeText = !g.start_time_tbd && typeof g.first_pitch_utc === "string"
-    ? fmtLocalDateTime(g.first_pitch_utc)
-    : "time TBD";
-  metaRows.push(`<div class="meta-row">${timeText}${dn}</div>`);
+  if (recs) metaParts.push(recs);
+  if (g.venue) metaParts.push(escapeHtml(String(g.venue)));
+  const metaHtml = metaParts.length ? `<div class="meta-row">${metaParts.join(" · ")}</div>` : "";
+  const footHtml = (metaHtml || flagsHtml)
+    ? `<div class="preview-foot">${metaHtml}${flagsHtml ? `<div class="row-flags">${flagsHtml}</div>` : ""}</div>`
+    : "";
+
+  // mirrors gameRowInnerHtml's mid-line time slot exactly (short local time,
+  // not the long weekday/date form the old card's own meta-row used) so a
+  // preview row reads like tomorrow's version of the slate row above it.
+  const timeShort = !g.start_time_tbd && typeof g.first_pitch_utc === "string"
+    ? fmtShortGameTime(g.first_pitch_utc)
+    : null;
+  const timeHtml = `<span class="game-time">${timeShort ?? "time TBD"}</span>`;
 
   const awaySpName = escapeHtml(g.away_sp?.name ?? "TBD");
   const homeSpName = escapeHtml(g.home_sp?.name ?? "TBD");
 
+  // each starter's expander follows that starter's own line, in DOM order as
+  // well as visually (the row's grid areas do the placement) — the stats are
+  // one pitcher's, so they belong under the pitcher they describe.
   return `
-  <div class="game-card preview-card">
-    <div class="matchup">
-      <div class="team-cell away">
-        ${codeLineHtml(awayCode, false, ` style="--team-color:${teamColor(g.away)}"`)}
-        <span class="sp" title="${awaySpName}">${awaySpName}</span>
-      </div>
-      <div class="at-sep" aria-hidden="true">@</div>
-      <div class="team-cell home">
-        ${codeLineHtml(homeCode, true, ` style="--team-color:${teamColor(g.home)}"`)}
-        <span class="sp" title="${homeSpName}">${homeSpName}</span>
-      </div>
-    </div>
-    <div class="game-meta">${metaRows.join("")}</div>
-    <div class="flags">${flags.join("")}</div>
-    <div class="preview-sp-grid">
-      <div class="preview-sp"><h4>${teamTagHtml(g.away)} SP</h4>${previewSpHtml(g.away_sp)}</div>
-      <div class="preview-sp"><h4>${teamTagHtml(g.home)} SP</h4>${previewSpHtml(g.home_sp)}</div>
-    </div>
+  <div class="slate-row preview-row">
+    <div class="team-cell away">${codeLineHtml(awayCode, false)}<span class="sp" title="${awaySpName}">${awaySpName}</span></div>
+    ${previewEraHtml(g.away_sp, false)}
+    ${previewSpDetailHtml(g.away_sp, false)}
+    <div class="mid-line"><span class="at-sep" aria-hidden="true">@</span>${timeHtml}</div>
+    <div class="team-cell home">${codeLineHtml(homeCode, true)}<span class="sp" title="${homeSpName}">${homeSpName}</span></div>
+    ${previewEraHtml(g.home_sp, true)}
+    ${previewSpDetailHtml(g.home_sp, true)}
+    ${footHtml}
   </div>`;
 }
 
@@ -1180,10 +1281,13 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
     <div class="game-meta">${metaRows.join("")}</div>`;
 }
 
-/* Returns a stat-table row spec ({ label, g, avg, obp, slg, ab, h, hr, bb,
-   so, pa }, any field left undefined renders as the "-" placeholder), or
-   null when the underlying data is absent — one row per {season, career,
-   vs SP} section, assembled into a single table by lineupStatsTableHtml. */
+/* Returns a stat-section spec ({ label, g, avg, obp, slg, ab, h, hr, bb,
+   so, pa, k_pct, bb_pct }, any field left undefined renders as the "-"
+   placeholder), or null when the underlying data is absent — one section
+   per {season, career, vs SP}, assembled into the row's expanded detail by
+   lineupStatsSectionsHtml. k_pct/bb_pct only ever come from season_totals
+   (career/vs_sp payloads don't carry them), same source + same "avg" in st
+   fallback rule the collapsed row used before Task A moved them here. */
 function lineupRowSeasonStats(seasonYear, st, rates) {
   if (!st) return null;
   // "avg" in st discriminates an old, pre-field JSON (fall back to the
@@ -1196,6 +1300,8 @@ function lineupRowSeasonStats(seasonYear, st, rates) {
     avg: hasSeasonRates ? st.avg : rates?.avg,
     obp: hasSeasonRates ? st.obp : rates?.obp,
     slg: hasSeasonRates ? st.slg : rates?.slg,
+    k_pct: hasSeasonRates ? st.k_pct : rates?.k_pct,
+    bb_pct: hasSeasonRates ? st.bb_pct : rates?.bb_pct,
   };
 }
 
@@ -1217,29 +1323,44 @@ function lineupRowVsSpStats(vsSp, oppSpName) {
   };
 }
 
-/* Shared row -> table renderer for the lineup-row detail expansion (season /
-   career / vs-SP) — same `.lineup-table` styling + `.table-scroll` wrapper
-   as the outer lineup table, so it scrolls horizontally on mobile instead of
-   wrapping. Missing cells (undefined fields) render via fmtOrDash's "-"
-   placeholder. */
-function lineupStatsTableHtml(rows) {
-  const bodyHtml = rows.map((r) => `<tr>
-    <td>${escapeHtml(r.label)}</td>
-    <td>${fmtOrDash(r.g, fmt0)}</td>
-    <td>${fmtOrDash(r.avg, fmtRate)}</td>
-    <td>${fmtOrDash(r.obp, fmtRate)}</td>
-    <td>${fmtOrDash(r.slg, fmtRate)}</td>
-    <td>${fmtOrDash(r.ab, fmt0)}</td>
-    <td>${fmtOrDash(r.h, fmt0)}</td>
-    <td>${fmtOrDash(r.hr, fmt0)}</td>
-    <td>${fmtOrDash(r.bb, fmt0)}</td>
-    <td>${fmtOrDash(r.so, fmt0)}</td>
-    <td>${fmtOrDash(r.pa, fmt0)}</td>
-  </tr>`).join("");
-  return `<div class="table-scroll"><table class="lineup-table row-detail-table">
-    <thead><tr><th></th><th>G</th><th>AVG</th><th>OBP</th><th>SLG</th><th>AB</th><th>H</th><th>HR</th><th>BB</th><th>SO</th><th>PA</th></tr></thead>
-    <tbody>${bodyHtml}</tbody>
-  </table></div>`;
+/* Field spec for the lineup-row expanded detail: same stats the former
+   11-column row-detail table showed (G, AVG, OBP, SLG, AB, H, HR, BB, SO,
+   PA), plus K%/BB% appended now that Task A moved them out of the collapsed
+   row (the only place they used to appear) into here, so no information is
+   lost, only relocated. */
+const LINEUP_DETAIL_FIELDS = [
+  ["G", "g", fmt0],
+  ["AVG", "avg", fmtRate],
+  ["OBP", "obp", fmtRate],
+  ["SLG", "slg", fmtRate],
+  ["AB", "ab", fmt0],
+  ["H", "h", fmt0],
+  ["HR", "hr", fmt0],
+  ["BB", "bb", fmt0],
+  ["SO", "so", fmt0],
+  ["PA", "pa", fmt0],
+  ["K%", "k_pct", fmtPctVal],
+  ["BB%", "bb_pct", fmtPctVal],
+];
+
+/* Shared row -> detail renderer for the lineup-row expansion (season /
+   career / vs-SP). Used to be an 11-column table inside .table-scroll,
+   handing anyone who tapped a player a second horizontal scroller nested
+   inside the first; now a label/value stack per section that wraps to the
+   available width, so the expanded row never scrolls sideways either.
+   Fields absent from a given section (e.g. vs-SP has no G/PA/OBP/SLG/K%/
+   BB%) still render, via fmtOrDash's "-" placeholder, same as the table did. */
+function lineupStatsSectionsHtml(rows) {
+  return rows.map((r) => {
+    const pairsHtml = LINEUP_DETAIL_FIELDS.map(([label, key, fmtFn]) => `<div class="stat-pair">
+        <span class="stat-pair-label">${label}</span>
+        <span class="stat-pair-val">${fmtOrDash(r[key], fmtFn)}</span>
+      </div>`).join("");
+    return `<div class="row-detail-section">
+      <div class="row-detail-heading">${escapeHtml(r.label)}</div>
+      <div class="stat-pair-grid">${pairsHtml}</div>
+    </div>`;
+  }).join("");
 }
 
 function lineupRowDetailHtml(row, seasonYear, oppSpName) {
@@ -1249,7 +1370,7 @@ function lineupRowDetailHtml(row, seasonYear, oppSpName) {
     lineupRowVsSpStats(row.vs_sp, oppSpName),
   ].filter(Boolean);
   if (stats.length === 0) return "";
-  return `<div class="row-detail-wrap">${lineupStatsTableHtml(stats)}</div>`;
+  return lineupStatsSectionsHtml(stats);
 }
 
 /* Whether at least one row in `rows` actually has a detail panel — mirrors
@@ -1257,6 +1378,67 @@ function lineupRowDetailHtml(row, seasonYear, oppSpName) {
    "Tap a player for..." hint above both lineup tables. */
 function anyLineupRowHasDetail(rows, seasonYear, oppSpName) {
   return (rows || []).some((r) => !!lineupRowDetailHtml(r, seasonYear, oppSpName));
+}
+
+/* Quintile cut points for the collapsed lineup table's AVG/OPS markers.
+   These are quintiles of starting-lineup regulars, not of all MLB batters:
+   measured over this repo's own data/details/*.json, taking every
+   starting-lineup batter row with season_totals.pa >= 100 and source !=
+   "league_avg", n = 7624 across the 35 published days of the 2026 season
+   (2026-08-12 to 2026-09-16). They describe one season's hitting
+   environment and have to be recomputed each season.
+
+   The league-average line the pipeline already carries (AVG .245, OPS .718)
+   is the obvious baseline and the wrong one: it sits at only the 46th
+   percentile of these starters, because the league figure includes bench
+   bats and low-PA call-ups who rarely start. Colouring against it would
+   mark close to half of every real lineup as below average, which tells a
+   reader nothing about the nine names in front of him.
+
+   min_pa is the same filter the cuts were derived under, kept next to them
+   so the two can't drift apart: a 30-PA call-up's rate is noise, and these
+   cut points do not describe it. */
+const LINEUP_RATE_QUINTILES = {
+  min_pa: 100,
+  avg: { p20: 0.224, p80: 0.273 },
+  ops: { p20: 0.662, p80: 0.804 },
+};
+
+/* The quintile triangle for one collapsed-table rate cell, or the empty
+   fixed-width marker that every other row gets. Only the two tails are
+   marked; the middle three quintiles render nothing at all, because this is
+   a scanning aid in a dense table and not a heat map, so quiet is the
+   default state and a mark has to mean something.
+
+   Three suppressions, all load-bearing. A league_avg row carries placeholder
+   rates rather than a player's own (it already renders dimmed with a "*"),
+   so a triangle there would be a claim about a performance nobody had.
+   Anything under min_pa is outside the population the cuts came from. A
+   null or non-finite rate already reads "-" and has no band. season_totals
+   is absent or partial on older detail files, so a missing object, a missing
+   pa and a non-numeric pa all have to fall through to the blank marker
+   rather than throw.
+
+   role="img" + aria-label rather than aria-hidden: the triangle carries
+   something the numeral alone does not, so a screen reader has to hear the
+   band in words next to the number ("top 20%") instead of the glyph's own
+   name or nothing at all. The label is the visible legend's wording
+   verbatim, so the two are one phrase to a reader who hears both. It stays
+   short because it repeats on every marked cell; the population it is 20%
+   of is named once for both tables by that legend under the lineup grid
+   (renderLineupsHtml), and on hover by title here. */
+function lineupRateMarkHtml(value, cuts, row) {
+  const blank = `<span class="rate-mark"></span>`;
+  if (!row || row.source === "league_avg" || !isFiniteNum(value)) return blank;
+  const pa = row.season_totals ? row.season_totals.pa : null;
+  if (!isFiniteNum(pa) || pa < LINEUP_RATE_QUINTILES.min_pa) return blank;
+  if (value >= cuts.p80) {
+    return `<span class="rate-mark up" role="img" aria-label="top 20%" title="top 20% of MLB starting lineup batters, 2026">▲</span>`;
+  }
+  if (value < cuts.p20) {
+    return `<span class="rate-mark down" role="img" aria-label="bottom 20%" title="bottom 20% of MLB starting lineup batters, 2026">▼</span>`;
+  }
+  return blank;
 }
 
 function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
@@ -1270,7 +1452,11 @@ function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
     ? `<p class="stale-note">projected from last played game</p>` : "";
   const rowsHtml = rows.map((r, idx) => {
     const dim = r.source === "league_avg";
-    const cellCls = dim ? ' class="lg-avg"' : "";
+    // .rate-cell holds the numeral and its quintile marker on one line: an
+    // inline-block is a line-break opportunity even with no whitespace in
+    // front of it, and these two columns are narrow enough that the marker
+    // would otherwise drop under the number and double the row's height.
+    const cellCls = dim ? ' class="lg-avg rate-cell"' : ' class="rate-cell"';
     const badge = dim
       ? `<sup class="lg-avg-mark" title="no player-level data matched (call-up or name mismatch); league-average rates shown">*</sup>`
       : "";
@@ -1284,8 +1470,12 @@ function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
     const avgVal = hasSeasonRates ? st.avg : r.avg;
     const obpVal = hasSeasonRates ? st.obp : r.obp;
     const slgVal = hasSeasonRates ? st.slg : r.slg;
-    const kVal = hasSeasonRates ? st.k_pct : r.k_pct;
-    const bbVal = hasSeasonRates ? st.bb_pct : r.bb_pct;
+    // OPS replaces the separate OBP/SLG columns the collapsed table no
+    // longer has room for at 360px; only render it when both components
+    // are real numbers, since a missing OBP must read "-", not fold into
+    // OPS as a silent zero (K%/BB% moved to the expanded detail instead of
+    // being dropped, see lineupRowSeasonStats/LINEUP_DETAIL_FIELDS).
+    const opsVal = isFiniteNum(obpVal) && isFiniteNum(slgVal) ? obpVal + slgVal : null;
     const detailHtml = lineupRowDetailHtml(r, seasonYear, oppSpName);
     const hasDetail = !!detailHtml;
     const rowId = `lineup-row-${escapeHtml(code)}-${idx}`;
@@ -1297,26 +1487,21 @@ function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
       <td>${escapeHtml(r.slot ?? "")}</td>
       <td><span class="player-name" title="${escapeHtml(r.name ?? "")}">${escapeHtml(r.name ?? "")}</span>${badge}${caret}</td>
       <td>${escapeHtml(r.pos ?? "")}</td>
-      <td${cellCls}>${avgVal != null ? fmtRate(avgVal) : "-"}</td>
-      <td${cellCls}>${obpVal != null ? fmtRate(obpVal) : "-"}</td>
-      <td${cellCls}>${slgVal != null ? fmtRate(slgVal) : "-"}</td>
-      <td${cellCls}>${kVal != null ? fmtPctVal(kVal) : "-"}</td>
-      <td${cellCls}>${bbVal != null ? fmtPctVal(bbVal) : "-"}</td>
+      <td${cellCls}>${avgVal != null ? fmtRate(avgVal) : "-"}${lineupRateMarkHtml(avgVal, LINEUP_RATE_QUINTILES.avg, r)}</td>
+      <td${cellCls}>${opsVal != null ? fmtRate(opsVal) : "-"}${lineupRateMarkHtml(opsVal, LINEUP_RATE_QUINTILES.ops, r)}</td>
     </tr>`;
     const detailRow = hasDetail
-      ? `<tr class="row-detail" id="${rowId}-detail" hidden><td colspan="8">${detailHtml}</td></tr>`
+      ? `<tr class="row-detail" id="${rowId}-detail" hidden><td colspan="5">${detailHtml}</td></tr>`
       : "";
     return mainRow + detailRow;
   }).join("");
   return `<div class="lineup-panel">
     <h3>${teamTagHtml(code)}</h3>
     ${caption}
-    <div class="table-scroll">
     <table class="lineup-table">
-      <thead><tr><th>#</th><th>Name</th><th>Pos</th><th>AVG</th><th>OBP</th><th>SLG</th><th>K%</th><th>BB%</th></tr></thead>
+      <thead><tr><th>#</th><th>Name</th><th>Pos</th><th class="rate-cell">AVG</th><th class="rate-cell">OPS</th></tr></thead>
       <tbody>${rowsHtml}</tbody>
     </table>
-    </div>
   </div>`;
 }
 
@@ -1337,12 +1522,31 @@ function renderLineupsHtml(lineups, lineupStatus, awayCode, homeCode, seasonYear
   const hint = hasAnyDetail
     ? `<p class="stale-note lineup-hint">Tap a player for season, career, and vs-starter detail.</p>`
     : "";
+  const awayPanel = lineupPanelHtml(awayCode, lineups.away, status.away, seasonYear, h.home_sp?.name);
+  const homePanel = lineupPanelHtml(homeCode, lineups.home, status.home, seasonYear, h.away_sp?.name);
+  // Names the population the quintile triangles are measured against, once
+  // for both tables: the per-cell aria-label says only "top 20%", and
+  // the hover title that spells the rest out is unreachable on a phone. It
+  // carries the table's own .rate-mark glyphs so a reader can match the
+  // legend against the marks in the cells, which is also why one visible
+  // line replaces the previous .sr-only one rather than sitting next to it.
+  // The glyphs here are aria-hidden: the words beside them already carry
+  // the meaning, and gating on a mark actually being present keeps the
+  // legend from describing triangles that aren't on the page.
+  const hasRateMark = /class="rate-mark (?:up|down)"/.test(awayPanel + homePanel);
+  const quintileLegend = hasRateMark
+    ? `<p class="stale-note quintile-legend">In AVG and OPS: `
+      + `<span class="ql-item"><span class="rate-mark up" aria-hidden="true">▲</span> top 20%</span>, `
+      + `<span class="ql-item"><span class="rate-mark down" aria-hidden="true">▼</span> bottom 20%</span>`
+      + ` of MLB starting lineup batters, 2026.</p>`
+    : "";
   return `<h2>Lineups</h2>
     ${hint}
     <div class="detail-grid">
-      ${lineupPanelHtml(awayCode, lineups.away, status.away, seasonYear, h.home_sp?.name)}
-      ${lineupPanelHtml(homeCode, lineups.home, status.home, seasonYear, h.away_sp?.name)}
+      ${awayPanel}
+      ${homePanel}
     </div>
+    ${quintileLegend}
     ${footer}
     ${legend}`;
 }
@@ -1856,6 +2060,7 @@ async function renderGameDetail() {
         emptyEl.innerHTML = renderDetailEmptyHtml();
       }
       if (stickyEl) stickyEl.innerHTML = "";
+      teardownGameSticky();
       if (lineupsEl) lineupsEl.innerHTML = "";
       if (statsEl) statsEl.innerHTML = "";
       if (spEl) spEl.innerHTML = "";
@@ -1863,6 +2068,11 @@ async function renderGameDetail() {
       return;
     }
     if (emptyEl) emptyEl.style.display = "none";
+
+    // past the !gameDetail branch, which clears the bar again: observing
+    // above it would leave the ResizeObserver bound to a node that is about
+    // to be detached and --detail-sticky-top holding its stale height.
+    observeGameSticky();
 
     if (lineupsEl) {
       lineupsEl.innerHTML = renderLineupsHtml(
@@ -1882,6 +2092,7 @@ async function renderGameDetail() {
       emptyEl.innerHTML = renderDetailEmptyHtml();
     }
     if (stickyEl) stickyEl.innerHTML = "";
+    teardownGameSticky();
     if (lineupsEl) lineupsEl.innerHTML = "";
     if (statsEl) statsEl.innerHTML = "";
     if (spEl) spEl.innerHTML = "";
@@ -1915,6 +2126,12 @@ async function refreshGameResult() {
   if (_detailCtx.hadDetail) {
     const stickyEl = document.getElementById("game-sticky");
     if (stickyEl) stickyEl.innerHTML = gameStickyHtml(_detailCtx.away, _detailCtx.home, g);
+    observeGameSticky();
+  } else {
+    // no bar on this page, and the header re-render above just detached the
+    // .matchup node observeGameHeader watches — take both observers down
+    // rather than leave them bound to it.
+    teardownGameSticky();
   }
   if (isGraded(g)) _detailEligible = false;
 }
@@ -1924,6 +2141,135 @@ function updateNavHeightVar() {
   if (nav) {
     document.documentElement.style.setProperty("--nav-h", `${nav.getBoundingClientRect().height}px`);
   }
+}
+
+let _gameStickyObserver = null;
+let _gameHeaderObserver = null;
+let _gameStickyTucked = false;
+
+/* Publishes --detail-sticky-top = --sticky-top + the live .game-sticky
+   bar's own height, so the lineup table's sticky thead (site.css) pins
+   itself just below the identity bar instead of underneath it. While the
+   bar is tucked away it takes up nothing on screen, so the offset collapses
+   back to plain --sticky-top and the thead pins where the bar would have
+   been rather than hanging with an empty band above it. No-op (and the CSS
+   fallback var(--detail-sticky-top, var(--sticky-top)) at the point of use
+   takes over) on any page without a .game-sticky, or before this has run
+   once. */
+function updateDetailStickyTopVar() {
+  const gameSticky = document.querySelector(".game-sticky");
+  if (!gameSticky) return;
+  // a tucked bar keeps its layout box (it is hidden with visibility and
+  // opacity, never display), so its measured height is still its full
+  // height — the state flag, not the measurement, decides this.
+  const barHeight = _gameStickyTucked ? 0 : gameSticky.getBoundingClientRect().height;
+  document.documentElement.style.setProperty(
+    "--detail-sticky-top",
+    barHeight > 0 ? `calc(var(--sticky-top) + ${barHeight}px)` : "var(--sticky-top)"
+  );
+}
+
+/* The tucked class goes on #game-sticky, the wrapper game.html ships, and
+   never on the .game-sticky bar inside it: the bar is replaced wholesale on
+   every renderGameDetail/refreshGameResult, so a class set on it would be
+   silently dropped by the next refresh, exactly when the reader is mid-page
+   and the bar is the only identity cue left. */
+function setGameStickyTucked(tucked) {
+  const wrap = document.getElementById("game-sticky");
+  if (!wrap) return;
+  _gameStickyTucked = tucked;
+  wrap.classList.toggle("tucked", tucked);
+  updateDetailStickyTopVar();
+}
+
+/* The identity bar repeats what the big win-probability block at the top of
+   #game-header already says, so it stays tucked away while any part of that
+   block is on screen and only appears once it has scrolled off. The
+   observed target is that block itself (#game-header's .matchup), which is
+   re-rendered along with the rest of the header, so this re-resolves it and
+   disconnects the previous observation every time rather than leaving one
+   bound to a detached node or stacking a second one on the new node. The
+   synchronous rect read seeds the class from the target's real position: a
+   refresh that lands mid-scroll would otherwise show the bar for the frame
+   before the observer's own first callback arrives. With no
+   IntersectionObserver nothing is ever tucked and the bar behaves exactly
+   as it did before (always visible), rather than being hidden with no way
+   back. */
+function observeGameHeader() {
+  _gameHeaderObserver?.disconnect();
+  _gameHeaderObserver = null;
+  const target = document.querySelector("#game-header .matchup");
+  if (!target || typeof IntersectionObserver === "undefined") {
+    setGameStickyTucked(false);
+    return;
+  }
+  const rect = target.getBoundingClientRect();
+  setGameStickyTucked(rect.bottom > 0 && rect.top < (window.innerHeight || 0));
+  _gameHeaderObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) setGameStickyTucked(entry.isIntersecting);
+  });
+  _gameHeaderObserver.observe(target);
+}
+
+/* .game-sticky's content (and therefore height) is replaced wholesale via
+   innerHTML on every renderGameDetail/refreshGameResult call, so the old
+   node a previous ResizeObserver call was watching is gone — re-resolve and
+   re-observe the current node each time this runs, same guarded pattern as
+   the .nav ResizeObserver above. Called once from initNavHeightSync (a
+   no-op there on first load, since .game-sticky doesn't exist until
+   renderGameDetail populates it) and again right after every place that
+   sets stickyEl.innerHTML. observeGameHeader rides along because the header
+   those same two callers re-render is the thing that decides whether this
+   bar should be on screen at all, so the two observers are re-bound
+   together and can't fall out of step with each other. */
+function observeGameSticky() {
+  observeGameHeader();
+  // drop the previous observation above the no-bar bail-out, not below it: on
+  // the paths that clear the bar the old .game-sticky node is already
+  // detached, and returning early used to leave a ResizeObserver holding it.
+  _gameStickyObserver?.disconnect();
+  _gameStickyObserver = null;
+  const gameSticky = document.querySelector(".game-sticky");
+  if (!gameSticky) return;
+  updateDetailStickyTopVar();
+  if (typeof ResizeObserver === "undefined") return;
+  _gameStickyObserver = new ResizeObserver(updateDetailStickyTopVar);
+  _gameStickyObserver.observe(gameSticky);
+}
+
+/* The counterpart to observeGameSticky, for the paths that clear #game-sticky
+   instead of re-rendering it (no detail payload, fetch failure, and a refresh
+   on a page that never had a bar). They leave nothing to observe, so both
+   observers have to come down with the bar rather than keep firing against
+   detached nodes and toggling .tucked on an empty wrapper. The explicit
+   --detail-sticky-top reset is here because updateDetailStickyTopVar()
+   early-returns once .game-sticky is gone, which would otherwise strand the
+   offset at the last real bar's height. */
+function teardownGameSticky() {
+  _gameHeaderObserver?.disconnect();
+  _gameHeaderObserver = null;
+  _gameStickyObserver?.disconnect();
+  _gameStickyObserver = null;
+  setGameStickyTucked(false);
+  document.documentElement.style.setProperty("--detail-sticky-top", "var(--sticky-top)");
+}
+
+/* Keeps --nav-h (and everything pinned off --sticky-top: .game-sticky,
+   .slate-section-label) tracking the real .nav element instead of the
+   64px CSS fallback. .nav grows to a second row on narrow viewports
+   (flex-wrap in the small-screen pass) and shrinks/grows again whenever the
+   brand-sub media query or the tabs' own wrapping toggles — a window
+   resize event alone can miss reflows the nav's own children cause without
+   the viewport itself changing size, hence the ResizeObserver in addition
+   to the resize listener. Runs on every page since app.js is shared. */
+function initNavHeightSync() {
+  updateNavHeightVar();
+  window.addEventListener?.("resize", updateNavHeightVar);
+  const nav = document.querySelector(".nav");
+  if (nav && typeof ResizeObserver !== "undefined") {
+    new ResizeObserver(updateNavHeightVar).observe(nav);
+  }
+  observeGameSticky();
 }
 
 /* ---------- accuracy history panel ---------- */
@@ -2552,8 +2898,7 @@ const REFRESH_INTERVAL_MS = 12 * 60 * 1000;
 const REFRESH_AFTER_HIDDEN_MS = 5 * 60 * 1000;
 
 document.addEventListener("DOMContentLoaded", () => {
-  updateNavHeightVar();
-  window.addEventListener?.("resize", updateNavHeightVar);
+  initNavHeightSync();
   const legendJumpLink = document.querySelector("#legend-jump a");
   const legendEl = document.getElementById("chip-legend");
   if (legendJumpLink && legendEl) {
