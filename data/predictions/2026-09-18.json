@@ -1,6 +1,6 @@
 {
   "date": "2026-09-18",
-  "generated_at_utc": "2026-09-18T23:31:01.216150+00:00",
+  "generated_at_utc": "2026-09-19T01:31:01.936461+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -271,8 +271,8 @@
       "home": "SDP",
       "away": "MIA",
       "dh_game_number": 0,
-      "prob_home_win": 0.5866072773933411,
-      "seed_std": 0.01788321716622641,
+      "prob_home_win": 0.5866083681583405,
+      "seed_std": 0.01788381494030608,
       "home_sp": "Nick Pivetta",
       "away_sp": "Tyler Phillips",
       "sp_status": {
@@ -283,11 +283,7 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-18T23:42:53.962013+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "ARI",
@@ -315,8 +311,8 @@
       "home": "LAD",
       "away": "SFG",
       "dh_game_number": 0,
-      "prob_home_win": 0.6576965034008027,
-      "seed_std": 0.01896849535346538,
+      "prob_home_win": 0.6588107585906983,
+      "seed_std": 0.019027755121387716,
       "home_sp": "Tyler Glasnow",
       "away_sp": "Cesar Perdomo",
       "sp_status": {
@@ -327,11 +323,7 @@
         "home": "announced",
         "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-18T23:42:53.962013+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
