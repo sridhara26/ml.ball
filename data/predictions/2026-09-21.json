@@ -1,14 +1,14 @@
 {
   "date": "2026-09-21",
-  "generated_at_utc": "2026-09-21T14:24:41.695699+00:00",
+  "generated_at_utc": "2026-09-21T21:51:15.144095+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "BAL",
       "away": "TOR",
       "dh_game_number": 0,
-      "prob_home_win": 0.5372458130121232,
-      "seed_std": 0.0292107056231702,
+      "prob_home_win": 0.5460543215274811,
+      "seed_std": 0.03159302663118586,
       "home_sp": "Shane Baz",
       "away_sp": "Trey Yesavage",
       "sp_status": {
@@ -16,21 +16,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-21T14:44:12.620139+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "DET",
       "away": "WSN",
       "dh_game_number": 0,
-      "prob_home_win": 0.5583625078201294,
-      "seed_std": 0.019303964598501186,
+      "prob_home_win": 0.5583699166774749,
+      "seed_std": 0.019306720838879042,
       "home_sp": "River Ryan",
       "away_sp": "DJ Herz",
       "sp_status": {
@@ -38,21 +34,17 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-21T14:44:12.620139+00:00"
-      }
+      "low_confidence": false
     },
     {
       "home": "SFG",
       "away": "MIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.4752400279045105,
-      "seed_std": 0.03146647489878027,
+      "prob_home_win": 0.47524301409721376,
+      "seed_std": 0.031467250486712096,
       "home_sp": "Blade Tidwell",
       "away_sp": "Zebby Matthews",
       "sp_status": {
@@ -63,11 +55,7 @@
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-21T14:44:12.620139+00:00"
-      }
+      "low_confidence": false
     }
   ]
 }
