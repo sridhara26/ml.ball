@@ -210,6 +210,35 @@ function resultFlagHtml(result, pHome) {
   return `<span class="flag">final (tie)${hasScores ? ` · ${result.away_score}–${result.home_score}` : ""}</span>`;
 }
 
+/* Postseason series round names, keyed by game_type, for a game whose own
+   series_description is missing (older published files predate that field
+   too, so the fallback can't just be blank). */
+const POSTSEASON_ROUND_LABELS = {
+  F: "Wild Card",
+  D: "Division Series",
+  L: "League Championship",
+  W: "World Series",
+};
+
+/* "" for a regular-season game — game_type absent (older published files
+   predate the field entirely) or "R" — otherwise one <span class="flag">
+   naming the round (series_description when the pipeline sent one, else the
+   game_type fallback above) plus a "Game X of Y" suffix when both
+   series_game/series_of are present. Shared by the ledger row
+   (gameRowInnerHtml), the next-day preview card (previewGameCard), and the
+   game-detail header (renderGameHeaderHtml) so a series label reads the same
+   everywhere. */
+function postseasonFlagHtml(g) {
+  if (typeof g?.game_type !== "string" || g.game_type === "R") return "";
+  const label = typeof g.series_description === "string" && g.series_description
+    ? g.series_description
+    : (POSTSEASON_ROUND_LABELS[g.game_type] ?? "Postseason");
+  const gameOf = Number.isInteger(g.series_game) && Number.isInteger(g.series_of) && g.series_of > 0
+    ? ` · Game ${g.series_game} of ${g.series_of}`
+    : "";
+  return `<span class="flag">${escapeHtml(label + gameOf)}</span>`;
+}
+
 /* ---------- predictions dashboard (index.html) ---------- */
 
 /* First flags-row chip of a ledger row: the ✓/✗ correctness verdict,
@@ -318,6 +347,7 @@ function gameRowInnerHtml(g, shortTime = null) {
   rowFlags.push(...spFlags(g));
   if (g.low_confidence) rowFlags.push('<span class="flag warn">low confidence</span>');
   if (g.dh_game_number > 0) rowFlags.push(`<span class="flag">DH game ${g.dh_game_number}</span>`);
+  rowFlags.push(postseasonFlagHtml(g));
   rowFlags.push(contestedTagHtml(g));
   const flagsHtml = rowFlags.filter(Boolean).join("");
 
@@ -1050,7 +1080,13 @@ function previewGameCard(g) {
   const flags = [];
   flags.push(...spFlags(g));
   if (dh > 0) flags.push(`<span class="flag">DH game ${dh}</span>`);
-  if (Number.isInteger(g.series_game) && Number.isInteger(g.series_of) && g.series_of > 0) {
+  // Postseason games get the round name (+ Game X of Y) from postseasonFlagHtml
+  // instead of the bare "Game X of Y" below, so a postseason row never shows
+  // both — the round name already carries the series-game count itself.
+  const postseasonFlag = postseasonFlagHtml(g);
+  if (postseasonFlag) {
+    flags.push(postseasonFlag);
+  } else if (Number.isInteger(g.series_game) && Number.isInteger(g.series_of) && g.series_of > 0) {
     flags.push(`<span class="flag">Game ${g.series_game} of ${g.series_of}</span>`);
   }
   const flagsHtml = flags.join("");
@@ -1248,6 +1284,8 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
     flags.push(...lineupFlags(matchGame));
     flags.push(...spFlags(matchGame));
     if (matchGame.low_confidence) flags.push('<span class="flag warn">low confidence</span>');
+    const psf = postseasonFlagHtml(matchGame);
+    if (psf) flags.push(psf);
   } else {
     matchupHtml = `
       <div class="matchup">
