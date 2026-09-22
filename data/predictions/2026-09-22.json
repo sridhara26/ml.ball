@@ -1,6 +1,6 @@
 {
   "date": "2026-09-22",
-  "generated_at_utc": "2026-09-22T21:51:01.454754+00:00",
+  "generated_at_utc": "2026-09-22T22:00:59.570358+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -57,8 +57,8 @@
       "home": "DET",
       "away": "WSN",
       "dh_game_number": 0,
-      "prob_home_win": 0.5708362817764282,
-      "seed_std": 0.02061383229248484,
+      "prob_home_win": 0.5708361685276031,
+      "seed_std": 0.020613915288856,
       "home_sp": "Drew Anderson",
       "away_sp": "Riley Cornelio",
       "sp_status": {
@@ -123,8 +123,8 @@
       "home": "BOS",
       "away": "CLE",
       "dh_game_number": 0,
-      "prob_home_win": 0.5356215715408326,
-      "seed_std": 0.014177550915944406,
+      "prob_home_win": 0.5356216192245483,
+      "seed_std": 0.014177538196439965,
       "home_sp": "Payton Tolle",
       "away_sp": "Parker Messick",
       "sp_status": {
@@ -145,8 +145,8 @@
       "home": "ATL",
       "away": "CIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.6498338997364044,
-      "seed_std": 0.024769339842093847,
+      "prob_home_win": 0.6498338341712951,
+      "seed_std": 0.02476948164944707,
       "home_sp": "JR Ritchie",
       "away_sp": "Brandon Williamson",
       "sp_status": {
@@ -255,8 +255,8 @@
       "home": "OAK",
       "away": "LAA",
       "dh_game_number": 0,
-      "prob_home_win": 0.4548858731985092,
-      "seed_std": 0.03408352552287609,
+      "prob_home_win": 0.45484315156936644,
+      "seed_std": 0.033817928730310955,
       "home_sp": "Brady Basso",
       "away_sp": "Yusei Kikuchi",
       "sp_status": {
@@ -265,7 +265,7 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
       "low_confidence": false,
       "game_type": "R",
@@ -277,8 +277,8 @@
       "home": "SEA",
       "away": "HOU",
       "dh_game_number": 0,
-      "prob_home_win": 0.5215031683444977,
-      "seed_std": 0.009201398201235153,
+      "prob_home_win": 0.5215030372142792,
+      "seed_std": 0.009201411738768138,
       "home_sp": "Logan Gilbert",
       "away_sp": "Cristian Javier",
       "sp_status": {
@@ -299,8 +299,8 @@
       "home": "SFG",
       "away": "MIN",
       "dh_game_number": 0,
-      "prob_home_win": 0.47052951753139494,
-      "seed_std": 0.033779925202184695,
+      "prob_home_win": 0.47052953243255613,
+      "seed_std": 0.033779965675543484,
       "home_sp": "Anthony Molina",
       "away_sp": "Taj Bradley",
       "sp_status": {
@@ -321,8 +321,8 @@
       "home": "LAD",
       "away": "SDP",
       "dh_game_number": 0,
-      "prob_home_win": 0.5364599078893661,
-      "seed_std": 0.02498511223512512,
+      "prob_home_win": 0.5364595979452134,
+      "seed_std": 0.024984888616527517,
       "home_sp": null,
       "away_sp": "Michael King",
       "sp_status": {
