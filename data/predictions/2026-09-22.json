@@ -1,6 +1,6 @@
 {
   "date": "2026-09-22",
-  "generated_at_utc": "2026-09-22T16:21:03.404035+00:00",
+  "generated_at_utc": "2026-09-22T21:51:01.454754+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -35,10 +35,186 @@
       "home": "NYY",
       "away": "TBR",
       "dh_game_number": 2,
-      "prob_home_win": 0.5334271967411042,
-      "seed_std": 0.01483419760135076,
+      "prob_home_win": 0.5455124497413635,
+      "seed_std": 0.01645321455848904,
       "home_sp": "Max Fried",
       "away_sp": "Drew Rasmussen",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 2,
+      "series_of": 4
+    },
+    {
+      "home": "DET",
+      "away": "WSN",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5708362817764282,
+      "seed_std": 0.02061383229248484,
+      "home_sp": "Drew Anderson",
+      "away_sp": "Riley Cornelio",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "cross_check_mismatch"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": true,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 2,
+      "series_of": 3
+    },
+    {
+      "home": "PIT",
+      "away": "STL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5467327296733856,
+      "seed_std": 0.015724401843977408,
+      "home_sp": "Jared Jones",
+      "away_sp": "Andre Pallante",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "PHI",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5302037715911865,
+      "seed_std": 0.013071538003082897,
+      "home_sp": "Zack Wheeler",
+      "away_sp": "Dustin May",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "BOS",
+      "away": "CLE",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5356215715408326,
+      "seed_std": 0.014177550915944406,
+      "home_sp": "Payton Tolle",
+      "away_sp": "Parker Messick",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "ATL",
+      "away": "CIN",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6498338997364044,
+      "seed_std": 0.024769339842093847,
+      "home_sp": "JR Ritchie",
+      "away_sp": "Brandon Williamson",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "KCR",
+      "away": "CHW",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4667335331439972,
+      "seed_std": 0.018432622354678144,
+      "home_sp": "Daniel Lynch IV",
+      "away_sp": "Anthony Kay",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "CHC",
+      "away": "MIA",
+      "dh_game_number": 0,
+      "prob_home_win": 0.591702938079834,
+      "seed_std": 0.022181230518490115,
+      "home_sp": "Shota Imanaga",
+      "away_sp": "Janson Junk",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "TEX",
+      "away": "NYM",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5424478709697723,
+      "seed_std": 0.028344655946776088,
+      "home_sp": "MacKenzie Gore",
+      "away_sp": "Sean Manaea",
       "sp_status": {
         "home": "confirmed",
         "away": "confirmed"
@@ -48,14 +224,120 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "COL",
+      "away": "ARI",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4243233919143677,
+      "seed_std": 0.02474196450028632,
+      "home_sp": "Kyle Freeland",
+      "away_sp": "Michael Soroka",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
       },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "OAK",
+      "away": "LAA",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4548858731985092,
+      "seed_std": 0.03408352552287609,
+      "home_sp": "Brady Basso",
+      "away_sp": "Yusei Kikuchi",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 2
+    },
+    {
+      "home": "SEA",
+      "away": "HOU",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5215031683444977,
+      "seed_std": 0.009201398201235153,
+      "home_sp": "Logan Gilbert",
+      "away_sp": "Cristian Javier",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 2
+    },
+    {
+      "home": "SFG",
+      "away": "MIN",
+      "dh_game_number": 0,
+      "prob_home_win": 0.47052951753139494,
+      "seed_std": 0.033779925202184695,
+      "home_sp": "Anthony Molina",
+      "away_sp": "Taj Bradley",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
-      "series_of": 4
+      "series_of": 3
+    },
+    {
+      "home": "LAD",
+      "away": "SDP",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5364599078893661,
+      "seed_std": 0.02498511223512512,
+      "home_sp": null,
+      "away_sp": "Michael King",
+      "sp_status": {
+        "home": "tbd",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 3
     },
     {
       "home": "BAL",
@@ -81,344 +363,6 @@
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
-      "series_of": 3
-    },
-    {
-      "home": "DET",
-      "away": "WSN",
-      "dh_game_number": 0,
-      "prob_home_win": 0.5708391547203064,
-      "seed_std": 0.020615519832263025,
-      "home_sp": "Drew Anderson",
-      "away_sp": "Riley Cornelio",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "cross_check_mismatch"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 2,
-      "series_of": 3
-    },
-    {
-      "home": "PIT",
-      "away": "STL",
-      "dh_game_number": 0,
-      "prob_home_win": 0.5474856555461883,
-      "seed_std": 0.015479530452987967,
-      "home_sp": "Jared Jones",
-      "away_sp": "Andre Pallante",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 3
-    },
-    {
-      "home": "PHI",
-      "away": "MIL",
-      "dh_game_number": 0,
-      "prob_home_win": 0.5332928776741028,
-      "seed_std": 0.015568926132597511,
-      "home_sp": "Zack Wheeler",
-      "away_sp": "Dustin May",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 3
-    },
-    {
-      "home": "BOS",
-      "away": "CLE",
-      "dh_game_number": 0,
-      "prob_home_win": 0.5553570926189423,
-      "seed_std": 0.015888610575890003,
-      "home_sp": "Payton Tolle",
-      "away_sp": "Parker Messick",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 3
-    },
-    {
-      "home": "ATL",
-      "away": "CIN",
-      "dh_game_number": 0,
-      "prob_home_win": 0.6497543454170227,
-      "seed_std": 0.024668987495844365,
-      "home_sp": "JR Ritchie",
-      "away_sp": "Brandon Williamson",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 3
-    },
-    {
-      "home": "KCR",
-      "away": "CHW",
-      "dh_game_number": 0,
-      "prob_home_win": 0.47407005429267884,
-      "seed_std": 0.019121543625776234,
-      "home_sp": "Daniel Lynch IV",
-      "away_sp": "Anthony Kay",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 3
-    },
-    {
-      "home": "CHC",
-      "away": "MIA",
-      "dh_game_number": 0,
-      "prob_home_win": 0.5944212138652801,
-      "seed_std": 0.02353473534551785,
-      "home_sp": "Shota Imanaga",
-      "away_sp": "Janson Junk",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 3
-    },
-    {
-      "home": "TEX",
-      "away": "NYM",
-      "dh_game_number": 0,
-      "prob_home_win": 0.5424499392509461,
-      "seed_std": 0.028346303285416877,
-      "home_sp": "MacKenzie Gore",
-      "away_sp": "Sean Manaea",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 3
-    },
-    {
-      "home": "COL",
-      "away": "ARI",
-      "dh_game_number": 0,
-      "prob_home_win": 0.42570618689060213,
-      "seed_std": 0.024691649325321058,
-      "home_sp": "Kyle Freeland",
-      "away_sp": "Michael Soroka",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 3
-    },
-    {
-      "home": "OAK",
-      "away": "LAA",
-      "dh_game_number": 0,
-      "prob_home_win": 0.45608368813991546,
-      "seed_std": 0.032957591178491244,
-      "home_sp": "Brady Basso",
-      "away_sp": "Yusei Kikuchi",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 2
-    },
-    {
-      "home": "SEA",
-      "away": "HOU",
-      "dh_game_number": 0,
-      "prob_home_win": 0.5215035140514374,
-      "seed_std": 0.00919995901165244,
-      "home_sp": "Logan Gilbert",
-      "away_sp": "Cristian Javier",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
-      "series_of": 2
-    },
-    {
-      "home": "SFG",
-      "away": "MIN",
-      "dh_game_number": 0,
-      "prob_home_win": 0.47052431404590606,
-      "seed_std": 0.03377934085910374,
-      "home_sp": "Anthony Molina",
-      "away_sp": "Taj Bradley",
-      "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 2,
-      "series_of": 3
-    },
-    {
-      "home": "LAD",
-      "away": "SDP",
-      "dh_game_number": 0,
-      "prob_home_win": 0.5364600539207458,
-      "seed_std": 0.02498893603689168,
-      "home_sp": null,
-      "away_sp": "Michael King",
-      "sp_status": {
-        "home": "tbd",
-        "away": "confirmed"
-      },
-      "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
-      },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-22T16:44:49.458121+00:00"
-      },
-      "game_type": "R",
-      "series_description": "Regular Season",
-      "series_game": 1,
       "series_of": 3
     }
   ]
