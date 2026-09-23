@@ -282,6 +282,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-23T00:12:49.458303+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 1,
@@ -304,6 +308,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-23T00:12:49.458303+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 1,
@@ -326,6 +334,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-23T00:12:49.458303+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 1,
@@ -348,6 +360,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-23T00:12:49.458303+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -370,6 +386,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-23T00:12:49.458303+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 1,
