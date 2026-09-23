@@ -31,6 +31,20 @@
       "n_graded": 73
     }
   },
+  "by_game_type": {
+    "regular_season": {
+      "accuracy": 0.5787545787545788,
+      "log_loss": 0.6760338883633246,
+      "brier": 0.24155897320551087,
+      "n_graded": 546
+    },
+    "postseason": {
+      "accuracy": null,
+      "log_loss": null,
+      "brier": null,
+      "n_graded": 0
+    }
+  },
   "home_baseline": {
     "n_graded": 546,
     "home_pick_rate": 0.6575091575091575,
@@ -668,5 +682,5 @@
       }
     }
   },
-  "updated_at_utc": "2026-09-23T07:13:42.136775+00:00"
+  "updated_at_utc": "2026-09-23T07:43:42.197426+00:00"
 }
