@@ -2911,6 +2911,57 @@ function wireTeamPanels(panelsEl, getByTeam) {
   });
 }
 
+/* by_game_type is a new (currently absent from the deployed record.json)
+   optional key -- regular_season/postseason buckets carrying the same
+   _metrics_block shape as `overall`. Postseason starts publishing games
+   later than regular season, so this whole section stays absent (not
+   just empty) until record.by_game_type.postseason has at least one
+   graded game -- the page must stay unchanged until then. */
+function gameTypeHasData(block) {
+  return !!block && typeof block === "object" && isFiniteNum(block.n_graded) && block.n_graded > 0;
+}
+
+function gameTypeLineHtml(label, block) {
+  const acc = fmtPctVal(block?.accuracy);
+  const nFinite = isFiniteNum(block?.n_graded) ? block.n_graded : null;
+  const nText = nFinite != null ? `${nFinite} game${nFinite === 1 ? "" : "s"}` : "-";
+  const ll = isFiniteNum(block?.log_loss) ? block.log_loss.toFixed(4) : "-";
+  return `<p class="acc-stat-line"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(acc)} accuracy · ${escapeHtml(nText)} · ${escapeHtml(ll)} log loss</p>`;
+}
+
+/* No HTML hook exists for this section yet (it's new), so it's built and
+   appended into the existing #accuracy-page container from here rather
+   than editing accuracy.html -- created lazily, once, the first time
+   there's postseason data to show. */
+function ensureGameTypeSection() {
+  const existing = document.getElementById("acc-game-type-section");
+  if (existing) return existing;
+  const main = document.getElementById("accuracy-page");
+  if (!main) return null;
+  const section = document.createElement("section");
+  section.id = "acc-game-type-section";
+  section.className = "acc-section";
+  section.setAttribute("aria-label", "Accuracy by game type");
+  section.innerHTML = `<h2>By game type</h2><div id="acc-game-type-rows"></div>`;
+  main.appendChild(section);
+  return section;
+}
+
+function renderGameTypeSection(byGameType) {
+  const postseason = byGameType?.postseason;
+  if (!gameTypeHasData(postseason)) {
+    const existing = document.getElementById("acc-game-type-section");
+    if (existing) existing.remove();
+    return;
+  }
+  const section = ensureGameTypeSection();
+  if (!section) return;
+  const rowsEl = section.querySelector("#acc-game-type-rows");
+  if (rowsEl) {
+    rowsEl.innerHTML = gameTypeLineHtml("Regular season", byGameType?.regular_season) + gameTypeLineHtml("Postseason", postseason);
+  }
+}
+
 let _accuracyRenderToken = 0;
 let _accuracyByTeamCache = null;
 
@@ -2942,6 +2993,7 @@ async function renderAccuracyPage() {
     _accuracyByTeamCache = rec.by_team && typeof rec.by_team === "object" ? rec.by_team : null;
     renderTeamSection(teamPanelsEl, teamStaleEl, _accuracyByTeamCache, _accuracyExpandedTeam);
     wireTeamPanels(teamPanelsEl, () => _accuracyByTeamCache);
+    renderGameTypeSection(rec.by_game_type);
   } catch {
     if (!isCurrent()) return;
     ["acc-stat-acc", "acc-stat-30d", "acc-stat-n", "acc-stat-ll"].forEach((id) => setStat(id, "-"));
@@ -2950,6 +3002,7 @@ async function renderAccuracyPage() {
     renderHomeBaselineSection(homeBaselineEl, null);
     _accuracyByTeamCache = null;
     renderTeamSection(teamPanelsEl, teamStaleEl, null, _accuracyExpandedTeam);
+    renderGameTypeSection(null);
   }
 
   const indexData = await fetchDateIndex();
