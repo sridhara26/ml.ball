@@ -336,7 +336,25 @@ function gameStartEpoch(detailsGames, g) {
   return Number.isNaN(t) ? null : t;
 }
 
-function gameRowInnerHtml(g, shortTime = null) {
+/* header.game_status lookup (postponed/cancelled) — null for a normal game,
+   an absent/null status, or when details aren't loaded. Drives both the
+   slate row's PPD/CNCL tag (gameStatusTagHtml) and the finished-bucket
+   routing in buildSlateGamesHtml below. */
+function gameStatusInfo(detailsGames, g) {
+  if (!detailsGames) return null;
+  const status = detailsGames[gameDetailsKey(g)]?.header?.game_status;
+  return status?.state === "postponed" || status?.state === "cancelled" ? status : null;
+}
+
+/* Small pill for the mid-line time slot, replacing the start time, for a
+   postponed/cancelled game — reuses .flag's existing warn/loss styling
+   (see site.css) instead of a bespoke class. */
+function gameStatusTagHtml(status) {
+  const cancelled = status.state === "cancelled";
+  return `<span class="flag ${cancelled ? "loss" : "warn"}">${cancelled ? "CNCL" : "PPD"}</span>`;
+}
+
+function gameRowInnerHtml(g, shortTime = null, statusInfo = null) {
   const pHome = g.prob_home_win;
   const pAway = 1 - pHome;
   const homeFav = pHome >= 0.5;
@@ -359,8 +377,11 @@ function gameRowInnerHtml(g, shortTime = null) {
   // Shown whenever the start time is known, regardless of whether the game
   // is graded — the FINAL column already carries the runs once a result is
   // in, so the mid-line "@ + time" stays as a stable reference line even
-  // after publication.
-  const timeHtml = shortTime ? `<span class="game-time">${shortTime}</span>` : "";
+  // after publication. A postponed/cancelled game shows its status tag in
+  // this same slot instead, taking priority over any (now stale) time.
+  const timeHtml = statusInfo
+    ? gameStatusTagHtml(statusInfo)
+    : (shortTime ? `<span class="game-time">${shortTime}</span>` : "");
   const awayRunsHtml = runsCellHtml(g.result, false);
   const homeRunsHtml = runsCellHtml(g.result, true, "home");
 
@@ -407,7 +428,8 @@ function slateSectionHeadHtml(bucket) {
 }
 
 /* Three-section slate ordering (index.html's games list only):
-     - finished    = gameHasFinalScore(g.result)
+     - finished    = gameHasFinalScore(g.result) OR postponed/cancelled
+                     (gameStatusInfo — see below)
      - upcoming    = not finished AND (epoch unknown OR now < epoch)
      - inProgress  = not finished AND epoch known AND now >= epoch
    Rendered in the order upcoming, finished, inProgress — readers care most
@@ -440,12 +462,14 @@ function slateSectionHeadHtml(bucket) {
    pre-existing behavior. Called fresh on every render (including
    auto-refresh ticks), so a game crossing buckets
    naturally changes cardsHtml and trips the _lastGamesHtml repaint guard in
-   renderDashboard. Known accepted edge: a postponed past game (no final
-   score, but its known first-pitch epoch has passed) sits under "in
-   progress" — rare, already a noted display nit, not special-cased. */
+   renderDashboard. A postponed/cancelled game (header.game_status, via
+   gameStatusInfo) is routed into finished regardless of its own — now
+   stale — first-pitch epoch, so it never lands in "in progress"; this
+   replaces a previously accepted display nit where such a game sorted there
+   on epoch alone. */
 function buildSlateGamesHtml(games, detailsGames, detailsAvailable, date) {
   const rowHtml = (g) => {
-    const inner = gameRowInnerHtml(g, gameStartTimeShort(detailsGames, g));
+    const inner = gameRowInnerHtml(g, gameStartTimeShort(detailsGames, g), gameStatusInfo(detailsGames, g));
     if (!detailsAvailable) return `<div class="slate-row">${inner}</div>`;
     const href = `game.html?date=${encodeURIComponent(date)}&g=${encodeURIComponent(gameDetailsKey(g))}`;
     return `<a class="slate-row" href="${href}">${inner}</a>`;
@@ -460,7 +484,7 @@ function buildSlateGamesHtml(games, detailsGames, detailsAvailable, date) {
   games.forEach((g, idx) => {
     const epoch = gameStartEpoch(detailsGames, g);
     const entry = { g, sortKey: epoch ?? Infinity, idx };
-    if (gameHasFinalScore(g.result)) {
+    if (gameHasFinalScore(g.result) || gameStatusInfo(detailsGames, g)) {
       finished.push(entry);
     } else if (epoch == null || now < epoch) {
       upcoming.push(entry);
@@ -926,7 +950,7 @@ async function renderDashboard() {
   // all-ungraded to partially-graded without the row markup itself changing
   // shape enough to matter, and the class must track that regardless of the
   // _lastGamesHtml guard.
-  const hasFinals = day.games.some((g) => gameHasFinalScore(g.result));
+  const hasFinals = day.games.some((g) => gameHasFinalScore(g.result) || gameStatusInfo(detailsGames, g));
   gamesEl.classList.toggle("no-finals", !hasFinals);
   document.getElementById("slate-head")?.classList.toggle("no-finals", !hasFinals);
   if (cardsHtml !== _lastGamesHtml) {
@@ -1236,6 +1260,24 @@ function recordsHtml(away, home, awayRec, homeRec) {
   return parts.join(" · ");
 }
 
+/* Banner near game.html's header when header.game_status marks the game
+   postponed/cancelled (mirrors gameStatusInfo/gameStatusTagHtml's slate-row
+   tag, but game.html already has the header object directly, no
+   detailsGames lookup needed) — reuses .preview-banner's box/tag/copy
+   classes rather than a bespoke style. The reason and reschedule sentences
+   are each omitted when that field is null. */
+function gameStatusBannerHtml(status) {
+  const cancelled = status.state === "cancelled";
+  const reason = status.reason ? ` (${escapeHtml(status.reason)})` : "";
+  const resched = status.reschedule_utc
+    ? ` Rescheduled to ${fmtLocalDateTime(status.reschedule_utc)}.`
+    : "";
+  return `<div class="preview-banner" role="note">
+    <span class="preview-banner-tag">${cancelled ? "CNCL" : "PPD"}</span>
+    <span class="preview-banner-copy">${cancelled ? "Cancelled" : "Postponed"}${reason}.${resched}</span>
+  </div>`;
+}
+
 function weatherHtml(w) {
   if (!w) return "";
   const parts = [];
@@ -1298,13 +1340,18 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
   const flagsHtml = flags.length ? `<div class="flags">${flags.join("")}</div>` : "";
 
   const h = detailsHeader || {};
+  const status = h.game_status;
+  const isPostponedOrCancelled = status?.state === "postponed" || status?.state === "cancelled";
   const metaRows = [];
   const recs = recordsHtml(away, home, h.away_record, h.home_record);
   if (recs) metaRows.push(`<div class="meta-row">${recs}</div>`);
   if (h.venue) metaRows.push(`<div class="meta-row">${escapeHtml(h.venue)}</div>`);
   if (h.first_pitch_utc) {
     const dn = h.day_night ? ` · ${escapeHtml(h.day_night)}` : "";
-    metaRows.push(`<div class="meta-row">${fmtLocalDateTime(h.first_pitch_utc)}${dn}</div>`);
+    // "Originally " keeps this from reading as a second current time sitting
+    // right under the status banner's own "Rescheduled to" time.
+    const prefix = isPostponedOrCancelled ? "Originally " : "";
+    metaRows.push(`<div class="meta-row">${prefix}${fmtLocalDateTime(h.first_pitch_utc)}${dn}</div>`);
   }
   const wx = weatherHtml(h.weather);
   if (wx) metaRows.push(`<div class="meta-row">${wx}</div>`);
@@ -1313,7 +1360,10 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
   metaRows.push(spLineHtml(`${away} SP`, awaySp));
   metaRows.push(spLineHtml(`${home} SP`, homeSp));
 
+  const statusBannerHtml = isPostponedOrCancelled ? gameStatusBannerHtml(status) : "";
+
   return `
+    ${statusBannerHtml}
     ${matchupHtml}
     ${flagsHtml}
     <div class="game-meta">${metaRows.join("")}</div>`;
