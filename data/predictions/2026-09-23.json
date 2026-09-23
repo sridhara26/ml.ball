@@ -1,6 +1,6 @@
 {
   "date": "2026-09-23",
-  "generated_at_utc": "2026-09-23T21:50:54.001322+00:00",
+  "generated_at_utc": "2026-09-23T23:50:59.599705+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -325,8 +325,8 @@
       "home": "COL",
       "away": "ARI",
       "dh_game_number": 0,
-      "prob_home_win": 0.4051890969276428,
-      "seed_std": 0.024924810233297234,
+      "prob_home_win": 0.4051920026540756,
+      "seed_std": 0.024926557794304503,
       "home_sp": "Mason Adams",
       "away_sp": "Merrill Kelly",
       "sp_status": {
@@ -338,10 +338,6 @@
         "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -351,8 +347,8 @@
       "home": "OAK",
       "away": "LAA",
       "dh_game_number": 0,
-      "prob_home_win": 0.49094843566417695,
-      "seed_std": 0.029988713778815148,
+      "prob_home_win": 0.5021463483572006,
+      "seed_std": 0.025431219992966672,
       "home_sp": "Jeffrey Springs",
       "away_sp": "Walbert Urena",
       "sp_status": {
@@ -360,14 +356,10 @@
         "away": "cross_check_mismatch"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -377,8 +369,8 @@
       "home": "LAD",
       "away": "SDP",
       "dh_game_number": 0,
-      "prob_home_win": 0.5742379009723664,
-      "seed_std": 0.015031576262691294,
+      "prob_home_win": 0.5936986446380615,
+      "seed_std": 0.01965354144964716,
       "home_sp": "Yoshinobu Yamamoto",
       "away_sp": "Robbie Ray",
       "sp_status": {
@@ -386,14 +378,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -403,8 +391,8 @@
       "home": "SEA",
       "away": "HOU",
       "dh_game_number": 0,
-      "prob_home_win": 0.5763410985469818,
-      "seed_std": 0.02065159979831554,
+      "prob_home_win": 0.576353269815445,
+      "seed_std": 0.02065184687150632,
       "home_sp": "George Kirby",
       "away_sp": "Ethan Pecko",
       "sp_status": {
@@ -412,14 +400,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
+        "home": "announced",
         "away": "projected_last_game"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
