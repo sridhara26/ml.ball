@@ -158,6 +158,10 @@
         "away": "announced"
       },
       "low_confidence": true,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 3,
@@ -180,6 +184,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 3,
@@ -202,6 +210,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 4,
@@ -224,6 +236,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 3,
@@ -246,6 +262,10 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 1,
@@ -268,6 +288,10 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 1,
@@ -290,6 +314,10 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 3,
