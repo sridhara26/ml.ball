@@ -77,8 +77,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
+        "home_won": true,
+        "home_score": 4,
+        "away_score": 2,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
@@ -131,8 +133,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
+        "home_won": false,
+        "home_score": 1,
+        "away_score": 5,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
@@ -157,8 +161,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
+        "home_won": false,
+        "home_score": 1,
+        "away_score": 4,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
@@ -183,8 +189,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
+        "home_won": true,
+        "home_score": 9,
+        "away_score": 2,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
@@ -209,8 +217,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
+        "home_won": true,
+        "home_score": 1,
+        "away_score": 0,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
@@ -235,8 +245,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
+        "home_won": true,
+        "home_score": 3,
+        "away_score": 2,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
@@ -261,8 +273,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
+        "home_won": true,
+        "home_score": 5,
+        "away_score": 4,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
@@ -287,8 +301,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
+        "home_won": false,
+        "home_score": 2,
+        "away_score": 3,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
@@ -313,8 +329,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-23T22:13:42.162527+00:00"
+        "home_won": false,
+        "home_score": 2,
+        "away_score": 7,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
@@ -338,6 +356,12 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "home_won": false,
+        "home_score": 3,
+        "away_score": 5,
+        "graded_at_utc": "2026-09-24T03:43:16.556395+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -360,6 +384,10 @@
         "away": "announced"
       },
       "low_confidence": true,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T03:43:16.556395+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -382,6 +410,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T03:43:16.556395+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -404,6 +436,10 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-24T03:43:16.556395+00:00"
+      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
