@@ -1,0 +1,271 @@
+{
+  "date": "2026-09-24",
+  "generated_at_utc": "2026-09-24T14:25:27.443699+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "PIT",
+      "away": "STL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5859230279922485,
+      "seed_std": 0.02155588628598238,
+      "home_sp": "Paul Skenes",
+      "away_sp": "Kyle Leahy",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "announced",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 3,
+      "series_of": 3
+    },
+    {
+      "home": "KCR",
+      "away": "CHW",
+      "dh_game_number": 0,
+      "prob_home_win": 0.49231951534748075,
+      "seed_std": 0.02101131372294594,
+      "home_sp": "Randy Dobnak",
+      "away_sp": "David Sandlin",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 3,
+      "series_of": 3
+    },
+    {
+      "home": "CHC",
+      "away": "MIA",
+      "dh_game_number": 0,
+      "prob_home_win": 0.579906040430069,
+      "seed_std": 0.021107640646752496,
+      "home_sp": "Matthew Boyd",
+      "away_sp": "Tyler Phillips",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 3,
+      "series_of": 3
+    },
+    {
+      "home": "TEX",
+      "away": "NYM",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5238723874092102,
+      "seed_std": 0.01585947397366159,
+      "home_sp": "Kumar Rocker",
+      "away_sp": "Zac Thornton",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 3,
+      "series_of": 3
+    },
+    {
+      "home": "COL",
+      "away": "ARI",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4181616485118866,
+      "seed_std": 0.026130625917987284,
+      "home_sp": "Tanner Gordon",
+      "away_sp": "Eduardo Rodriguez",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "cross_check_mismatch"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 3,
+      "series_of": 3
+    },
+    {
+      "home": "PHI",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.49523192942142485,
+      "seed_std": 0.01972388906398069,
+      "home_sp": "Andrew Painter",
+      "away_sp": "Bryse Wilson",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 3,
+      "series_of": 3
+    },
+    {
+      "home": "BOS",
+      "away": "CLE",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5458342075347901,
+      "seed_std": 0.016355083188435305,
+      "home_sp": "Ranger Suarez",
+      "away_sp": "Daniel Espino",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 3,
+      "series_of": 3
+    },
+    {
+      "home": "NYY",
+      "away": "TBR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5192516863346099,
+      "seed_std": 0.013849350232150937,
+      "home_sp": "Cam Schlittler",
+      "away_sp": "Ian Seymour",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 4,
+      "series_of": 4
+    },
+    {
+      "home": "ATL",
+      "away": "CIN",
+      "dh_game_number": 0,
+      "prob_home_win": 0.6181303679943084,
+      "seed_std": 0.02643795528582688,
+      "home_sp": "Tyler Mahle",
+      "away_sp": "Brady Singer",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 3,
+      "series_of": 3
+    },
+    {
+      "home": "OAK",
+      "away": "HOU",
+      "dh_game_number": 0,
+      "prob_home_win": 0.44593109786510465,
+      "seed_std": 0.02553218190202713,
+      "home_sp": "Mason Barnett",
+      "away_sp": "Peter Lambert",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 4
+    },
+    {
+      "home": "SEA",
+      "away": "LAA",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5682595312595368,
+      "seed_std": 0.02013793044956683,
+      "home_sp": "Bryan Woo",
+      "away_sp": "Grayson Rodriguez",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 1,
+      "series_of": 4
+    },
+    {
+      "home": "LAD",
+      "away": "SDP",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5867496371269226,
+      "seed_std": 0.02177056151998896,
+      "home_sp": "Tyler Glasnow",
+      "away_sp": "Nick Pivetta",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "R",
+      "series_description": "Regular Season",
+      "series_game": 3,
+      "series_of": 3
+    }
+  ]
+}
