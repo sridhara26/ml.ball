@@ -133,8 +133,10 @@
       },
       "low_confidence": true,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-24T17:44:16.357988+00:00"
+        "home_won": false,
+        "home_score": 8,
+        "away_score": 12,
+        "graded_at_utc": "2026-09-24T22:43:16.216760+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",
