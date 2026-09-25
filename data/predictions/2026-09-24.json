@@ -1,6 +1,6 @@
 {
   "date": "2026-09-24",
-  "generated_at_utc": "2026-09-24T21:21:26.343490+00:00",
+  "generated_at_utc": "2026-09-25T00:50:26.759551+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -251,8 +251,8 @@
       "home": "OAK",
       "away": "HOU",
       "dh_game_number": 0,
-      "prob_home_win": 0.4459346503019333,
-      "seed_std": 0.025532939220546794,
+      "prob_home_win": 0.4481836646795273,
+      "seed_std": 0.02489542139275475,
       "home_sp": "Mason Barnett",
       "away_sp": "Peter Lambert",
       "sp_status": {
@@ -260,14 +260,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 1,
@@ -277,8 +273,8 @@
       "home": "SEA",
       "away": "LAA",
       "dh_game_number": 0,
-      "prob_home_win": 0.5682582080364227,
-      "seed_std": 0.020136932727042194,
+      "prob_home_win": 0.5763433039188385,
+      "seed_std": 0.016547379417839486,
       "home_sp": "Bryan Woo",
       "away_sp": "Grayson Rodriguez",
       "sp_status": {
@@ -286,14 +282,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 1,
@@ -303,8 +295,8 @@
       "home": "LAD",
       "away": "SDP",
       "dh_game_number": 0,
-      "prob_home_win": 0.5867522656917572,
-      "seed_std": 0.02177042511969885,
+      "prob_home_win": 0.5769902467727661,
+      "seed_std": 0.015406281397155738,
       "home_sp": "Tyler Glasnow",
       "away_sp": "Nick Pivetta",
       "sp_status": {
@@ -312,14 +304,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-24T21:43:16.233293+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 3,
