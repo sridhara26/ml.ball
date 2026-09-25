@@ -315,22 +315,62 @@ function fmtShortGameTime(iso) {
   return escapeHtml(time);
 }
 
+/* MLB gives a traditional doubleheader's game 2 a placeholder first_pitch_utc
+   (game 1's time + 5 min) before the real one is set. Small fallback
+   heuristic for details JSON published before the pipeline started emitting
+   header.start_time_tbd: dh_game_number 2 whose first_pitch_utc lands within
+   ~10 minutes after the same matchup's dh_game_number 1 first_pitch_utc. */
+function isDhPlaceholderStart(gamesMap, away, home, dh, iso) {
+  if (!gamesMap || dh !== 2 || typeof iso !== "string") return false;
+  const iso1 = gamesMap[`${away}-${home}-1`]?.header?.first_pitch_utc;
+  if (typeof iso1 !== "string") return false;
+  const t2 = new Date(iso).getTime();
+  const t1 = new Date(iso1).getTime();
+  if (Number.isNaN(t2) || Number.isNaN(t1)) return false;
+  const diffMin = (t2 - t1) / 60000;
+  return diffMin >= 0 && diffMin <= 10;
+}
+
+/* True when a game's real start time is unknown: the pipeline's own
+   header.start_time_tbd flag (from MLB's status.startTimeTBD) decides
+   outright once present, true or false. Only when that flag is absent
+   (details JSON published before it existed) does the doubleheader game-2
+   placeholder heuristic above get a say. */
+function gameStartIsTbd(gamesMap, away, home, dh, header) {
+  const flag = header?.start_time_tbd;
+  if (flag !== undefined) return flag === true;
+  return isDhPlaceholderStart(gamesMap, away, home, dh, header?.first_pitch_utc);
+}
+
 /* Looks up a game's first_pitch_utc in the (already-fetched) details JSON's
    games map and formats it — null when the details file is absent, the
    game isn't in it, or it carries no first_pitch_utc, so callers can fall
-   back to the plain empty-runs-cell rendering with no layout shift. */
+   back to the plain empty-runs-cell rendering with no layout shift. When the
+   start time is TBD (gameStartIsTbd above), shows "TBD" — or "After G1" for
+   a doubleheader's game 2 — instead of the placeholder clock time. */
 function gameStartTimeShort(detailsGames, g) {
   if (!detailsGames) return null;
-  const iso = detailsGames[gameDetailsKey(g)]?.header?.first_pitch_utc;
+  const header = detailsGames[gameDetailsKey(g)]?.header;
+  const dh = g.dh_game_number ?? 0;
+  if (gameStartIsTbd(detailsGames, g.away, g.home, dh, header)) {
+    return dh === 2 ? "After G1" : "TBD";
+  }
+  const iso = header?.first_pitch_utc;
   return typeof iso === "string" ? fmtShortGameTime(iso) : null;
 }
 
 /* Same first_pitch_utc lookup as gameStartTimeShort, but returns the raw
    epoch ms (or null) for the upcoming/finished/in-progress bucketing sort in
-   buildSlateGamesHtml below, instead of a formatted display string. */
+   buildSlateGamesHtml below, instead of a formatted display string. A TBD
+   start (gameStartIsTbd above) is treated as an unknown epoch, same as a
+   missing first_pitch_utc, so the game lands in "upcoming" rather than
+   "in progress" once its placeholder time has passed. */
 function gameStartEpoch(detailsGames, g) {
   if (!detailsGames) return null;
-  const iso = detailsGames[gameDetailsKey(g)]?.header?.first_pitch_utc;
+  const header = detailsGames[gameDetailsKey(g)]?.header;
+  const dh = g.dh_game_number ?? 0;
+  if (gameStartIsTbd(detailsGames, g.away, g.home, dh, header)) return null;
+  const iso = header?.first_pitch_utc;
   if (typeof iso !== "string") return null;
   const t = new Date(iso).getTime();
   return Number.isNaN(t) ? null : t;
@@ -1253,6 +1293,15 @@ function fmtLocalDateTime(iso) {
   }));
 }
 
+/* Same instant-to-local-date conversion as fmtLocalDateTime, but the date
+   only (no clock time) — for a TBD start time (renderGameHeaderHtml), whose
+   first_pitch_utc placeholder carries a real date but no real time. */
+function fmtLocalDateOnly(iso) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return escapeHtml(String(iso));
+  return escapeHtml(d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }));
+}
+
 function recordsHtml(away, home, awayRec, homeRec) {
   const parts = [];
   if (awayRec) parts.push(`${escapeHtml(away)} ${escapeHtml(String(awayRec.wins))}-${escapeHtml(String(awayRec.losses))}`);
@@ -1296,7 +1345,7 @@ function spLineHtml(label, sp) {
   return `<div class="meta-row">${escapeHtml(label)}: ${escapeHtml(sp.name)}${hand}${status}</div>`;
 }
 
-function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
+function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader, startTimeTbd = false) {
   const awayCode = escapeHtml(away);
   const homeCode = escapeHtml(home);
 
@@ -1351,7 +1400,20 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader) {
     // "Originally " keeps this from reading as a second current time sitting
     // right under the status banner's own "Rescheduled to" time.
     const prefix = isPostponedOrCancelled ? "Originally " : "";
-    metaRows.push(`<div class="meta-row">${prefix}${fmtLocalDateTime(h.first_pitch_utc)}${dn}</div>`);
+    // A TBD placeholder first_pitch_utc (gameStartIsTbd, checked by the
+    // caller) never gets shown as a real clock time here, but the date it
+    // carries is still real, so it stays ahead of the TBD copy instead of
+    // disappearing. The TBD copy itself is lowercase when it continues the
+    // "Originally " sentence, capitalized when it starts its own clause.
+    let timeCopy;
+    if (startTimeTbd) {
+      const tbdWord = dh === 2 ? "after Game 1" : "time TBD";
+      const tbdCopy = isPostponedOrCancelled ? tbdWord : tbdWord[0].toUpperCase() + tbdWord.slice(1);
+      timeCopy = `${fmtLocalDateOnly(h.first_pitch_utc)} · ${tbdCopy}`;
+    } else {
+      timeCopy = fmtLocalDateTime(h.first_pitch_utc);
+    }
+    metaRows.push(`<div class="meta-row">${prefix}${timeCopy}${dn}</div>`);
   }
   const wx = weatherHtml(h.weather);
   if (wx) metaRows.push(`<div class="meta-row">${wx}</div>`);
@@ -2136,10 +2198,11 @@ async function renderGameDetail() {
 
     document.title = `${away} @ ${home} · ml.ball`;
 
-    headerEl.innerHTML = renderGameHeaderHtml({ away, home, dh }, matchGame, gameDetail?.header ?? null);
+    const startTimeTbd = gameStartIsTbd(details?.games ?? null, away, home, dh, gameDetail?.header ?? null);
+    headerEl.innerHTML = renderGameHeaderHtml({ away, home, dh }, matchGame, gameDetail?.header ?? null, startTimeTbd);
     if (stickyEl) stickyEl.innerHTML = gameStickyHtml(away, home, matchGame);
 
-    _detailCtx = { date, away, home, dh, detailsHeader: gameDetail?.header ?? null, hadDetail: !!gameDetail };
+    _detailCtx = { date, away, home, dh, detailsHeader: gameDetail?.header ?? null, startTimeTbd, hadDetail: !!gameDetail };
     _detailEligible = !isGraded(matchGame);
 
     if (!gameDetail) {
@@ -2208,7 +2271,8 @@ async function refreshGameResult() {
     headerEl.innerHTML = renderGameHeaderHtml(
       { away: _detailCtx.away, home: _detailCtx.home, dh: _detailCtx.dh },
       g,
-      _detailCtx.detailsHeader
+      _detailCtx.detailsHeader,
+      _detailCtx.startTimeTbd
     );
   }
   if (_detailCtx.hadDetail) {
