@@ -1,6 +1,6 @@
 {
   "date": "2026-09-26",
-  "generated_at_utc": "2026-09-26T18:20:19.016764+00:00",
+  "generated_at_utc": "2026-09-26T22:21:20.578046+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -169,8 +169,8 @@
       "home": "KCR",
       "away": "CLE",
       "dh_game_number": 0,
-      "prob_home_win": 0.44634917080402375,
-      "seed_std": 0.01859872415535857,
+      "prob_home_win": 0.44550834894180297,
+      "seed_std": 0.019435825493273818,
       "home_sp": "Michael Wacha",
       "away_sp": "Tanner Bibee",
       "sp_status": {
@@ -178,14 +178,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-26T18:43:12.985125+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -195,8 +191,8 @@
       "home": "CHW",
       "away": "COL",
       "dh_game_number": 0,
-      "prob_home_win": 0.6528324961662293,
-      "seed_std": 0.017659582732161984,
+      "prob_home_win": 0.6417883098125458,
+      "seed_std": 0.021356422848847697,
       "home_sp": "Davis Martin",
       "away_sp": "Jose Quintana",
       "sp_status": {
@@ -204,14 +200,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
+        "home": "announced",
         "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-26T18:43:12.985125+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -221,8 +213,8 @@
       "home": "MIL",
       "away": "STL",
       "dh_game_number": 0,
-      "prob_home_win": 0.6047448813915253,
-      "seed_std": 0.027313679704716917,
+      "prob_home_win": 0.6053219437599182,
+      "seed_std": 0.026701159629737518,
       "home_sp": "Dustin May",
       "away_sp": "Quinn Mathews",
       "sp_status": {
@@ -230,14 +222,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-26T18:43:12.985125+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -247,23 +235,19 @@
       "home": "PHI",
       "away": "TBR",
       "dh_game_number": 0,
-      "prob_home_win": 0.5362278699874878,
-      "seed_std": 0.021445860268409264,
-      "home_sp": null,
+      "prob_home_win": 0.5479421496391297,
+      "seed_std": 0.018009244779675696,
+      "home_sp": "Aaron Nola",
       "away_sp": "Griffin Jax",
       "sp_status": {
-        "home": "tbd",
+        "home": "confirmed",
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-26T18:43:12.985125+00:00"
-      },
+      "low_confidence": false,
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -273,8 +257,8 @@
       "home": "SDP",
       "away": "ARI",
       "dh_game_number": 0,
-      "prob_home_win": 0.5873895466327668,
-      "seed_std": 0.01474247420929169,
+      "prob_home_win": 0.5850812077522278,
+      "seed_std": 0.01468935034182979,
       "home_sp": "Walker Buehler",
       "away_sp": null,
       "sp_status": {
@@ -282,14 +266,10 @@
         "away": "tbd"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-26T18:43:12.985125+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 2,
@@ -299,8 +279,8 @@
       "home": "OAK",
       "away": "HOU",
       "dh_game_number": 0,
-      "prob_home_win": 0.47004002928733823,
-      "seed_std": 0.019072614582258805,
+      "prob_home_win": 0.47055105268955233,
+      "seed_std": 0.01893059619022139,
       "home_sp": "Jack Perkins",
       "away_sp": "Hayden Wesneski",
       "sp_status": {
@@ -308,14 +288,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
+        "home": "announced",
         "away": "projected_last_game"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-26T18:43:12.985125+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 3,
@@ -325,8 +301,8 @@
       "home": "SEA",
       "away": "LAA",
       "dh_game_number": 0,
-      "prob_home_win": 0.5570482730865478,
-      "seed_std": 0.022911419765843457,
+      "prob_home_win": 0.5570460379123687,
+      "seed_std": 0.0229110707339872,
       "home_sp": "Kade Anderson",
       "away_sp": "Ryan Johnson",
       "sp_status": {
@@ -338,10 +314,6 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-26T18:43:12.985125+00:00"
-      },
       "game_type": "R",
       "series_description": "Regular Season",
       "series_game": 3,
