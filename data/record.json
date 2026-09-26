@@ -1,42 +1,42 @@
 {
   "overall": {
-    "accuracy": 0.578125,
-    "log_loss": 0.6775377714252211,
-    "brier": 0.24229987287666382,
-    "n_graded": 576
+    "accuracy": 0.5820642978003384,
+    "log_loss": 0.6761939687897449,
+    "brier": 0.24164202227942488,
+    "n_graded": 591
   },
   "last_30d": {
-    "accuracy": 0.585427135678392,
-    "log_loss": 0.6748849125853114,
-    "brier": 0.24101601732746358,
+    "accuracy": 0.592964824120603,
+    "log_loss": 0.6722224937624189,
+    "brier": 0.2397209749481882,
     "n_graded": 398
   },
   "by_confidence": {
     "[0.50,0.55)": {
-      "accuracy": 0.5504885993485342,
-      "log_loss": 0.6875644207429908,
-      "brier": 0.2472134841260625,
-      "n_graded": 307
+      "accuracy": 0.554140127388535,
+      "log_loss": 0.6872717807272621,
+      "brier": 0.24706735621432968,
+      "n_graded": 314
     },
     "[0.55,0.60)": {
-      "accuracy": 0.578125,
-      "log_loss": 0.6829501845631766,
-      "brier": 0.24490184368264442,
-      "n_graded": 192
+      "accuracy": 0.5786802030456852,
+      "log_loss": 0.68220692368964,
+      "brier": 0.24453797293161514,
+      "n_graded": 197
     },
     "[0.60,1.00]": {
-      "accuracy": 0.6883116883116883,
-      "log_loss": 0.6240655030740163,
-      "brier": 0.21622120991155117,
-      "n_graded": 77
+      "accuracy": 0.7,
+      "log_loss": 0.6179066554939986,
+      "brier": 0.2132163081039053,
+      "n_graded": 80
     }
   },
   "by_game_type": {
     "regular_season": {
-      "accuracy": 0.578125,
-      "log_loss": 0.6775377714252211,
-      "brier": 0.24229987287666382,
-      "n_graded": 576
+      "accuracy": 0.5820642978003384,
+      "log_loss": 0.6761939687897449,
+      "brier": 0.24164202227942488,
+      "n_graded": 591
     },
     "postseason": {
       "accuracy": null,
@@ -46,89 +46,89 @@
     }
   },
   "home_baseline": {
-    "n_graded": 576,
-    "home_pick_rate": 0.6649305555555556,
-    "home_win_rate": 0.5381944444444444
+    "n_graded": 591,
+    "home_pick_rate": 0.6683587140439933,
+    "home_win_rate": 0.5414551607445008
   },
   "by_team": {
     "ARI": {
-      "n_graded": 37,
-      "wins": 21,
-      "accuracy": 0.4594594594594595,
+      "n_graded": 38,
+      "wins": 22,
+      "accuracy": 0.4473684210526316,
       "picked": {
         "n": 25,
         "accuracy": 0.52
       },
       "faded": {
-        "n": 12,
-        "accuracy": 0.3333333333333333
+        "n": 13,
+        "accuracy": 0.3076923076923077
       },
       "home": {
         "n": 18,
         "accuracy": 0.3333333333333333
       },
       "away": {
-        "n": 19,
-        "accuracy": 0.5789473684210527
+        "n": 20,
+        "accuracy": 0.55
       }
     },
     "ATL": {
-      "n_graded": 39,
+      "n_graded": 40,
       "wins": 21,
-      "accuracy": 0.5384615384615384,
+      "accuracy": 0.55,
       "picked": {
         "n": 27,
         "accuracy": 0.5555555555555556
       },
       "faded": {
-        "n": 12,
-        "accuracy": 0.5
+        "n": 13,
+        "accuracy": 0.5384615384615384
       },
       "home": {
         "n": 20,
         "accuracy": 0.55
       },
       "away": {
-        "n": 19,
-        "accuracy": 0.5263157894736842
+        "n": 20,
+        "accuracy": 0.55
       }
     },
     "BAL": {
-      "n_graded": 40,
+      "n_graded": 41,
       "wins": 21,
-      "accuracy": 0.575,
+      "accuracy": 0.5853658536585366,
       "picked": {
         "n": 14,
         "accuracy": 0.6428571428571429
       },
       "faded": {
-        "n": 26,
-        "accuracy": 0.5384615384615384
+        "n": 27,
+        "accuracy": 0.5555555555555556
       },
       "home": {
         "n": 19,
         "accuracy": 0.7368421052631579
       },
       "away": {
-        "n": 21,
-        "accuracy": 0.42857142857142855
+        "n": 22,
+        "accuracy": 0.45454545454545453
       }
     },
     "BOS": {
-      "n_graded": 40,
-      "wins": 21,
-      "accuracy": 0.6,
+      "n_graded": 41,
+      "wins": 22,
+      "accuracy": 0.6097560975609756,
       "picked": {
-        "n": 29,
-        "accuracy": 0.5862068965517241
+        "n": 30,
+        "accuracy": 0.6
       },
       "faded": {
         "n": 11,
         "accuracy": 0.6363636363636364
       },
       "home": {
-        "n": 19,
-        "accuracy": 0.5789473684210527
+        "n": 20,
+        "accuracy": 0.6
       },
       "away": {
         "n": 21,
@@ -136,41 +136,41 @@
       }
     },
     "CHC": {
-      "n_graded": 39,
+      "n_graded": 40,
       "wins": 17,
-      "accuracy": 0.5641025641025641,
+      "accuracy": 0.575,
       "picked": {
         "n": 32,
         "accuracy": 0.5
       },
       "faded": {
-        "n": 7,
-        "accuracy": 0.8571428571428571
+        "n": 8,
+        "accuracy": 0.875
       },
       "home": {
         "n": 22,
         "accuracy": 0.5
       },
       "away": {
-        "n": 17,
-        "accuracy": 0.6470588235294118
+        "n": 18,
+        "accuracy": 0.6666666666666666
       }
     },
     "CHW": {
-      "n_graded": 40,
-      "wins": 21,
-      "accuracy": 0.525,
+      "n_graded": 41,
+      "wins": 22,
+      "accuracy": 0.5365853658536586,
       "picked": {
-        "n": 26,
-        "accuracy": 0.5384615384615384
+        "n": 27,
+        "accuracy": 0.5555555555555556
       },
       "faded": {
         "n": 14,
         "accuracy": 0.5
       },
       "home": {
-        "n": 18,
-        "accuracy": 0.5555555555555556
+        "n": 19,
+        "accuracy": 0.5789473684210527
       },
       "away": {
         "n": 22,
@@ -178,33 +178,33 @@
       }
     },
     "CIN": {
-      "n_graded": 40,
+      "n_graded": 41,
       "wins": 17,
-      "accuracy": 0.55,
+      "accuracy": 0.5609756097560976,
       "picked": {
         "n": 1,
         "accuracy": 0.0
       },
       "faded": {
-        "n": 39,
-        "accuracy": 0.5641025641025641
+        "n": 40,
+        "accuracy": 0.575
       },
       "home": {
         "n": 21,
         "accuracy": 0.5238095238095238
       },
       "away": {
-        "n": 19,
-        "accuracy": 0.5789473684210527
+        "n": 20,
+        "accuracy": 0.6
       }
     },
     "CLE": {
-      "n_graded": 38,
-      "wins": 24,
-      "accuracy": 0.6578947368421053,
+      "n_graded": 39,
+      "wins": 25,
+      "accuracy": 0.6666666666666666,
       "picked": {
-        "n": 29,
-        "accuracy": 0.6896551724137931
+        "n": 30,
+        "accuracy": 0.7
       },
       "faded": {
         "n": 9,
@@ -215,46 +215,46 @@
         "accuracy": 0.6363636363636364
       },
       "away": {
-        "n": 16,
-        "accuracy": 0.6875
+        "n": 17,
+        "accuracy": 0.7058823529411765
       }
     },
     "COL": {
-      "n_graded": 38,
+      "n_graded": 39,
       "wins": 10,
-      "accuracy": 0.7368421052631579,
+      "accuracy": 0.7435897435897436,
       "picked": {
         "n": 0,
         "accuracy": null
       },
       "faded": {
-        "n": 38,
-        "accuracy": 0.7368421052631579
+        "n": 39,
+        "accuracy": 0.7435897435897436
       },
       "home": {
         "n": 22,
         "accuracy": 0.7727272727272727
       },
       "away": {
-        "n": 16,
-        "accuracy": 0.6875
+        "n": 17,
+        "accuracy": 0.7058823529411765
       }
     },
     "DET": {
-      "n_graded": 39,
-      "wins": 15,
-      "accuracy": 0.48717948717948717,
+      "n_graded": 40,
+      "wins": 16,
+      "accuracy": 0.5,
       "picked": {
-        "n": 21,
-        "accuracy": 0.38095238095238093
+        "n": 22,
+        "accuracy": 0.4090909090909091
       },
       "faded": {
         "n": 18,
         "accuracy": 0.6111111111111112
       },
       "home": {
-        "n": 19,
-        "accuracy": 0.47368421052631576
+        "n": 20,
+        "accuracy": 0.5
       },
       "away": {
         "n": 20,
@@ -262,12 +262,12 @@
       }
     },
     "HOU": {
-      "n_graded": 38,
+      "n_graded": 39,
       "wins": 18,
-      "accuracy": 0.5,
+      "accuracy": 0.48717948717948717,
       "picked": {
-        "n": 19,
-        "accuracy": 0.47368421052631576
+        "n": 20,
+        "accuracy": 0.45
       },
       "faded": {
         "n": 19,
@@ -278,25 +278,25 @@
         "accuracy": 0.45454545454545453
       },
       "away": {
-        "n": 16,
-        "accuracy": 0.5625
+        "n": 17,
+        "accuracy": 0.5294117647058824
       }
     },
     "KCR": {
-      "n_graded": 38,
+      "n_graded": 39,
       "wins": 19,
-      "accuracy": 0.6052631578947368,
+      "accuracy": 0.6153846153846154,
       "picked": {
         "n": 4,
         "accuracy": 1.0
       },
       "faded": {
-        "n": 34,
-        "accuracy": 0.5588235294117647
+        "n": 35,
+        "accuracy": 0.5714285714285714
       },
       "home": {
-        "n": 19,
-        "accuracy": 0.631578947368421
+        "n": 20,
+        "accuracy": 0.65
       },
       "away": {
         "n": 19,
@@ -304,33 +304,33 @@
       }
     },
     "LAA": {
-      "n_graded": 38,
-      "wins": 15,
-      "accuracy": 0.5526315789473685,
+      "n_graded": 39,
+      "wins": 16,
+      "accuracy": 0.5384615384615384,
       "picked": {
         "n": 8,
         "accuracy": 0.375
       },
       "faded": {
-        "n": 30,
-        "accuracy": 0.6
+        "n": 31,
+        "accuracy": 0.5806451612903226
       },
       "home": {
         "n": 20,
         "accuracy": 0.55
       },
       "away": {
-        "n": 18,
-        "accuracy": 0.5555555555555556
+        "n": 19,
+        "accuracy": 0.5263157894736842
       }
     },
     "LAD": {
-      "n_graded": 39,
-      "wins": 25,
-      "accuracy": 0.6666666666666666,
+      "n_graded": 40,
+      "wins": 26,
+      "accuracy": 0.675,
       "picked": {
-        "n": 36,
-        "accuracy": 0.6666666666666666
+        "n": 37,
+        "accuracy": 0.6756756756756757
       },
       "faded": {
         "n": 3,
@@ -341,25 +341,25 @@
         "accuracy": 0.6956521739130435
       },
       "away": {
-        "n": 16,
-        "accuracy": 0.625
+        "n": 17,
+        "accuracy": 0.6470588235294118
       }
     },
     "MIA": {
-      "n_graded": 38,
-      "wins": 17,
-      "accuracy": 0.5263157894736842,
+      "n_graded": 39,
+      "wins": 18,
+      "accuracy": 0.5384615384615384,
       "picked": {
-        "n": 15,
-        "accuracy": 0.4666666666666667
+        "n": 16,
+        "accuracy": 0.5
       },
       "faded": {
         "n": 23,
         "accuracy": 0.5652173913043478
       },
       "home": {
-        "n": 16,
-        "accuracy": 0.5
+        "n": 17,
+        "accuracy": 0.5294117647058824
       },
       "away": {
         "n": 22,
@@ -367,20 +367,20 @@
       }
     },
     "MIL": {
-      "n_graded": 39,
-      "wins": 26,
-      "accuracy": 0.5897435897435898,
+      "n_graded": 40,
+      "wins": 27,
+      "accuracy": 0.6,
       "picked": {
-        "n": 28,
-        "accuracy": 0.6785714285714286
+        "n": 29,
+        "accuracy": 0.6896551724137931
       },
       "faded": {
         "n": 11,
         "accuracy": 0.36363636363636365
       },
       "home": {
-        "n": 15,
-        "accuracy": 0.6666666666666666
+        "n": 16,
+        "accuracy": 0.6875
       },
       "away": {
         "n": 24,
@@ -388,20 +388,20 @@
       }
     },
     "MIN": {
-      "n_graded": 37,
-      "wins": 15,
-      "accuracy": 0.5675675675675675,
+      "n_graded": 38,
+      "wins": 16,
+      "accuracy": 0.5789473684210527,
       "picked": {
-        "n": 13,
-        "accuracy": 0.46153846153846156
+        "n": 14,
+        "accuracy": 0.5
       },
       "faded": {
         "n": 24,
         "accuracy": 0.625
       },
       "home": {
-        "n": 19,
-        "accuracy": 0.5789473684210527
+        "n": 20,
+        "accuracy": 0.6
       },
       "away": {
         "n": 18,
@@ -409,41 +409,41 @@
       }
     },
     "NYM": {
-      "n_graded": 38,
+      "n_graded": 39,
       "wins": 20,
-      "accuracy": 0.5263157894736842,
+      "accuracy": 0.5384615384615384,
       "picked": {
         "n": 12,
         "accuracy": 0.5833333333333334
       },
       "faded": {
-        "n": 26,
-        "accuracy": 0.5
+        "n": 27,
+        "accuracy": 0.5185185185185185
       },
       "home": {
         "n": 22,
         "accuracy": 0.5909090909090909
       },
       "away": {
-        "n": 16,
-        "accuracy": 0.4375
+        "n": 17,
+        "accuracy": 0.47058823529411764
       }
     },
     "NYY": {
-      "n_graded": 41,
-      "wins": 25,
-      "accuracy": 0.6097560975609756,
+      "n_graded": 42,
+      "wins": 26,
+      "accuracy": 0.6190476190476191,
       "picked": {
-        "n": 39,
-        "accuracy": 0.6153846153846154
+        "n": 40,
+        "accuracy": 0.625
       },
       "faded": {
         "n": 2,
         "accuracy": 0.5
       },
       "home": {
-        "n": 23,
-        "accuracy": 0.6521739130434783
+        "n": 24,
+        "accuracy": 0.6666666666666666
       },
       "away": {
         "n": 18,
@@ -451,20 +451,20 @@
       }
     },
     "OAK": {
-      "n_graded": 38,
-      "wins": 16,
-      "accuracy": 0.6052631578947368,
+      "n_graded": 39,
+      "wins": 17,
+      "accuracy": 0.5897435897435898,
       "picked": {
         "n": 1,
         "accuracy": 1.0
       },
       "faded": {
-        "n": 37,
-        "accuracy": 0.5945945945945946
+        "n": 38,
+        "accuracy": 0.5789473684210527
       },
       "home": {
-        "n": 18,
-        "accuracy": 0.5
+        "n": 19,
+        "accuracy": 0.47368421052631576
       },
       "away": {
         "n": 20,
@@ -472,20 +472,20 @@
       }
     },
     "PHI": {
-      "n_graded": 37,
+      "n_graded": 38,
       "wins": 23,
-      "accuracy": 0.6486486486486487,
+      "accuracy": 0.631578947368421,
       "picked": {
-        "n": 30,
-        "accuracy": 0.6666666666666666
+        "n": 31,
+        "accuracy": 0.6451612903225806
       },
       "faded": {
         "n": 7,
         "accuracy": 0.5714285714285714
       },
       "home": {
-        "n": 16,
-        "accuracy": 0.625
+        "n": 17,
+        "accuracy": 0.5882352941176471
       },
       "away": {
         "n": 21,
@@ -493,41 +493,41 @@
       }
     },
     "PIT": {
-      "n_graded": 37,
+      "n_graded": 38,
       "wins": 22,
-      "accuracy": 0.5675675675675675,
+      "accuracy": 0.5789473684210527,
       "picked": {
         "n": 14,
         "accuracy": 0.7142857142857143
       },
       "faded": {
-        "n": 23,
-        "accuracy": 0.4782608695652174
+        "n": 24,
+        "accuracy": 0.5
       },
       "home": {
         "n": 21,
         "accuracy": 0.6190476190476191
       },
       "away": {
-        "n": 16,
-        "accuracy": 0.5
+        "n": 17,
+        "accuracy": 0.5294117647058824
       }
     },
     "SDP": {
-      "n_graded": 37,
+      "n_graded": 38,
       "wins": 25,
-      "accuracy": 0.7027027027027027,
+      "accuracy": 0.6842105263157895,
       "picked": {
-        "n": 28,
-        "accuracy": 0.75
+        "n": 29,
+        "accuracy": 0.7241379310344828
       },
       "faded": {
         "n": 9,
         "accuracy": 0.5555555555555556
       },
       "home": {
-        "n": 15,
-        "accuracy": 0.8
+        "n": 16,
+        "accuracy": 0.75
       },
       "away": {
         "n": 22,
@@ -535,20 +535,20 @@
       }
     },
     "SEA": {
-      "n_graded": 38,
+      "n_graded": 39,
       "wins": 17,
-      "accuracy": 0.47368421052631576,
+      "accuracy": 0.46153846153846156,
       "picked": {
-        "n": 15,
-        "accuracy": 0.4
+        "n": 16,
+        "accuracy": 0.375
       },
       "faded": {
         "n": 23,
         "accuracy": 0.5217391304347826
       },
       "home": {
-        "n": 15,
-        "accuracy": 0.4
+        "n": 16,
+        "accuracy": 0.375
       },
       "away": {
         "n": 23,
@@ -556,20 +556,20 @@
       }
     },
     "SFG": {
-      "n_graded": 38,
+      "n_graded": 39,
       "wins": 14,
-      "accuracy": 0.6052631578947368,
+      "accuracy": 0.6153846153846154,
       "picked": {
         "n": 7,
         "accuracy": 0.42857142857142855
       },
       "faded": {
-        "n": 31,
-        "accuracy": 0.6451612903225806
+        "n": 32,
+        "accuracy": 0.65625
       },
       "home": {
-        "n": 19,
-        "accuracy": 0.5263157894736842
+        "n": 20,
+        "accuracy": 0.55
       },
       "away": {
         "n": 19,
@@ -577,83 +577,83 @@
       }
     },
     "STL": {
-      "n_graded": 39,
+      "n_graded": 40,
       "wins": 17,
-      "accuracy": 0.5384615384615384,
+      "accuracy": 0.55,
       "picked": {
         "n": 25,
         "accuracy": 0.48
       },
       "faded": {
-        "n": 14,
-        "accuracy": 0.6428571428571429
+        "n": 15,
+        "accuracy": 0.6666666666666666
       },
       "home": {
         "n": 16,
         "accuracy": 0.5
       },
       "away": {
-        "n": 23,
-        "accuracy": 0.5652173913043478
+        "n": 24,
+        "accuracy": 0.5833333333333334
       }
     },
     "TBR": {
-      "n_graded": 39,
-      "wins": 22,
-      "accuracy": 0.6153846153846154,
+      "n_graded": 40,
+      "wins": 23,
+      "accuracy": 0.6,
       "picked": {
         "n": 25,
         "accuracy": 0.64
       },
       "faded": {
-        "n": 14,
-        "accuracy": 0.5714285714285714
+        "n": 15,
+        "accuracy": 0.5333333333333333
       },
       "home": {
         "n": 22,
         "accuracy": 0.6363636363636364
       },
       "away": {
-        "n": 17,
-        "accuracy": 0.5882352941176471
+        "n": 18,
+        "accuracy": 0.5555555555555556
       }
     },
     "TEX": {
-      "n_graded": 38,
+      "n_graded": 39,
       "wins": 18,
-      "accuracy": 0.5789473684210527,
+      "accuracy": 0.5897435897435898,
       "picked": {
         "n": 26,
         "accuracy": 0.5384615384615384
       },
       "faded": {
-        "n": 12,
-        "accuracy": 0.6666666666666666
+        "n": 13,
+        "accuracy": 0.6923076923076923
       },
       "home": {
         "n": 22,
         "accuracy": 0.6363636363636364
       },
       "away": {
-        "n": 16,
-        "accuracy": 0.5
+        "n": 17,
+        "accuracy": 0.5294117647058824
       }
     },
     "TOR": {
-      "n_graded": 38,
-      "wins": 19,
-      "accuracy": 0.5263157894736842,
+      "n_graded": 39,
+      "wins": 20,
+      "accuracy": 0.5384615384615384,
       "picked": {
-        "n": 19,
-        "accuracy": 0.5263157894736842
+        "n": 20,
+        "accuracy": 0.55
       },
       "faded": {
         "n": 19,
         "accuracy": 0.5263157894736842
       },
       "home": {
-        "n": 17,
-        "accuracy": 0.5294117647058824
+        "n": 18,
+        "accuracy": 0.5555555555555556
       },
       "away": {
         "n": 21,
@@ -661,20 +661,20 @@
       }
     },
     "WSN": {
-      "n_graded": 37,
-      "wins": 15,
-      "accuracy": 0.6486486486486487,
+      "n_graded": 38,
+      "wins": 16,
+      "accuracy": 0.6578947368421053,
       "picked": {
-        "n": 8,
-        "accuracy": 0.625
+        "n": 9,
+        "accuracy": 0.6666666666666666
       },
       "faded": {
         "n": 29,
         "accuracy": 0.6551724137931034
       },
       "home": {
-        "n": 16,
-        "accuracy": 0.5
+        "n": 17,
+        "accuracy": 0.5294117647058824
       },
       "away": {
         "n": 21,
@@ -682,5 +682,5 @@
       }
     }
   },
-  "updated_at_utc": "2026-09-25T23:13:42.967725+00:00"
+  "updated_at_utc": "2026-09-26T06:13:13.346446+00:00"
 }
