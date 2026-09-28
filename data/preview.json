@@ -1,6 +1,148 @@
 {
-  "date": "2026-09-28",
-  "generated_at_utc": "2026-09-27T14:25:49.487611+00:00",
-  "n_games": 0,
-  "games": []
+  "date": "2026-09-29",
+  "generated_at_utc": "2026-09-28T14:04:02.304721+00:00",
+  "n_games": 4,
+  "games": [
+    {
+      "away": "PHI",
+      "home": "ATL",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-29T18:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "day",
+      "venue": "Truist Park",
+      "game_type": "F",
+      "series_description": "NL Wild Card Series",
+      "series_game": 1,
+      "series_of": 3,
+      "away_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "home_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "away_sp": null,
+      "home_sp": {
+        "name": "Chris Sale",
+        "season": {
+          "starts": 27,
+          "ip": 162.7,
+          "era": 2.16,
+          "k9": 11.07,
+          "bb9": 1.72,
+          "hr9": 0.55,
+          "days_rest": 6
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      }
+    },
+    {
+      "away": "CHW",
+      "home": "HOU",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-29T21:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "day",
+      "venue": "Daikin Park",
+      "game_type": "F",
+      "series_description": "AL Wild Card Series",
+      "series_game": 1,
+      "series_of": 3,
+      "away_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "home_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "away_sp": null,
+      "home_sp": null,
+      "sp_status": {
+        "home": "tbd",
+        "away": "tbd"
+      }
+    },
+    {
+      "away": "BOS",
+      "home": "NYY",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-30T00:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "Yankee Stadium",
+      "game_type": "F",
+      "series_description": "AL Wild Card Series",
+      "series_game": 1,
+      "series_of": 3,
+      "away_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "home_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "away_sp": null,
+      "home_sp": {
+        "name": "Cam Schlittler",
+        "season": {
+          "starts": 33,
+          "ip": 193.7,
+          "era": 1.95,
+          "k9": 11.11,
+          "bb9": 2.28,
+          "hr9": 0.74,
+          "days_rest": 5
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      }
+    },
+    {
+      "away": "CHC",
+      "home": "SDP",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-09-30T02:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "Petco Park",
+      "game_type": "F",
+      "series_description": "NL Wild Card Series",
+      "series_game": 1,
+      "series_of": 3,
+      "away_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "home_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "away_sp": null,
+      "home_sp": {
+        "name": "Michael King",
+        "season": {
+          "starts": 32,
+          "ip": 185.0,
+          "era": 3.21,
+          "k9": 7.74,
+          "bb9": 3.41,
+          "hr9": 0.97,
+          "days_rest": 7
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      }
+    }
+  ]
 }
