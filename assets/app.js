@@ -199,7 +199,7 @@ function spFlags(g) {
 
 function resultFlagHtml(result, pHome) {
   if (!result) return "";
-  if (result.status === "no_result") {
+  if (result.status === "no_result" || result.status === "postponed" || result.status === "cancelled") {
     return "";
   }
   if (typeof result.home_won === "boolean") {
@@ -248,7 +248,7 @@ function postseasonFlagHtml(g) {
    backs the game-detail header's flags line. */
 function verdictChipHtml(result, pHome) {
   if (!result) return "";
-  if (result.status === "no_result") {
+  if (result.status === "no_result" || result.status === "postponed" || result.status === "cancelled") {
     return "";
   }
   if (typeof result.home_won === "boolean") {
@@ -376,14 +376,36 @@ function gameStartEpoch(detailsGames, g) {
   return Number.isNaN(t) ? null : t;
 }
 
-/* header.game_status lookup (postponed/cancelled) — null for a normal game,
-   an absent/null status, or when details aren't loaded. Drives both the
+/* Precedence: (1) an actually-played result (home_won boolean, or a finite
+   home_score/away_score — a resumed or made-up game) always wins null, so a
+   stale header never shows PPD/CNCL over a real result; (2) else
+   result.status postponed/cancelled — the fresher 30-minute source
+   (grade_predictions.py), so a later reschedule_utc or a PPD -> CNCL change
+   reaches the site before the next details rebuild; (3) else
+   headerStatus when its own state is postponed/cancelled (details rebuilt
+   but the prediction row hasn't caught up, or detailsGames is null and
+   headerStatus is already null, the flat path); (4) else null. Always the
+   same {state, reason, reschedule_utc} shape. Shared with
+   renderGameHeaderHtml's game.html header. */
+function postponedOrCancelledStatus(headerStatus, result) {
+  const isPlayed = typeof result?.home_won === "boolean" || isFiniteNum(result?.home_score) || isFiniteNum(result?.away_score);
+  if (isPlayed) return null;
+  if (result?.status === "postponed" || result?.status === "cancelled") {
+    return { state: result.status, reason: result.reason ?? null, reschedule_utc: result.reschedule_utc ?? null };
+  }
+  if (headerStatus?.state === "postponed" || headerStatus?.state === "cancelled") return headerStatus;
+  return null;
+}
+
+/* header.game_status lookup (postponed/cancelled), falling back to
+   g.result per postponedOrCancelledStatus's precedence (a played result
+   always wins null; otherwise result.status beats headerStatus) — covers
+   detailsGames being null or not having this game yet. Drives both the
    slate row's PPD/CNCL tag (gameStatusTagHtml) and the finished-bucket
    routing in buildSlateGamesHtml below. */
 function gameStatusInfo(detailsGames, g) {
-  if (!detailsGames) return null;
-  const status = detailsGames[gameDetailsKey(g)]?.header?.game_status;
-  return status?.state === "postponed" || status?.state === "cancelled" ? status : null;
+  const headerStatus = detailsGames ? detailsGames[gameDetailsKey(g)]?.header?.game_status : null;
+  return postponedOrCancelledStatus(headerStatus, g.result);
 }
 
 /* Small pill for the mid-line time slot, replacing the start time, for a
@@ -498,15 +520,16 @@ function slateSectionHeadHtml(bucket) {
    #slate-head row is what stands down there (renderDashboard). One flat
    path remains: detailsGames absent entirely means no start time is known
    for anything and no bucketing is possible, so that case still renders a
-   flat, unsorted, published-order list under the global row — the
-   pre-existing behavior. Called fresh on every render (including
+   flat, unsorted, published-order list under the global row (gameStatusInfo
+   still resolves a PPD/CNCL tag there off g.result alone) — the
+   pre-existing behavior otherwise. Called fresh on every render (including
    auto-refresh ticks), so a game crossing buckets
    naturally changes cardsHtml and trips the _lastGamesHtml repaint guard in
-   renderDashboard. A postponed/cancelled game (header.game_status, via
-   gameStatusInfo) is routed into finished regardless of its own — now
-   stale — first-pitch epoch, so it never lands in "in progress"; this
-   replaces a previously accepted display nit where such a game sorted there
-   on epoch alone. */
+   renderDashboard. A postponed/cancelled game (header.game_status or
+   g.result, via gameStatusInfo) is routed into finished regardless of its
+   own — now stale — first-pitch epoch, so it never lands in "in progress";
+   this replaces a previously accepted display nit where such a game sorted
+   there on epoch alone. */
 function buildSlateGamesHtml(games, detailsGames, detailsAvailable, date) {
   const rowHtml = (g) => {
     const inner = gameRowInnerHtml(g, gameStartTimeShort(detailsGames, g), gameStatusInfo(detailsGames, g));
@@ -729,11 +752,18 @@ function setupDateNav({ navEl, prevBtn, nextBtn, backEl, recordEl, indexData, ta
   if (backEl) backEl.style.display = isLatest ? "none" : "";
   if (recordEl) {
     const entry = suppressRecord ? null : (dates.find((d) => d.date === targetDate) ?? null);
+    // n_void (postponed/cancelled games, absent on older index.json —
+    // treated as 0, same as today's behavior) counts toward "nothing left
+    // to grade" alongside n_graded. A day voided out entirely (n_graded: 0)
+    // is still "fully graded" in that sense, but showing "0 of 0 correct"
+    // would be a nonsense record line, so that case is guarded separately
+    // below and just shows no record line at all.
+    const nVoid = entry && isFiniteNum(entry.n_void) ? entry.n_void : 0;
     const fullyGraded = entry
       && typeof entry.n_graded === "number" && typeof entry.n_games === "number"
       && typeof entry.n_correct === "number"
-      && entry.n_games > 0 && entry.n_graded === entry.n_games;
-    if (fullyGraded) {
+      && entry.n_games > 0 && entry.n_graded + nVoid === entry.n_games;
+    if (fullyGraded && entry.n_graded > 0) {
       showRecordEl(recordEl, `${entry.n_correct} of ${entry.n_graded} correct`);
     } else {
       clearRecordEl(recordEl);
@@ -815,18 +845,22 @@ let _autoRefreshEligible = false;
 let _hiddenAt = 0;
 let _lastGamesHtml = null;
 
-/* mirrors setupDateNav's own fullyGraded check (n_correct isn't needed
-   here) — no index entry for the date means "unknown", which stays
-   eligible for refresh rather than assuming it's done. */
+/* mirrors setupDateNav's own fullyGraded check, n_void included (n_correct
+   isn't needed here) — no index entry for the date means "unknown", which
+   stays eligible for refresh rather than assuming it's done. Unlike
+   setupDateNav's record line, an all-void day (n_graded: 0, n_void ===
+   n_games) correctly reads as fully graded here: nothing on this date is
+   still awaiting a result, so auto-refresh has nothing left to pick up. */
 function entryFullyGraded(indexData, targetDate) {
   const dates = indexData ? sortedDateEntries(indexData) : [];
   const entry = dates.find((d) => d.date === targetDate) ?? null;
+  const nVoid = entry && isFiniteNum(entry.n_void) ? entry.n_void : 0;
   return !!(
     entry
     && typeof entry.n_games === "number"
     && typeof entry.n_graded === "number"
     && entry.n_games > 0
-    && entry.n_graded === entry.n_games
+    && entry.n_graded + nVoid === entry.n_games
   );
 }
 
@@ -1309,12 +1343,13 @@ function recordsHtml(away, home, awayRec, homeRec) {
   return parts.join(" · ");
 }
 
-/* Banner near game.html's header when header.game_status marks the game
-   postponed/cancelled (mirrors gameStatusInfo/gameStatusTagHtml's slate-row
-   tag, but game.html already has the header object directly, no
-   detailsGames lookup needed) — reuses .preview-banner's box/tag/copy
-   classes rather than a bespoke style. The reason and reschedule sentences
-   are each omitted when that field is null. */
+/* Banner near game.html's header when the game is resolved postponed/
+   cancelled, from header.game_status or the prediction's own result (see
+   postponedOrCancelledStatus, called by renderGameHeaderHtml — mirrors
+   gameStatusInfo/gameStatusTagHtml's slate-row tag) — reuses
+   .preview-banner's box/tag/copy classes rather than a bespoke style. The
+   reason and reschedule sentences are each omitted when that field is
+   null. */
 function gameStatusBannerHtml(status) {
   const cancelled = status.state === "cancelled";
   const reason = status.reason ? ` (${escapeHtml(status.reason)})` : "";
@@ -1389,8 +1424,12 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader, star
   const flagsHtml = flags.length ? `<div class="flags">${flags.join("")}</div>` : "";
 
   const h = detailsHeader || {};
-  const status = h.game_status;
-  const isPostponedOrCancelled = status?.state === "postponed" || status?.state === "cancelled";
+  // See postponedOrCancelledStatus for the precedence (a played result
+  // always wins null; otherwise the prediction row's own result beats
+  // h.game_status) — matchGame is null when the row itself isn't in scope
+  // (e.g. an unpublished game), same as resultFlagHtml above.
+  const status = postponedOrCancelledStatus(h.game_status, matchGame?.result);
+  const isPostponedOrCancelled = !!status;
   const metaRows = [];
   const recs = recordsHtml(away, home, h.away_record, h.home_record);
   if (recs) metaRows.push(`<div class="meta-row">${recs}</div>`);
