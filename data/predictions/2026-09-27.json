@@ -49,8 +49,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-27T18:43:13.014719+00:00"
+        "status": "cancelled",
+        "reason": "Rain",
+        "reschedule_utc": null,
+        "checked_at_utc": "2026-09-29T06:13:30.528371+00:00"
       },
       "game_type": "R",
       "series_description": "Regular Season",

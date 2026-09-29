@@ -1,0 +1,95 @@
+{
+  "date": "2026-09-29",
+  "generated_at_utc": "2026-09-29T14:31:23.933519+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "ATL",
+      "away": "PHI",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5521565556526185,
+      "seed_std": 0.013920817368803703,
+      "home_sp": "Chris Sale",
+      "away_sp": "Jesus Luzardo",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "F",
+      "series_description": "NL Wild Card Series",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "HOU",
+      "away": "CHW",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5347701728343963,
+      "seed_std": 0.016205480450537213,
+      "home_sp": "AJ Blubaugh",
+      "away_sp": "Hagen Smith",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "F",
+      "series_description": "AL Wild Card Series",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "NYY",
+      "away": "BOS",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5360290229320526,
+      "seed_std": 0.015169992491812154,
+      "home_sp": "Cam Schlittler",
+      "away_sp": "Payton Tolle",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "F",
+      "series_description": "AL Wild Card Series",
+      "series_game": 1,
+      "series_of": 3
+    },
+    {
+      "home": "SDP",
+      "away": "CHC",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5020489364862442,
+      "seed_std": 0.014467157764825368,
+      "home_sp": "Michael King",
+      "away_sp": "Matthew Boyd",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "F",
+      "series_description": "NL Wild Card Series",
+      "series_game": 1,
+      "series_of": 3
+    }
+  ]
+}
