@@ -1,14 +1,14 @@
 {
   "date": "2026-09-29",
-  "generated_at_utc": "2026-09-29T14:31:23.933519+00:00",
+  "generated_at_utc": "2026-09-29T17:10:38.832122+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "ATL",
       "away": "PHI",
       "dh_game_number": 0,
-      "prob_home_win": 0.5521565556526185,
-      "seed_std": 0.013920817368803703,
+      "prob_home_win": 0.5220896422863006,
+      "seed_std": 0.013095930570449605,
       "home_sp": "Chris Sale",
       "away_sp": "Jesus Luzardo",
       "sp_status": {
@@ -16,14 +16,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-29T14:44:30.637430+00:00"
-      },
       "game_type": "F",
       "series_description": "NL Wild Card Series",
       "series_game": 1,
@@ -33,8 +29,8 @@
       "home": "HOU",
       "away": "CHW",
       "dh_game_number": 0,
-      "prob_home_win": 0.5347701728343963,
-      "seed_std": 0.016205480450537213,
+      "prob_home_win": 0.5192386090755463,
+      "seed_std": 0.013115991134040094,
       "home_sp": "AJ Blubaugh",
       "away_sp": "Hagen Smith",
       "sp_status": {
@@ -42,14 +38,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-29T14:44:30.637430+00:00"
-      },
       "game_type": "F",
       "series_description": "AL Wild Card Series",
       "series_game": 1,
@@ -59,8 +51,8 @@
       "home": "NYY",
       "away": "BOS",
       "dh_game_number": 0,
-      "prob_home_win": 0.5360290229320526,
-      "seed_std": 0.015169992491812154,
+      "prob_home_win": 0.5360310852527619,
+      "seed_std": 0.015172225191152074,
       "home_sp": "Cam Schlittler",
       "away_sp": "Payton Tolle",
       "sp_status": {
@@ -72,10 +64,6 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-29T14:44:30.637430+00:00"
-      },
       "game_type": "F",
       "series_description": "AL Wild Card Series",
       "series_game": 1,
@@ -85,8 +73,8 @@
       "home": "SDP",
       "away": "CHC",
       "dh_game_number": 0,
-      "prob_home_win": 0.5020489364862442,
-      "seed_std": 0.014467157764825368,
+      "prob_home_win": 0.5020523816347122,
+      "seed_std": 0.014466482761780282,
       "home_sp": "Michael King",
       "away_sp": "Matthew Boyd",
       "sp_status": {
@@ -98,10 +86,6 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-29T14:44:30.637430+00:00"
-      },
       "game_type": "F",
       "series_description": "NL Wild Card Series",
       "series_game": 1,
