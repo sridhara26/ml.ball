@@ -20,6 +20,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-29T17:12:30.440142+00:00"
+      },
       "game_type": "F",
       "series_description": "NL Wild Card Series",
       "series_game": 1,
@@ -42,6 +46,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-29T17:12:30.440142+00:00"
+      },
       "game_type": "F",
       "series_description": "AL Wild Card Series",
       "series_game": 1,
@@ -64,6 +72,10 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-29T17:12:30.440142+00:00"
+      },
       "game_type": "F",
       "series_description": "AL Wild Card Series",
       "series_game": 1,
@@ -86,6 +98,10 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-09-29T17:12:30.440142+00:00"
+      },
       "game_type": "F",
       "series_description": "NL Wild Card Series",
       "series_game": 1,
