@@ -1,76 +1,54 @@
 {
-  "date": "2026-09-30",
-  "generated_at_utc": "2026-09-29T14:31:33.671402+00:00",
+  "date": "2026-10-01",
+  "generated_at_utc": "2026-09-30T14:17:35.006672+00:00",
   "n_games": 4,
   "games": [
     {
       "away": "PHI",
       "home": "ATL",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-30T18:00:00Z",
+      "first_pitch_utc": "2026-10-01T18:00:00Z",
       "start_time_tbd": false,
       "day_night": "day",
       "venue": "Truist Park",
       "game_type": "F",
       "series_description": "NL Wild Card Series",
-      "series_game": 2,
+      "series_game": 3,
       "series_of": 3,
       "away_record": {
         "wins": 0,
-        "losses": 0
+        "losses": 1
       },
       "home_record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0
       },
-      "away_sp": {
-        "name": "Cristopher Sanchez",
-        "season": {
-          "starts": 33,
-          "ip": 207.0,
-          "era": 2.91,
-          "k9": 10.04,
-          "bb9": 1.96,
-          "hr9": 0.83,
-          "days_rest": 5
-        }
-      },
-      "home_sp": {
-        "name": "Tyler Mahle",
-        "season": {
-          "starts": 27,
-          "ip": 149.0,
-          "era": 3.99,
-          "k9": 8.28,
-          "bb9": 2.78,
-          "hr9": 1.21,
-          "days_rest": 6
-        }
-      },
+      "away_sp": null,
+      "home_sp": null,
       "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
+        "home": "tbd",
+        "away": "tbd"
       }
     },
     {
       "away": "CHW",
       "home": "HOU",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-09-30T21:00:00Z",
+      "first_pitch_utc": "2026-10-01T21:00:00Z",
       "start_time_tbd": false,
       "day_night": "day",
       "venue": "Daikin Park",
       "game_type": "F",
       "series_description": "AL Wild Card Series",
-      "series_game": 2,
+      "series_game": 3,
       "series_of": 3,
       "away_record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0
       },
       "home_record": {
         "wins": 0,
-        "losses": 0
+        "losses": 1
       },
       "away_sp": null,
       "home_sp": null,
@@ -83,43 +61,43 @@
       "away": "BOS",
       "home": "NYY",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-01T00:00:00Z",
+      "first_pitch_utc": "2026-10-02T00:00:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Yankee Stadium",
       "game_type": "F",
       "series_description": "AL Wild Card Series",
-      "series_game": 2,
+      "series_game": 3,
       "series_of": 3,
       "away_record": {
         "wins": 0,
-        "losses": 0
+        "losses": 1
       },
       "home_record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0
       },
       "away_sp": {
-        "name": "Sonny Gray",
+        "name": "Ranger Suarez",
         "season": {
-          "starts": 29,
-          "ip": 169.0,
-          "era": 2.72,
-          "k9": 7.93,
-          "bb9": 2.45,
-          "hr9": 0.85,
+          "starts": 28,
+          "ip": 148.3,
+          "era": 3.22,
+          "k9": 8.49,
+          "bb9": 2.79,
+          "hr9": 0.61,
           "days_rest": 7
         }
       },
       "home_sp": {
-        "name": "Max Fried",
+        "name": "Gerrit Cole",
         "season": {
-          "starts": 20,
-          "ip": 112.7,
-          "era": 2.8,
-          "k9": 8.31,
-          "bb9": 2.64,
-          "hr9": 0.32,
+          "starts": 22,
+          "ip": 127.0,
+          "era": 3.61,
+          "k9": 9.28,
+          "bb9": 1.77,
+          "hr9": 1.56,
           "days_rest": 8
         }
       },
@@ -132,20 +110,20 @@
       "away": "CHC",
       "home": "SDP",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-01T02:00:00Z",
+      "first_pitch_utc": "2026-10-02T02:00:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Petco Park",
       "game_type": "F",
       "series_description": "NL Wild Card Series",
-      "series_game": 2,
+      "series_game": 3,
       "series_of": 3,
       "away_record": {
         "wins": 0,
-        "losses": 0
+        "losses": 1
       },
       "home_record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0
       },
       "away_sp": null,
