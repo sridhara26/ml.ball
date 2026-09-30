@@ -1,6 +1,6 @@
 {
   "date": "2026-09-30",
-  "generated_at_utc": "2026-09-30T20:11:12.835408+00:00",
+  "generated_at_utc": "2026-09-30T23:11:12.100024+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -61,8 +61,8 @@
       "home": "NYY",
       "away": "BOS",
       "dh_game_number": 0,
-      "prob_home_win": 0.5485570430755615,
-      "seed_std": 0.012971627796983807,
+      "prob_home_win": 0.5485591351985931,
+      "seed_std": 0.012972060527513592,
       "home_sp": "Max Fried",
       "away_sp": "Sonny Gray",
       "sp_status": {
@@ -74,10 +74,6 @@
         "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-30T20:13:03.907733+00:00"
-      },
       "game_type": "F",
       "series_description": "AL Wild Card Series",
       "series_game": 2,
@@ -87,8 +83,8 @@
       "home": "SDP",
       "away": "CHC",
       "dh_game_number": 0,
-      "prob_home_win": 0.4883454740047455,
-      "seed_std": 0.009569539952150607,
+      "prob_home_win": 0.49572084546089173,
+      "seed_std": 0.009649007640006207,
       "home_sp": "Nick Pivetta",
       "away_sp": "Kevin Gausman",
       "sp_status": {
@@ -96,14 +92,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-30T20:13:03.907733+00:00"
-      },
       "game_type": "F",
       "series_description": "NL Wild Card Series",
       "series_game": 2,
