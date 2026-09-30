@@ -1,14 +1,14 @@
 {
   "date": "2026-09-30",
-  "generated_at_utc": "2026-09-30T14:17:26.034191+00:00",
+  "generated_at_utc": "2026-09-30T17:11:13.872995+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "ATL",
       "away": "PHI",
       "dh_game_number": 0,
-      "prob_home_win": 0.5392444610595704,
-      "seed_std": 0.01275434213600172,
+      "prob_home_win": 0.5377909064292907,
+      "seed_std": 0.009866733980339881,
       "home_sp": "Tyler Mahle",
       "away_sp": "Cristopher Sanchez",
       "sp_status": {
@@ -16,14 +16,10 @@
         "away": "cross_check_mismatch"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-30T14:43:03.834070+00:00"
-      },
       "game_type": "F",
       "series_description": "NL Wild Card Series",
       "series_game": 2,
@@ -46,10 +42,6 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-30T14:43:03.834070+00:00"
-      },
       "game_type": "F",
       "series_description": "AL Wild Card Series",
       "series_game": 2,
@@ -72,10 +64,6 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-30T14:43:03.834070+00:00"
-      },
       "game_type": "F",
       "series_description": "AL Wild Card Series",
       "series_game": 2,
@@ -85,8 +73,8 @@
       "home": "SDP",
       "away": "CHC",
       "dh_game_number": 0,
-      "prob_home_win": 0.48835172355175016,
-      "seed_std": 0.009567643185222876,
+      "prob_home_win": 0.48834617137908937,
+      "seed_std": 0.00956917776861766,
       "home_sp": "Nick Pivetta",
       "away_sp": "Kevin Gausman",
       "sp_status": {
@@ -98,10 +86,6 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-30T14:43:03.834070+00:00"
-      },
       "game_type": "F",
       "series_description": "NL Wild Card Series",
       "series_game": 2,
