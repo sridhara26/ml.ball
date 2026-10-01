@@ -77,8 +77,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-09-30T23:13:03.932775+00:00"
+        "home_won": true,
+        "home_score": 9,
+        "away_score": 2,
+        "graded_at_utc": "2026-10-01T03:43:03.865405+00:00"
       },
       "game_type": "F",
       "series_description": "AL Wild Card Series",
