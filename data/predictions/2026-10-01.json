@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-01",
+  "generated_at_utc": "2026-10-01T14:15:27.138833+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "ATL",
+      "away": "PHI",
+      "dh_game_number": 0,
+      "prob_home_win": 0.53265300989151,
+      "seed_std": 0.011254552584780555,
+      "home_sp": null,
+      "away_sp": null,
+      "sp_status": {
+        "home": "tbd",
+        "away": "tbd"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true,
+      "game_type": "F",
+      "series_description": "NL Wild Card Series",
+      "series_game": 3,
+      "series_of": 3
+    }
+  ]
+}
