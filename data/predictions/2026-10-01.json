@@ -1,29 +1,25 @@
 {
   "date": "2026-10-01",
-  "generated_at_utc": "2026-10-01T14:15:27.138833+00:00",
+  "generated_at_utc": "2026-10-01T23:12:01.812367+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "ATL",
       "away": "PHI",
       "dh_game_number": 0,
-      "prob_home_win": 0.53265300989151,
-      "seed_std": 0.011254552584780555,
-      "home_sp": null,
-      "away_sp": null,
+      "prob_home_win": 0.5056195259094238,
+      "seed_std": 0.015990989945050823,
+      "home_sp": "Ray Kerr",
+      "away_sp": "Aaron Nola",
       "sp_status": {
-        "home": "tbd",
-        "away": "tbd"
+        "home": "confirmed",
+        "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-01T14:43:20.368028+00:00"
-      },
+      "low_confidence": false,
       "game_type": "F",
       "series_description": "NL Wild Card Series",
       "series_game": 3,
