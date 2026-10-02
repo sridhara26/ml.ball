@@ -1,6 +1,148 @@
 {
-  "date": "2026-10-02",
-  "generated_at_utc": "2026-10-01T14:15:36.046808+00:00",
-  "n_games": 0,
-  "games": []
+  "date": "2026-10-03",
+  "generated_at_utc": "2026-10-02T14:01:24.357247+00:00",
+  "n_games": 4,
+  "games": [
+    {
+      "away": "CHW",
+      "home": "CLE",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-10-03T17:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "day",
+      "venue": "Progressive Field",
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 1,
+      "series_of": 5,
+      "away_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "home_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "away_sp": null,
+      "home_sp": {
+        "name": "Parker Messick",
+        "season": {
+          "starts": 32,
+          "ip": 186.3,
+          "era": 2.56,
+          "k9": 9.32,
+          "bb9": 2.37,
+          "hr9": 0.82,
+          "days_rest": 6
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      }
+    },
+    {
+      "away": "ATL",
+      "home": "LAD",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-10-03T20:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "day",
+      "venue": "UNIQLO Field at Dodger Stadium",
+      "game_type": "D",
+      "series_description": "NL Division Series",
+      "series_game": 1,
+      "series_of": 5,
+      "away_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "home_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "away_sp": null,
+      "home_sp": null,
+      "sp_status": {
+        "home": "tbd",
+        "away": "tbd"
+      }
+    },
+    {
+      "away": "NYY",
+      "home": "TBR",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-10-03T22:30:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "Tropicana Field",
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 1,
+      "series_of": 5,
+      "away_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "home_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "away_sp": null,
+      "home_sp": {
+        "name": "Drew Rasmussen",
+        "season": {
+          "starts": 30,
+          "ip": 172.0,
+          "era": 2.67,
+          "k9": 9.1,
+          "bb9": 1.67,
+          "hr9": 0.73,
+          "days_rest": 11
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      }
+    },
+    {
+      "away": "SDP",
+      "home": "MIL",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-10-04T00:30:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "American Family Field",
+      "game_type": "D",
+      "series_description": "NL Division Series",
+      "series_game": 1,
+      "series_of": 5,
+      "away_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "home_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "away_sp": null,
+      "home_sp": {
+        "name": "Jacob Misiorowski",
+        "season": {
+          "starts": 30,
+          "ip": 174.7,
+          "era": 1.8,
+          "k9": 12.98,
+          "bb9": 2.27,
+          "hr9": 0.72,
+          "days_rest": 6
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      }
+    }
+  ]
 }
