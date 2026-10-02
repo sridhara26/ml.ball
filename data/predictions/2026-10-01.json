@@ -21,8 +21,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-01T23:13:20.550462+00:00"
+        "home_won": true,
+        "home_score": 6,
+        "away_score": 2,
+        "graded_at_utc": "2026-10-02T03:13:20.619558+00:00"
       },
       "game_type": "F",
       "series_description": "NL Wild Card Series",
