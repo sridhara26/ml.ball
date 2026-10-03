@@ -21,8 +21,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-03T16:12:20.249966+00:00"
+        "home_won": false,
+        "home_score": 0,
+        "away_score": 3,
+        "graded_at_utc": "2026-10-03T20:13:20.309112+00:00"
       },
       "game_type": "D",
       "series_description": "AL Division Series",
