@@ -74,6 +74,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-10-03T21:44:20.210143+00:00"
+      },
       "game_type": "D",
       "series_description": "AL Division Series",
       "series_game": 1,
@@ -96,6 +100,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-10-03T21:44:20.210143+00:00"
+      },
       "game_type": "D",
       "series_description": "NL Division Series",
       "series_game": 1,
