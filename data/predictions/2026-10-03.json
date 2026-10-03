@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-03",
+  "generated_at_utc": "2026-10-03T14:16:20.733795+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "CLE",
+      "away": "CHW",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5348623335361481,
+      "seed_std": 0.013436766480902734,
+      "home_sp": "Parker Messick",
+      "away_sp": "Hagen Smith",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "announced"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 1,
+      "series_of": 5
+    },
+    {
+      "home": "LAD",
+      "away": "ATL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5645592391490937,
+      "seed_std": 0.019488005558049762,
+      "home_sp": "Tarik Skubal",
+      "away_sp": null,
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true,
+      "game_type": "D",
+      "series_description": "NL Division Series",
+      "series_game": 1,
+      "series_of": 5
+    },
+    {
+      "home": "TBR",
+      "away": "NYY",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5054479688405991,
+      "seed_std": 0.018878297404308728,
+      "home_sp": "Drew Rasmussen",
+      "away_sp": "Gerrit Cole",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 1,
+      "series_of": 5
+    },
+    {
+      "home": "MIL",
+      "away": "SDP",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5863151133060456,
+      "seed_std": 0.01750106080946928,
+      "home_sp": "Jacob Misiorowski",
+      "away_sp": "Robbie Ray",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "NL Division Series",
+      "series_game": 1,
+      "series_of": 5
+    }
+  ]
+}
