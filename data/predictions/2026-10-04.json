@@ -1,14 +1,14 @@
 {
   "date": "2026-10-04",
-  "generated_at_utc": "2026-10-04T14:16:07.663330+00:00",
+  "generated_at_utc": "2026-10-04T19:11:28.737398+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "MIL",
       "away": "SDP",
       "dh_game_number": 0,
-      "prob_home_win": 0.5523751139640808,
-      "seed_std": 0.01554915052521406,
+      "prob_home_win": 0.5576018452644348,
+      "seed_std": 0.018123316585464098,
       "home_sp": "Logan Henderson",
       "away_sp": "Michael King",
       "sp_status": {
@@ -16,14 +16,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-04T14:43:20.232363+00:00"
-      },
       "game_type": "D",
       "series_description": "NL Division Series",
       "series_game": 2,
@@ -33,23 +29,19 @@
       "home": "LAD",
       "away": "ATL",
       "dh_game_number": 0,
-      "prob_home_win": 0.5728029131889343,
-      "seed_std": 0.02029702905547391,
+      "prob_home_win": 0.5667008340358735,
+      "seed_std": 0.017490579348580754,
       "home_sp": "Blake Snell",
-      "away_sp": null,
+      "away_sp": "Ray Kerr",
       "sp_status": {
         "home": "confirmed",
-        "away": "tbd"
+        "away": "confirmed"
       },
       "lineup_status": {
         "home": "projected_last_game",
         "away": "projected_last_game"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-04T14:43:20.232363+00:00"
-      },
+      "low_confidence": false,
       "game_type": "D",
       "series_description": "NL Division Series",
       "series_game": 2,
