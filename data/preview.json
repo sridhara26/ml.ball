@@ -1,82 +1,93 @@
 {
-  "date": "2026-10-04",
-  "generated_at_utc": "2026-10-03T14:16:29.733477+00:00",
+  "date": "2026-10-05",
+  "generated_at_utc": "2026-10-04T14:16:16.587902+00:00",
   "n_games": 2,
   "games": [
     {
-      "away": "SDP",
-      "home": "MIL",
+      "away": "CHW",
+      "home": "CLE",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-04T20:00:00Z",
+      "first_pitch_utc": "2026-10-05T21:00:00Z",
       "start_time_tbd": false,
       "day_night": "day",
-      "venue": "American Family Field",
+      "venue": "Progressive Field",
       "game_type": "D",
-      "series_description": "NL Division Series",
+      "series_description": "AL Division Series",
       "series_game": 2,
       "series_of": 5,
       "away_record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0
       },
       "home_record": {
         "wins": 0,
+        "losses": 1
+      },
+      "away_sp": null,
+      "home_sp": {
+        "name": "Gavin Williams",
+        "season": {
+          "starts": 32,
+          "ip": 184.3,
+          "era": 3.76,
+          "k9": 12.11,
+          "bb9": 2.98,
+          "hr9": 1.37,
+          "days_rest": 10
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      }
+    },
+    {
+      "away": "NYY",
+      "home": "TBR",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-10-06T00:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "Tropicana Field",
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 2,
+      "series_of": 5,
+      "away_record": {
+        "wins": 0,
+        "losses": 1
+      },
+      "home_record": {
+        "wins": 1,
         "losses": 0
       },
       "away_sp": {
-        "name": "Michael King",
+        "name": "Cam Schlittler",
         "season": {
-          "starts": 32,
-          "ip": 185.0,
-          "era": 3.21,
-          "k9": 7.74,
-          "bb9": 3.41,
-          "hr9": 0.97,
-          "days_rest": 12
+          "starts": 33,
+          "ip": 193.7,
+          "era": 1.95,
+          "k9": 11.11,
+          "bb9": 2.28,
+          "hr9": 0.74,
+          "days_rest": 11
         }
       },
       "home_sp": {
-        "name": "Logan Henderson",
+        "name": "Freddy Peralta",
         "season": {
-          "starts": 18,
-          "ip": 98.3,
-          "era": 2.47,
-          "k9": 10.07,
-          "bb9": 1.74,
-          "hr9": 1.28,
-          "days_rest": 11
+          "starts": 32,
+          "ip": 169.0,
+          "era": 4.42,
+          "k9": 8.31,
+          "bb9": 3.36,
+          "hr9": 1.22,
+          "days_rest": 10
         }
       },
       "sp_status": {
         "home": "confirmed",
         "away": "confirmed"
-      }
-    },
-    {
-      "away": "ATL",
-      "home": "LAD",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-05T00:00:00Z",
-      "start_time_tbd": false,
-      "day_night": "day",
-      "venue": "UNIQLO Field at Dodger Stadium",
-      "game_type": "D",
-      "series_description": "NL Division Series",
-      "series_game": 2,
-      "series_of": 5,
-      "away_record": {
-        "wins": 0,
-        "losses": 0
-      },
-      "home_record": {
-        "wins": 0,
-        "losses": 0
-      },
-      "away_sp": null,
-      "home_sp": null,
-      "sp_status": {
-        "home": "tbd",
-        "away": "tbd"
       }
     }
   ]
