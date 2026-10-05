@@ -1,88 +1,99 @@
 {
-  "date": "2026-10-05",
-  "generated_at_utc": "2026-10-04T14:16:16.587902+00:00",
+  "date": "2026-10-06",
+  "generated_at_utc": "2026-10-05T14:11:53.609615+00:00",
   "n_games": 2,
   "games": [
     {
-      "away": "CHW",
-      "home": "CLE",
+      "away": "LAD",
+      "home": "ATL",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-05T21:00:00Z",
+      "first_pitch_utc": "2026-10-06T22:00:00Z",
       "start_time_tbd": false,
-      "day_night": "day",
-      "venue": "Progressive Field",
+      "day_night": "night",
+      "venue": "Truist Park",
       "game_type": "D",
-      "series_description": "AL Division Series",
-      "series_game": 2,
+      "series_description": "NL Division Series",
+      "series_game": 3,
       "series_of": 5,
       "away_record": {
         "wins": 1,
-        "losses": 0
-      },
-      "home_record": {
-        "wins": 0,
         "losses": 1
       },
-      "away_sp": null,
-      "home_sp": {
-        "name": "Gavin Williams",
+      "home_record": {
+        "wins": 1,
+        "losses": 1
+      },
+      "away_sp": {
+        "name": "Yoshinobu Yamamoto",
         "season": {
-          "starts": 32,
-          "ip": 184.3,
-          "era": 3.76,
-          "k9": 12.11,
-          "bb9": 2.98,
-          "hr9": 1.37,
-          "days_rest": 10
+          "starts": 28,
+          "ip": 185.0,
+          "era": 2.53,
+          "k9": 8.85,
+          "bb9": 2.04,
+          "hr9": 0.97,
+          "days_rest": 13
+        }
+      },
+      "home_sp": {
+        "name": "Chris Sale",
+        "season": {
+          "starts": 27,
+          "ip": 162.7,
+          "era": 2.16,
+          "k9": 11.07,
+          "bb9": 1.72,
+          "hr9": 0.55,
+          "days_rest": 13
         }
       },
       "sp_status": {
         "home": "confirmed",
-        "away": "tbd"
+        "away": "confirmed"
       }
     },
     {
-      "away": "NYY",
-      "home": "TBR",
+      "away": "MIL",
+      "home": "SDP",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-06T00:00:00Z",
+      "first_pitch_utc": "2026-10-07T01:30:00Z",
       "start_time_tbd": false,
       "day_night": "night",
-      "venue": "Tropicana Field",
+      "venue": "Petco Park",
       "game_type": "D",
-      "series_description": "AL Division Series",
-      "series_game": 2,
+      "series_description": "NL Division Series",
+      "series_game": 3,
       "series_of": 5,
       "away_record": {
-        "wins": 0,
-        "losses": 1
-      },
-      "home_record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0
       },
+      "home_record": {
+        "wins": 0,
+        "losses": 2
+      },
       "away_sp": {
-        "name": "Cam Schlittler",
+        "name": "Dustin May",
         "season": {
-          "starts": 33,
-          "ip": 193.7,
-          "era": 1.95,
-          "k9": 11.11,
-          "bb9": 2.28,
-          "hr9": 0.74,
-          "days_rest": 11
+          "starts": 31,
+          "ip": 145.7,
+          "era": 4.7,
+          "k9": 8.9,
+          "bb9": 3.09,
+          "hr9": 0.86,
+          "days_rest": 10
         }
       },
       "home_sp": {
-        "name": "Freddy Peralta",
+        "name": "Nick Pivetta",
         "season": {
-          "starts": 32,
-          "ip": 169.0,
-          "era": 4.42,
-          "k9": 8.31,
-          "bb9": 3.36,
-          "hr9": 1.22,
-          "days_rest": 10
+          "starts": 8,
+          "ip": 34.7,
+          "era": 2.86,
+          "k9": 10.9,
+          "bb9": 2.08,
+          "hr9": 0.52,
+          "days_rest": 12
         }
       },
       "sp_status": {

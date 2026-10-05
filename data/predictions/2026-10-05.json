@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-05",
+  "generated_at_utc": "2026-10-05T14:11:44.605783+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "CLE",
+      "away": "CHW",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5560791850090027,
+      "seed_std": 0.019102570999140464,
+      "home_sp": "Gavin Williams",
+      "away_sp": "Anthony Kay",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 2,
+      "series_of": 5
+    },
+    {
+      "home": "TBR",
+      "away": "NYY",
+      "dh_game_number": 0,
+      "prob_home_win": 0.502501392364502,
+      "seed_std": 0.016743931128356055,
+      "home_sp": "Freddy Peralta",
+      "away_sp": "Cam Schlittler",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 2,
+      "series_of": 5
+    }
+  ]
+}
