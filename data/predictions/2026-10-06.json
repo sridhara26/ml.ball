@@ -20,6 +20,10 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-10-06T14:13:37.754816+00:00"
+      },
       "game_type": "D",
       "series_description": "NL Division Series",
       "series_game": 3,
@@ -42,6 +46,10 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-10-06T14:13:37.754816+00:00"
+      },
       "game_type": "D",
       "series_description": "NL Division Series",
       "series_game": 3,
