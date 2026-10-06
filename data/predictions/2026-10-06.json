@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-06",
+  "generated_at_utc": "2026-10-06T14:10:58.424331+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "ATL",
+      "away": "LAD",
+      "dh_game_number": 0,
+      "prob_home_win": 0.508474737405777,
+      "seed_std": 0.013765608858641632,
+      "home_sp": "Chris Sale",
+      "away_sp": "Yoshinobu Yamamoto",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "NL Division Series",
+      "series_game": 3,
+      "series_of": 5
+    },
+    {
+      "home": "SDP",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.49054340124130247,
+      "seed_std": 0.015670795569411516,
+      "home_sp": "Nick Pivetta",
+      "away_sp": "Dustin May",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "NL Division Series",
+      "series_game": 3,
+      "series_of": 5
+    }
+  ]
+}
