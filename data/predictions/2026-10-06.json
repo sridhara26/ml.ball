@@ -1,6 +1,6 @@
 {
   "date": "2026-10-06",
-  "generated_at_utc": "2026-10-06T21:11:30.079292+00:00",
+  "generated_at_utc": "2026-10-07T00:41:29.030751+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -33,8 +33,8 @@
       "home": "SDP",
       "away": "MIL",
       "dh_game_number": 0,
-      "prob_home_win": 0.4678837239742279,
-      "seed_std": 0.020405123041327727,
+      "prob_home_win": 0.47846097946166993,
+      "seed_std": 0.01523827006892588,
       "home_sp": "Nick Pivetta",
       "away_sp": "Dustin May",
       "sp_status": {
@@ -43,13 +43,9 @@
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-06T21:12:20.236729+00:00"
-      },
       "game_type": "D",
       "series_description": "NL Division Series",
       "series_game": 3,
