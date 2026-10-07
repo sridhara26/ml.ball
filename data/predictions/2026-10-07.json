@@ -1,6 +1,6 @@
 {
   "date": "2026-10-07",
-  "generated_at_utc": "2026-10-07T21:11:12.308484+00:00",
+  "generated_at_utc": "2026-10-07T23:11:08.321693+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
@@ -59,8 +59,8 @@
       "home": "NYY",
       "away": "TBR",
       "dh_game_number": 0,
-      "prob_home_win": 0.5460338115692138,
-      "seed_std": 0.017859627813875352,
+      "prob_home_win": 0.5460324108600616,
+      "seed_std": 0.017859163683677348,
       "home_sp": "Max Fried",
       "away_sp": "Nick Martinez",
       "sp_status": {
@@ -72,10 +72,6 @@
         "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-07T21:12:53.877889+00:00"
-      },
       "game_type": "D",
       "series_description": "AL Division Series",
       "series_game": 3,
@@ -85,23 +81,19 @@
       "home": "SDP",
       "away": "MIL",
       "dh_game_number": 0,
-      "prob_home_win": 0.5104253858327865,
-      "seed_std": 0.016952708230286676,
+      "prob_home_win": 0.49627830386161803,
+      "seed_std": 0.016263381117899104,
       "home_sp": "Walker Buehler",
-      "away_sp": null,
+      "away_sp": "Robert Gasser",
       "sp_status": {
         "home": "confirmed",
-        "away": "tbd"
+        "away": "confirmed"
       },
       "lineup_status": {
         "home": "announced",
-        "away": "projected_last_game"
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-07T21:12:53.877889+00:00"
-      },
+      "low_confidence": false,
       "game_type": "D",
       "series_description": "NL Division Series",
       "series_game": 4,
