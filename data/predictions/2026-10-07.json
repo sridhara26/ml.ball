@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-07",
+  "generated_at_utc": "2026-10-07T14:17:56.206595+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "CHW",
+      "away": "CLE",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5176215797662735,
+      "seed_std": 0.015106498374742438,
+      "home_sp": "Sean Newcomb",
+      "away_sp": "Daniel Espino",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 3,
+      "series_of": 5
+    },
+    {
+      "home": "ATL",
+      "away": "LAD",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4798277407884598,
+      "seed_std": 0.018341608131399532,
+      "home_sp": "Tyler Mahle",
+      "away_sp": "Tyler Glasnow",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "NL Division Series",
+      "series_game": 4,
+      "series_of": 5
+    },
+    {
+      "home": "NYY",
+      "away": "TBR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5421539366245269,
+      "seed_std": 0.015674709447141794,
+      "home_sp": "Max Fried",
+      "away_sp": "Nick Martinez",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 3,
+      "series_of": 5
+    },
+    {
+      "home": "SDP",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5104234009981156,
+      "seed_std": 0.01695299663376343,
+      "home_sp": "Walker Buehler",
+      "away_sp": null,
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true,
+      "game_type": "D",
+      "series_description": "NL Division Series",
+      "series_game": 4,
+      "series_of": 5
+    }
+  ]
+}
