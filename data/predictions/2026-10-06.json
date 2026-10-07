@@ -21,8 +21,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-06T21:12:20.236729+00:00"
+        "home_won": false,
+        "home_score": 1,
+        "away_score": 3,
+        "graded_at_utc": "2026-10-07T05:49:12.152419+00:00"
       },
       "game_type": "D",
       "series_description": "NL Division Series",
@@ -47,8 +49,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-07T00:43:20.259801+00:00"
+        "home_won": true,
+        "home_score": 4,
+        "away_score": 3,
+        "graded_at_utc": "2026-10-07T05:49:12.152419+00:00"
       },
       "game_type": "D",
       "series_description": "NL Division Series",
