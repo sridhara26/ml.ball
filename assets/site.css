@@ -497,6 +497,7 @@ a.slate-row:hover::after { color: var(--accent); }
 .flag.ok { color: var(--win); border-color: var(--win); }
 .flag.loss, .flag.result-loss { color: var(--loss); border-color: var(--loss); }
 .flag.quiet { color: var(--faint); border-color: var(--rule); }
+.flag.ps-tag { color: var(--accent); border-color: var(--accent); margin-left: 4px; }
 
 /* ---------- chip legend (collapsible, index.html) ---------- */
 
@@ -726,6 +727,72 @@ footer a { color: var(--muted); }
 }
 .team-tag { color: var(--ink); font-weight: 600; }
 
+/* Compact two-option switch that sits next to the numbers it changes: the
+   lineup drop-downs (.row-seg) and the team stats header (.stats-seg). */
+.seg {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+}
+.seg-tab {
+  appearance: none;
+  margin: 0;
+  padding: 4px 9px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+.seg-tab:first-child { border-radius: calc(var(--radius) - 1px) 0 0 calc(var(--radius) - 1px); }
+.seg-tab:last-child { border-radius: 0 calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0; }
+.seg-tab + .seg-tab { border-left: 1px solid var(--rule-strong); }
+.seg-tab:hover { background: var(--paper-2); color: var(--ink); }
+.seg-tab[aria-selected="true"] { background: var(--accent); color: var(--paper); }
+.seg-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* the drop-down's strip: full width, equal-width cells that never wrap */
+.row-seg { width: 100%; margin: 0 0 10px; }
+.row-seg .seg-tab { flex: 1 1 0; padding: 4px 4px; text-align: center; white-space: nowrap; }
+
+/* Team stats pinned bar: shares .compare-row's column template (label | away |
+   home), so its team codes sit over the values below. The season | postseason
+   switch (postseason games only) is in the label cell. Pinned like the lineup
+   thead: same top (just under the win-prob bar, or under the nav while that
+   bar is tucked) and a z-index below .game-sticky's 5. It sticks inside
+   #team-stats only, so it scrolls away with the section. Opaque, and the -8px
+   shadow paints the 8px gap above the pin point the way .slate-section-label
+   does. */
+.compare-row.compare-codes.stats-scope-bar {
+  position: sticky;
+  top: var(--detail-sticky-top, var(--sticky-top));
+  z-index: 4;
+  align-items: center;
+  margin: 0 0 8px;
+  padding: 4px 0 3px;
+  background: var(--paper);
+  box-shadow: 0 -8px 0 var(--paper);
+}
+/* the switch shrinks with its cell instead of overflowing it (tabs clip with an
+   ellipsis as a last resort); the narrow-screen padding keeps them whole down
+   to 320px */
+.stats-scope-bar .compare-label { min-width: 0; }
+.stats-scope-bar .seg-tab { text-transform: none; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 344px) {
+  .stats-scope-bar .seg-tab { padding: 4px 4px; letter-spacing: 0; }
+}
+/* the bar spans the section, so on a wide screen the groups stack in one
+   column of the same width instead of the two-column grid */
+@media (min-width: 900px) {
+  #team-stats .compare-cols { grid-template-columns: 1fr; max-width: 620px; }
+  #team-stats .stats-scope-bar { max-width: 620px; }
+}
+
 .game-meta { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
 .meta-row { font-size: 14px; color: var(--muted); }
 
@@ -795,6 +862,7 @@ footer a { color: var(--muted); }
 .table-scroll th, .table-scroll td { white-space: nowrap; }
 
 .sp-season-table th, .sp-season-table td { text-align: center; }
+.sp-season-table td.sp-row-label { text-align: left; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); }
 
 /* The collapsed lineup table (game.html) is the one table-scroll consumer
    cut down to fit 360px without horizontal scrolling (5 columns instead of

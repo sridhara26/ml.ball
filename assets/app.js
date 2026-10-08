@@ -23,8 +23,13 @@ function escapeHtml(s) {
   }[c]));
 }
 
-function pct(p) {
-  return (p * 100).toFixed(1) + "%";
+/* Away/home win-prob text, widened until the two sides differ: 2026-10-07 CLE @ CHW (prob_home_win 0.49959) read
+   "50.0%" on both sides while the pick convention (pHome >= 0.5 is home) chose CLE at 50.04%. */
+function winProbPairText(pHome, baseDigits) {
+  const fmt = (p, d) => (p * 100).toFixed(d);
+  let digits = baseDigits;
+  while (digits < 2 && fmt(1 - pHome, digits) === fmt(pHome, digits)) digits += 1;
+  return { away: fmt(1 - pHome, digits) + "%", home: fmt(pHome, digits) + "%" };
 }
 
 function isFiniteNum(v) { return typeof v === "number" && Number.isFinite(v); }
@@ -418,7 +423,7 @@ function gameStatusTagHtml(status) {
 
 function gameRowInnerHtml(g, shortTime = null, statusInfo = null) {
   const pHome = g.prob_home_win;
-  const pAway = 1 - pHome;
+  const probText = winProbPairText(pHome, 1);
   const homeFav = pHome >= 0.5;
 
   const rowFlags = [];
@@ -452,11 +457,11 @@ function gameRowInnerHtml(g, shortTime = null, statusInfo = null) {
   // grid-template-areas handle the actual visual placement independently.
   return `
     <div class="team-cell away">${codeLineHtml(awayCode, false)}<span class="sp" title="${awaySp}">${awaySp}</span></div>
-    <div class="pct-cell${homeFav ? "" : " fav"}">${pct(pAway)}</div>
+    <div class="pct-cell${homeFav ? "" : " fav"}">${probText.away}</div>
     ${awayRunsHtml}
     <div class="mid-line"><span class="at-sep" aria-hidden="true">@</span>${timeHtml}</div>
     <div class="team-cell home">${codeLineHtml(homeCode, true)}<span class="sp" title="${homeSp}">${homeSp}</span></div>
-    <div class="pct-cell home${homeFav ? " fav" : ""}">${pct(pHome)}</div>
+    <div class="pct-cell home${homeFav ? " fav" : ""}">${probText.home}</div>
     ${homeRunsHtml}
     ${flagsHtml ? `<div class="row-flags">${flagsHtml}</div>` : ""}`;
 }
@@ -1388,19 +1393,19 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader, star
   const flags = [];
   if (matchGame) {
     const pHome = matchGame.prob_home_win;
-    const pAway = 1 - pHome;
+    const probText = winProbPairText(pHome, 1);
     const homeFav = pHome >= 0.5;
     matchupHtml = `
       <div class="micro-label">Model win probability</div>
       <div class="matchup">
         <div class="team away">
           <span class="code" style="--team-color:${teamColor(away)}">${awayCode}</span>
-          <span class="pct ${homeFav ? "dog" : "fav"}">${pct(pAway)}</span>
+          <span class="pct ${homeFav ? "dog" : "fav"}">${probText.away}</span>
         </div>
         <span class="at">@</span>
         <div class="team home">
           <span class="code" style="--team-color:${teamColor(home)}">${homeCode}</span>
-          <span class="pct ${homeFav ? "fav" : "dog"}">${pct(pHome)}</span>
+          <span class="pct ${homeFav ? "fav" : "dog"}">${probText.home}</span>
         </div>
       </div>
       ${contestedTagHtml(matchGame)}`;
@@ -1474,9 +1479,11 @@ function renderGameHeaderHtml({ away, home, dh }, matchGame, detailsHeader, star
    so, pa, k_pct, bb_pct }, any field left undefined renders as the "-"
    placeholder), or null when the underlying data is absent — one section
    per {season, career, vs SP}, assembled into the row's expanded detail by
-   lineupStatsSectionsHtml. k_pct/bb_pct only ever come from season_totals
-   (career/vs_sp payloads don't carry them), same source + same "avg" in st
-   fallback rule the collapsed row used before Task A moved them here. */
+   lineupStatsSectionsHtml. k_pct/bb_pct come from season_totals, and from
+   career in details files built on or after 2026-10-08 (pipeline commit
+   cb56c9cb93; older career payloads render "-"); vs_sp still does not carry
+   them. Same source + same "avg" in st fallback rule the collapsed row used
+   before Task A moved them here. */
 function lineupRowSeasonStats(seasonYear, st, rates) {
   if (!st) return null;
   // "avg" in st discriminates an old, pre-field JSON (fall back to the
@@ -1499,7 +1506,7 @@ function lineupRowCareerStats(car) {
   return {
     label: "Career",
     g: car.g, ab: car.ab, h: car.h, hr: car.hr, bb: car.bb, so: car.so, pa: car.pa,
-    avg: car.avg, obp: car.obp, slg: car.slg,
+    avg: car.avg, obp: car.obp, slg: car.slg, k_pct: car.k_pct, bb_pct: car.bb_pct,
   };
 }
 
@@ -1532,6 +1539,9 @@ const LINEUP_DETAIL_FIELDS = [
   ["BB%", "bb_pct", fmtPctVal],
 ];
 
+/* A batter's line against one pitcher carries only these (same order). */
+const LINEUP_VS_FIELDS = LINEUP_DETAIL_FIELDS.filter(([, key]) => ["avg", "ab", "h", "hr", "bb", "so"].includes(key));
+
 /* Shared row -> detail renderer for the lineup-row expansion (season /
    career / vs-SP). Used to be an 11-column table inside .table-scroll,
    handing anyone who tapped a player a second horizontal scroller nested
@@ -1539,9 +1549,9 @@ const LINEUP_DETAIL_FIELDS = [
    available width, so the expanded row never scrolls sideways either.
    Fields absent from a given section (e.g. vs-SP has no G/PA/OBP/SLG/K%/
    BB%) still render, via fmtOrDash's "-" placeholder, same as the table did. */
-function lineupStatsSectionsHtml(rows) {
+function lineupStatsSectionsHtml(rows, fields = LINEUP_DETAIL_FIELDS) {
   return rows.map((r) => {
-    const pairsHtml = LINEUP_DETAIL_FIELDS.map(([label, key, fmtFn]) => `<div class="stat-pair">
+    const pairsHtml = fields.map(([label, key, fmtFn]) => `<div class="stat-pair">
         <span class="stat-pair-label">${label}</span>
         <span class="stat-pair-val">${fmtOrDash(r[key], fmtFn)}</span>
       </div>`).join("");
@@ -1552,21 +1562,56 @@ function lineupStatsSectionsHtml(rows) {
   }).join("");
 }
 
-function lineupRowDetailHtml(row, seasonYear, oppSpName) {
-  const stats = [
-    lineupRowSeasonStats(seasonYear, row.season_totals, row),
-    lineupRowCareerStats(row.career),
-    lineupRowVsSpStats(row.vs_sp, oppSpName),
-  ].filter(Boolean);
-  if (stats.length === 0) return "";
-  return lineupStatsSectionsHtml(stats);
+/* Page-level choice behind the local switches (not stored): _dropScope is the
+   lineup drop-downs' tab ("reg" | "post" | "career" | "vs"; a row lacking it
+   opens on its first tab with data, so a regular-season page opens on Season), _statsScope
+   the team stats section's scope. They share no state; both start on the
+   postseason. */
+let _dropScope = "post";
+let _statsScope = "postseason";
+
+/* Compact two-option switch (team stats); the first option is the regular season. */
+function segHtml(cls, label, scope, seasonYear) {
+  const tab = (key, text) => `<button type="button" class="seg-tab" role="tab" data-scope="${key}" aria-selected="${scope === key}" tabindex="${scope === key ? 0 : -1}">${text}</button>`;
+  return `<div class="seg ${cls}" role="tablist" aria-label="${label}">${tab("regular", `${escapeHtml(seasonYear)} season`)}${tab("postseason", "Postseason")}</div>`;
+}
+
+/* The drop-down of a lineup row: a strip of short tabs over one panel each,
+   the long name in the panel's heading. A postseason game (postRows is that
+   side's postseason lineup) has Reg | Post | Career | vs SP, the postseason
+   row being the one with the same slot and name; any other game has Season |
+   Career | vs SP. Career is left out when there is none, vs SP when there is
+   neither data nor a named starter. Every panel is in the markup with all but
+   one hidden, so switching never re-renders. */
+function lineupRowDetailHtml(row, seasonYear, oppSpName, postRows = null) {
+  const season = lineupRowSeasonStats(seasonYear, row.season_totals, row);
+  const career = lineupRowCareerStats(row.career);
+  const vs = lineupRowVsSpStats(row.vs_sp, oppSpName);
+  const postRow = postRows ? postRows.find((r) => r && r.slot === row.slot && r.name === row.name) : null;
+  const post = postRow ? lineupRowSeasonStats(seasonYear, postRow.season_totals, postRow) : null;
+  if (!season && !post && !career && !vs) return "";
+  const section = (spec, label, empty, fields) => (spec
+    ? lineupStatsSectionsHtml([{ ...spec, label }], fields)
+    : `<div class="row-detail-section"><div class="row-detail-heading">${escapeHtml(label)}</div><p class="stale-note">${escapeHtml(empty)}</p></div>`);
+  const spName = oppSpName || "TBD";
+  // [key, tab label, panel html, has data]
+  const tabs = [postRows
+    ? ["reg", "Reg", section(season, `${seasonYear} regular season`, "no regular season data"), !!season]
+    : ["reg", "Season", section(season, `${seasonYear} season`, "no season data"), !!season]];
+  if (postRows) tabs.push(["post", "Post", section(post, `${seasonYear} postseason`, "no postseason data"), !!post]);
+  if (career) tabs.push(["career", "Career", section(career, "Career (regular seasons)"), true]);
+  if (vs || oppSpName) tabs.push(["vs", "vs SP", section(vs, `vs ${spName} (career)`, `no history vs ${spName}`, LINEUP_VS_FIELDS), !!vs]);
+  const def = tabs.some(([key]) => key === _dropScope) ? _dropScope : (tabs.find((t) => t[3]) ?? tabs[0])[0];
+  const strip = tabs.map(([key, label]) => `<button type="button" class="seg-tab" role="tab" data-scope="${key}" aria-selected="${key === def}" tabindex="${key === def ? 0 : -1}">${label}</button>`).join("");
+  return `<div class="seg row-seg" role="tablist" aria-label="Player stats view">${strip}</div>`
+    + tabs.map(([key, , html, hasData]) => `<div class="row-scope-panel" data-scope="${key}"${hasData ? "" : " data-empty"}${key === def ? "" : " hidden"}>${html}</div>`).join("");
 }
 
 /* Whether at least one row in `rows` actually has a detail panel — mirrors
    lineupPanelHtml's own per-row `hasDetail` check, used to gate the
    "Tap a player for..." hint above both lineup tables. */
-function anyLineupRowHasDetail(rows, seasonYear, oppSpName) {
-  return (rows || []).some((r) => !!lineupRowDetailHtml(r, seasonYear, oppSpName));
+function anyLineupRowHasDetail(rows, seasonYear, oppSpName, postRows = null) {
+  return (rows || []).some((r) => !!lineupRowDetailHtml(r, seasonYear, oppSpName, postRows));
 }
 
 /* Quintile cut points for the collapsed lineup table's AVG/OPS markers.
@@ -1630,7 +1675,7 @@ function lineupRateMarkHtml(value, cuts, row) {
   return blank;
 }
 
-function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
+function lineupPanelHtml(code, rows, status, seasonYear, oppSpName, postRows = null) {
   if (!rows) {
     return `<div class="lineup-panel">
       <h3>${teamTagHtml(code)}</h3>
@@ -1665,7 +1710,7 @@ function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
     // OPS as a silent zero (K%/BB% moved to the expanded detail instead of
     // being dropped, see lineupRowSeasonStats/LINEUP_DETAIL_FIELDS).
     const opsVal = isFiniteNum(obpVal) && isFiniteNum(slgVal) ? obpVal + slgVal : null;
-    const detailHtml = lineupRowDetailHtml(r, seasonYear, oppSpName);
+    const detailHtml = lineupRowDetailHtml(r, seasonYear, oppSpName, postRows);
     const hasDetail = !!detailHtml;
     const rowId = `lineup-row-${escapeHtml(code)}-${idx}`;
     const rowOpenTag = hasDetail
@@ -1694,25 +1739,34 @@ function lineupPanelHtml(code, rows, status, seasonYear, oppSpName) {
   </div>`;
 }
 
-function renderLineupsHtml(lineups, lineupStatus, awayCode, homeCode, seasonYear, header) {
+function renderLineupsHtml(lineups, lineupStatus, awayCode, homeCode, seasonYear, header, post = null) {
   if (!lineups) {
     return `<h2>Lineups</h2><p class="stale-note">Lineup data unavailable.</p>`;
   }
   const status = lineupStatus || {};
   const h = header || {};
-  const footer = lineups.stats_as_of
-    ? `<p class="stale-note">player rates as of ${escapeHtml(lineups.stats_as_of)}</p>` : "";
+  // a postseason game says what each set of rates runs through
+  const footerClauses = post
+    ? [lineups.stats_as_of && `regular-season rates through ${escapeHtml(fmtShortDate(lineups.stats_as_of))}`,
+       post.games_through && `postseason through ${escapeHtml(fmtShortDate(post.games_through))}`].filter(Boolean)
+    : [];
+  const footer = post
+    ? (footerClauses.length ? `<p class="stale-note">${footerClauses.join(" · ")}</p>` : "")
+    : (lineups.stats_as_of
+      ? `<p class="stale-note">player rates as of ${escapeHtml(lineups.stats_as_of)}</p>` : "");
   const hasLgAvg = [...(lineups.away || []), ...(lineups.home || [])].some((r) => r.source === "league_avg");
   const legend = hasLgAvg
     ? `<p class="stale-note lg-avg-legend">* No player-level data matched (call-up or name mismatch). League-average rates shown.</p>`
     : "";
-  const hasAnyDetail = anyLineupRowHasDetail(lineups.away, seasonYear, h.home_sp?.name)
-    || anyLineupRowHasDetail(lineups.home, seasonYear, h.away_sp?.name);
+  // with a postseason block each side's postseason rows feed the drop-downs
+  const postRowsFor = (side) => (post ? (Array.isArray(post.lineups?.[side]) ? post.lineups[side] : []) : null);
+  const hasAnyDetail = anyLineupRowHasDetail(lineups.away, seasonYear, h.home_sp?.name, postRowsFor("away"))
+    || anyLineupRowHasDetail(lineups.home, seasonYear, h.away_sp?.name, postRowsFor("home"));
   const hint = hasAnyDetail
-    ? `<p class="stale-note lineup-hint">Tap a player for season, career, and vs-starter detail.</p>`
+    ? `<p class="stale-note lineup-hint">${post ? "Tap a player for season, postseason, career and vs-starter detail." : "Tap a player for season, career, and vs-starter detail."}</p>`
     : "";
-  const awayPanel = lineupPanelHtml(awayCode, lineups.away, status.away, seasonYear, h.home_sp?.name);
-  const homePanel = lineupPanelHtml(homeCode, lineups.home, status.home, seasonYear, h.away_sp?.name);
+  const awayPanel = lineupPanelHtml(awayCode, lineups.away, status.away, seasonYear, h.home_sp?.name, postRowsFor("away"));
+  const homePanel = lineupPanelHtml(homeCode, lineups.home, status.home, seasonYear, h.away_sp?.name, postRowsFor("home"));
   // Names the population the quintile triangles are measured against, once
   // for both tables: the per-cell aria-label says only "top 20%", and
   // the hover title that spells the rest out is unreachable on a phone. It
@@ -1740,8 +1794,52 @@ function renderLineupsHtml(lineups, lineupStatus, awayCode, homeCode, seasonYear
     ${legend}`;
 }
 
+/* Click or ArrowLeft/ArrowRight (wrapping) on a two-tab switch;
+   onSelect(scope, viaKeyboard). */
+function wireSeg(seg, onSelect) {
+  if (!seg) return;
+  const tabs = Array.from(seg.querySelectorAll('[role="tab"]'));
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => onSelect(t.dataset.scope, false));
+    t.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      onSelect(tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length].dataset.scope, true);
+    });
+  });
+}
+
+/* Paints one drop-down's tabs and panels from _dropScope (a row without that
+   tab, e.g. no Career, shows its first tab that has data). A row paints itself
+   when the reader opens it, so a choice made in one row reaches rows opened
+   afterwards without touching the others. */
+function applyRowScope(detailRow) {
+  const seg = detailRow.querySelector(".row-seg");
+  if (!seg) return;
+  const tabs = Array.from(seg.querySelectorAll('[role="tab"]'));
+  const panels = Array.from(detailRow.querySelectorAll(".row-scope-panel"));
+  const hasData = (key) => panels.some((p) => p.dataset.scope === key && p.dataset.empty === undefined);
+  const want = tabs.some((t) => t.dataset.scope === _dropScope)
+    ? _dropScope
+    : (tabs.find((t) => hasData(t.dataset.scope)) ?? tabs[0]).dataset.scope;
+  tabs.forEach((t) => {
+    const on = t.dataset.scope === want;
+    t.setAttribute("aria-selected", String(on));
+    t.tabIndex = on ? 0 : -1;
+  });
+  detailRow.querySelectorAll(".row-scope-panel").forEach((p) => { p.hidden = p.dataset.scope !== want; });
+}
+
 function wireExpandableRows(container) {
   if (!container || typeof container.querySelectorAll !== "function") return;
+  container.querySelectorAll("tr.row-detail").forEach((detailRow) => {
+    const seg = detailRow.querySelector(".row-seg");
+    wireSeg(seg, (next, focus) => {
+      _dropScope = next;
+      applyRowScope(detailRow);
+      if (focus) Array.from(seg.querySelectorAll('[role="tab"]')).find((t) => t.dataset.scope === next)?.focus();
+    });
+  });
   container.querySelectorAll("tr.lineup-row.has-detail").forEach((row) => {
     const targetId = row.dataset.detailTarget;
     const detailRow = targetId ? document.getElementById(targetId) : null;
@@ -1751,6 +1849,7 @@ function wireExpandableRows(container) {
       const expanded = row.getAttribute("aria-expanded") === "true";
       row.setAttribute("aria-expanded", String(!expanded));
       detailRow.hidden = expanded;
+      if (!expanded) applyRowScope(detailRow);
       if (caret) caret.textContent = expanded ? "▸" : "▾";
     };
     row.addEventListener("click", toggle);
@@ -1791,13 +1890,13 @@ function statRows(rowsConfig, obj) {
 }
 
 const BATTING_ROWS = [
+  ["runs_per_game", "Runs/game", { fmt: fmt1 }],
   ["avg", "AVG", { fmt: fmtRate }],
   ["obp", "OBP", { fmt: fmtRate }],
   ["slg", "SLG", { fmt: fmtRate }],
-  ["runs_per_game", "Runs/game", { fmt: fmt1 }],
   ["hr_per_game", "HR/game", { fmt: fmt1 }],
-  ["bb_per_game", "BB/game", { fmt: fmt1 }],
   ["so_pct", "K%", { fmt: fmtPctVal, lowerIsBetter: true }],
+  ["bb_per_game", "BB/game", { fmt: fmt1 }],
 ];
 const PITCHING_ROWS = [
   ["era", "ERA", { fmt: fmt2, lowerIsBetter: true }],
@@ -1806,37 +1905,65 @@ const PITCHING_ROWS = [
   ["bb_per_9", "BB/9", { fmt: fmt1, lowerIsBetter: true }],
   ["hr_per_9", "HR/9", { fmt: fmt1, lowerIsBetter: true }],
   ["bullpen_era", "Bullpen ERA", { fmt: fmt2, lowerIsBetter: true }],
-  ["bullpen_whip", "Bullpen WHIP", { fmt: fmt2, lowerIsBetter: true }],
 ];
 const FORM_ROWS = [
-  ["wins", "Wins", { fmt: fmt0 }],
-  ["losses", "Losses", { fmt: fmt0, highlight: false }],
-  ["win_pct", "Win %", { fmt: fmtPctVal }],
   ["streak", "Streak", { fmt: (v) => String(v), highlight: false }],
   ["run_diff_per_game", "Run diff/game", { fmt: fmt2 }],
-  // payload sign convention: positive = games up, the pipeline's
-  // parse_games_behind negates Baseball Reference's GB (e.g. "1.5 GB"
-  // becomes -1.5, "up 0.5" becomes +0.5) — so higher is better here, the
-  // default direction (no lowerIsBetter).
-  ["games_behind", "Games up", { fmt: fmtSigned1 }],
   ["days_rest", "Days rest", { fmt: fmt0, highlight: false }],
 ];
-const H2H_ROWS = [
-  ["games", "Games", { fmt: fmt0, highlight: false }],
-  ["win_pct", "Win %", { fmt: fmtPctVal }],
-  ["avg", "AVG", { fmt: fmtRate }],
-  ["obp", "OBP", { fmt: fmtRate }],
-  ["slg", "SLG", { fmt: fmtRate }],
-  ["runs_per_game", "Runs/game", { fmt: fmt1 }],
-];
+// payload sign convention: positive = games up, the pipeline's
+// parse_games_behind negates Baseball Reference's GB (e.g. "1.5 GB"
+// becomes -1.5, "up 0.5" becomes +0.5) — so higher is better here, the
+// default direction (no lowerIsBetter). Regular season only.
+const FORM_GAMES_ROWS = [["games_behind", "Games up", { fmt: fmtSigned1 }]];
+const H2H_RUNS_ROWS = [["runs_per_game", "Runs/game", { fmt: fmt1 }]];
+
+/* Row whose per-side values are already text (Record, Series); awayScore /
+   homeScore pick the better side, and only when both texts are complete (a
+   "-" cell is never marked better). */
+function compareTextRowHtml(label, awayText, homeText, awayScore, homeScore, opts = {}) {
+  const { lowerIsBetter = false } = opts;
+  let awayBetter = false, homeBetter = false;
+  if (awayText !== "-" && homeText !== "-" && isFiniteNum(awayScore) && isFiniteNum(homeScore) && awayScore !== homeScore) {
+    awayBetter = lowerIsBetter ? awayScore < homeScore : awayScore > homeScore;
+    homeBetter = !awayBetter;
+  }
+  return `<div class="compare-row">
+    <div class="compare-label">${escapeHtml(label)}</div>
+    <div class="compare-val away${awayBetter ? " better" : ""}">${escapeHtml(awayText)}</div>
+    <div class="compare-val home${homeBetter ? " better" : ""}">${escapeHtml(homeText)}</div>
+  </div>`;
+}
+
+const sideVal = (obj, key, side) => obj?.[key]?.[side] ?? null;
+
+/* "93-69", or "-" without wins and losses; better = higher win %. */
+function recordRowHtml(form) {
+  const text = (side) => {
+    const w = sideVal(form, "wins", side), l = sideVal(form, "losses", side);
+    return isFiniteNum(w) && isFiniteNum(l) ? `${w}-${l}` : "-";
+  };
+  return compareTextRowHtml("Record", text("away"), text("home"), sideVal(form, "win_pct", "away"), sideVal(form, "win_pct", "home"));
+}
+
+/* Wins-losses from games and win %, "-" when either is missing; better = higher win %. */
+function seriesRowHtml(label, h2h) {
+  const text = (side) => {
+    const g = sideVal(h2h, "games", side), p = sideVal(h2h, "win_pct", side);
+    if (!isFiniteNum(g) || !isFiniteNum(p)) return "-";
+    const w = Math.round(g * p);
+    return `${w}-${g - w}`;
+  };
+  return compareTextRowHtml(label, text("away"), text("home"), sideVal(h2h, "win_pct", "away"), sideVal(h2h, "win_pct", "home"));
+}
 
 function gameStickyHtml(awayCode, homeCode, matchGame) {
   const away = escapeHtml(awayCode);
   const home = escapeHtml(homeCode);
   const hasProb = matchGame && Number.isFinite(matchGame.prob_home_win);
-  const hp = hasProb ? Math.round(matchGame.prob_home_win * 100) : null;
-  const awayText = hasProb ? `${away} ${100 - hp}%` : away;
-  const homeText = hasProb ? `${hp}% ${home}` : home;
+  const probText = hasProb ? winProbPairText(matchGame.prob_home_win, 1) : null;
+  const awayText = hasProb ? `${away} ${probText.away}` : away;
+  const homeText = hasProb ? `${probText.home} ${home}` : home;
   const sep = hasProb ? "win prob" : "vs";
   return `<div class="game-sticky">
     <span class="side away" style="--team-color:${teamColor(awayCode)}">AWAY · ${awayText}</span>
@@ -1845,26 +1972,59 @@ function gameStickyHtml(awayCode, homeCode, matchGame) {
   </div>`;
 }
 
-function renderTeamStatsHtml(stats, awayCode, homeCode) {
-  if (!stats) return `<h2>Team stats</h2><p class="stale-note">Team stats unavailable.</p>`;
+function renderTeamStatsHtml(stats, awayCode, homeCode, post = null, seasonYear = "", scope = "postseason") {
+  const inPost = !!post && scope === "postseason";
+  const src = inPost ? (post.team_stats && typeof post.team_stats === "object" ? post.team_stats : null) : stats;
   const away = escapeHtml(awayCode);
   const home = escapeHtml(homeCode);
+  // The pinned bar (site.css) sits under the heading and shares the rows'
+  // column template: the section's own season | postseason switch (when the
+  // game has a postseason block) over the label column, the team codes over
+  // the two sides.
+  const bar = `<div class="compare-row compare-codes stats-scope-bar"><div class="compare-label">${post ? segHtml("stats-seg", "Team stats scope", scope, seasonYear) : ""}</div><div class="compare-val away">${away}</div><div class="compare-val home">${home}</div></div>`;
+  const head = `<h2>Team stats</h2>${post || src ? bar : ""}`;
+  if (!src) return `${head}<p class="stale-note">Team stats unavailable.</p>`;
   const groups = [
-    ["Batting", BATTING_ROWS, stats.batting],
-    ["Pitching", PITCHING_ROWS, stats.pitching],
-    ["Recent form", FORM_ROWS, stats.form],
-    ["Head-to-head", H2H_ROWS, stats.head_to_head],
+    ["Form", src.form, (f) => recordRowHtml(f) + statRows([...FORM_ROWS, ...(inPost ? [] : FORM_GAMES_ROWS)], f)],
+    ["Batting", src.batting, (b) => statRows(BATTING_ROWS, b)],
+    ["Pitching", src.pitching, (p) => statRows(PITCHING_ROWS, p)],
+    ["Head-to-head", src.head_to_head, (h) => seriesRowHtml(inPost ? "This series" : "Season series", h) + statRows(H2H_RUNS_ROWS, h)],
   ];
-  const codesRow = `<div class="compare-row compare-codes"><div class="compare-label"></div><div class="compare-val away">${away}</div><div class="compare-val home">${home}</div></div>`;
   const body = groups
-    .filter(([, , obj]) => obj)
-    .map(([title, rowsCfg, obj]) => `<div class="compare-group"><h3>${title}</h3>${codesRow}${statRows(rowsCfg, obj)}</div>`)
+    .filter(([, obj]) => obj)
+    .map(([title, obj, rowsFn]) => `<div class="compare-group"><h3>${title}</h3>${rowsFn(obj)}</div>`)
     .join("");
-  if (!body) return `<h2>Team stats</h2><p class="stale-note">Team stats unavailable.</p>`;
-  return `<h2>Team stats</h2><div class="compare-cols">${body}</div>`;
+  if (!body) return `${head}<p class="stale-note">Team stats unavailable.</p>`;
+  return `${head}<div class="compare-cols">${body}</div>`;
 }
 
-function spSeasonTableHtml(s) {
+/* tag for a postseason entry (a start or a game in recent form): the round and
+   series game when the pipeline sent them ("DS G2"), else a plain "PS". */
+function psTagHtml(entry) {
+  const round = typeof entry?.round === "string" && entry.round ? entry.round : null;
+  const game = isFiniteNum(entry?.series_game) ? `G${entry.series_game}` : null;
+  const text = round || game ? [round || "PS", game].filter(Boolean).join(" ") : "PS";
+  return `<span class="flag ps-tag" title="postseason">${escapeHtml(text)}</span>`;
+}
+
+/* ps (optional) is that starter's postseason block: it adds a labelled
+   second row to the season table. */
+function spSeasonTableHtml(s, ps = null) {
+  if (ps) {
+    const row = (label, x) => `<tr>
+      <td class="sp-row-label">${label}</td>
+      <td>${fmtOrDash(x.starts, fmt0)}</td>
+      <td>${fmtOrDash(x.ip, fmt1)}</td>
+      <td>${fmtOrDash(x.era, fmt2)}</td>
+      <td>${fmtOrDash(x.k9, fmt1)}</td>
+      <td>${fmtOrDash(x.bb9, fmt1)}</td>
+      <td>${fmtOrDash(x.hr9, fmt1)}</td>
+    </tr>`;
+    return `<div class="table-scroll"><table class="lineup-table sp-season-table">
+    <thead><tr><th></th><th>GS</th><th>IP</th><th>ERA</th><th>K/9</th><th>BB/9</th><th>HR/9</th></tr></thead>
+    <tbody>${row("Season", s)}${row("Postseason", ps.season ?? {})}</tbody>
+  </table></div>`;
+  }
   return `<div class="table-scroll"><table class="lineup-table sp-season-table">
     <thead><tr><th>GS</th><th>IP</th><th>ERA</th><th>K/9</th><th>BB/9</th><th>HR/9</th></tr></thead>
     <tbody><tr>
@@ -1898,18 +2058,35 @@ function spVsOpponentTableHtml(vo, oppCode) {
 function spWorkloadLineHtml(s) {
   const bits = [];
   if (s.days_rest != null) bits.push(`rest ${fmtOrDash(s.days_rest, fmt0)}d`);
+  else if (s.rest_unknown) bits.push("rest -");
   if (s.starts_last_30 != null) bits.push(`${fmtOrDash(s.starts_last_30, fmt0)} starts/30d`);
   return bits.join(" · ");
 }
 
-function spPanelHtml(code, sp, oppCode) {
+function spPanelHtml(code, sp, oppCode, ps = null) {
   if (!sp) {
     return `<div class="sp-panel"><h3>${teamTagHtml(code)}</h3><p class="stale-note">No starter info available.</p></div>`;
   }
   const s = sp.season || {};
-  const seasonTable = spSeasonTableHtml(s);
-  const workload = spWorkloadLineHtml(s);
-  const starts = sp.last_starts || [];
+  const seasonTable = spSeasonTableHtml(s, ps);
+  // postseason: days of rest comes from the postseason block when it has one
+  // (the regular figure is stale once the starter has pitched in October) and
+  // reads "rest -" when the block says the team's latest game was cut (its box
+  // is missing), starts in the last 30 days are the regular and postseason
+  // counts added (whichever exists when only one does), and postseason starts
+  // merge into the last-starts list, newest first, five kept.
+  const regular30 = s.starts_last_30, post30 = ps?.season?.starts_last_30;
+  const workload = spWorkloadLineHtml(ps ? {
+    ...s,
+    ...(ps.season?.days_rest_cut === true ? { days_rest: null, rest_unknown: true }
+      : isFiniteNum(ps.season?.days_rest) ? { days_rest: ps.season.days_rest } : {}),
+    ...(isFiniteNum(post30) ? { starts_last_30: isFiniteNum(regular30) ? regular30 + post30 : post30 } : {}),
+  } : s);
+  const starts = ps
+    ? [...(Array.isArray(ps.last_starts) ? ps.last_starts.map((st) => ({ ...st, _ps: true })) : []), ...(sp.last_starts || [])]
+      .sort((a, b) => String(b.date ?? "").localeCompare(String(a.date ?? "")))
+      .slice(0, 5)
+    : (sp.last_starts || []);
   const isDebut = (s.starts == null || s.starts === 0) && starts.length === 0;
 
   const nameLine = `<p>${escapeHtml(sp.name ?? "TBD")}</p>`;
@@ -1921,7 +2098,7 @@ function spPanelHtml(code, sp, oppCode) {
     : `<div class="table-scroll"><table class="lineup-table">
         <thead><tr><th>Date</th><th>IP</th><th>ER</th><th>SO</th><th>BB</th><th>HR</th><th>P</th></tr></thead>
         <tbody>${starts.map((st) => `<tr>
-          <td>${escapeHtml(st.date ?? "")}</td>
+          <td>${escapeHtml(st.date ?? "")}${st._ps ? ` ${psTagHtml(st)}` : ""}</td>
           <td>${fmtOrDash(st.ip, fmt1)}</td>
           <td>${fmtOrDash(st.er, fmt0)}</td>
           <td>${fmtOrDash(st.so, fmt0)}</td>
@@ -1947,12 +2124,13 @@ function spPanelHtml(code, sp, oppCode) {
   </div>`;
 }
 
-function renderSpDetailHtml(spDetail, awayCode, homeCode) {
+function renderSpDetailHtml(spDetail, awayCode, homeCode, post = null) {
   if (!spDetail) return `<h2>Starting pitchers</h2><p class="stale-note">Starter detail unavailable.</p>`;
+  const psFor = (side) => (post ? (post.sp_detail?.[side] && typeof post.sp_detail[side] === "object" ? post.sp_detail[side] : {}) : null);
   return `<h2>Starting pitchers</h2>
     <div class="detail-grid">
-      ${spPanelHtml(awayCode, spDetail.away, homeCode)}
-      ${spPanelHtml(homeCode, spDetail.home, awayCode)}
+      ${spPanelHtml(awayCode, spDetail.away, homeCode, psFor("away"))}
+      ${spPanelHtml(homeCode, spDetail.home, awayCode, psFor("home"))}
     </div>`;
 }
 
@@ -1971,15 +2149,22 @@ function formChipHtml(entry, code) {
   const atHomeAttr = entry.at_home ? "1" : "0";
   const rfAttr = isFiniteNum(entry.rf) ? String(entry.rf) : "";
   const raAttr = isFiniteNum(entry.ra) ? String(entry.ra) : "";
+  const psTag = entry._ps ? ` ${psTagHtml(entry)}` : "";
   return `<div class="form-chip" data-fc-date="${dateAttr}" data-fc-team="${teamAttr}" data-fc-opp="${oppAttr}" data-fc-at-home="${atHomeAttr}" data-fc-rf="${rfAttr}" data-fc-ra="${raAttr}">
     <span class="fc-date" title="${escapeHtml(entry.date ?? "")}">${escapeHtml(fmtShortDate(entry.date))}</span>
-    <span class="fc-opp">${oppLabel}</span>
+    <span class="fc-opp">${oppLabel}${psTag}</span>
     <span class="fc-score">${score}</span>
     <span class="flag ${cls}">${text}</span>
   </div>`;
 }
 
-function formColumnHtml(code, entries) {
+function formColumnHtml(code, entries, psEntries = null) {
+  // postseason games merge into the list, newest first, the last ten kept
+  if (psEntries) {
+    entries = [...(Array.isArray(psEntries) ? psEntries.map((e) => ({ ...e, _ps: true })) : []), ...(entries || [])]
+      .sort((a, b) => String(b.date ?? "").localeCompare(String(a.date ?? "")))
+      .slice(0, 10);
+  }
   if (!entries || entries.length === 0) {
     return `<div class="form-col"><h3>${teamTagHtml(code)}</h3><p class="stale-note">No recent games.</p></div>`;
   }
@@ -2107,12 +2292,13 @@ async function upgradeRecentFormLinks(containerEl) {
   }
 }
 
-function renderRecentFormHtml(recentForm, awayCode, homeCode) {
+function renderRecentFormHtml(recentForm, awayCode, homeCode, post = null) {
   if (!recentForm) return `<h2>Recent form</h2><p class="stale-note">Recent form unavailable.</p>`;
+  const psFor = (side) => (post ? (post.recent_form?.[side] ?? []) : null);
   return `<h2>Recent form</h2>
     <div class="detail-grid">
-      ${formColumnHtml(awayCode, recentForm.away)}
-      ${formColumnHtml(homeCode, recentForm.home)}
+      ${formColumnHtml(awayCode, recentForm.away, psFor("away"))}
+      ${formColumnHtml(homeCode, recentForm.home, psFor("home"))}
     </div>`;
 }
 
@@ -2195,6 +2381,56 @@ function wireBackLink(el) {
 let _detailCtx = null;
 let _detailEligible = false;
 
+/* The four sections below the header (lineups, team stats, starting pitchers,
+   recent form). When the game has a postseason block the sections merge it in
+   (stat lines, column pairs, merged lists); if that render throws, the
+   sections are rendered again without the block, so a malformed block never
+   takes the regular stats down with it. ctx = { away, home, seasonYear,
+   els: { lineupsEl, statsEl, spEl, formEl } }. */
+function renderDetailSections(gameDetail, ctx) {
+  const post = gameDetail.postseason && typeof gameDetail.postseason === "object" ? gameDetail.postseason : null;
+  try {
+    renderDetailSectionsWith(gameDetail, post, ctx);
+  } catch (e) {
+    if (!post) throw e;
+    renderDetailSectionsWith(gameDetail, null, ctx);
+  }
+}
+
+function renderDetailSectionsWith(gameDetail, post, ctx) {
+  const { away, home, seasonYear, els } = ctx;
+  if (els.lineupsEl) {
+    els.lineupsEl.innerHTML = renderLineupsHtml(
+      gameDetail.lineups, gameDetail.header?.lineup_status, away, home, seasonYear, gameDetail.header, post
+    );
+    wireExpandableRows(els.lineupsEl);
+  }
+  if (els.statsEl) {
+    // the section's own switch re-renders only this section
+    const paintStats = () => {
+      els.statsEl.innerHTML = renderTeamStatsHtml(gameDetail.team_stats, away, home, post, seasonYear, _statsScope);
+      wireSeg(els.statsEl.querySelector?.(".stats-seg"), (next) => {
+        _statsScope = next;
+        try {
+          paintStats();
+        } catch {
+          _statsScope = "regular";
+          paintStats();
+        }
+        // the repaint replaced the focused button, so focus its successor
+        // (click, Enter/Space and arrow keys alike)
+        Array.from(els.statsEl.querySelectorAll('.stats-seg [role="tab"]')).find((t) => t.dataset.scope === _statsScope)?.focus();
+      });
+    };
+    paintStats();
+  }
+  if (els.spEl) els.spEl.innerHTML = renderSpDetailHtml(gameDetail.sp_detail, away, home, post);
+  if (els.formEl) {
+    els.formEl.innerHTML = renderRecentFormHtml(gameDetail.recent_form, away, home, post);
+    upgradeRecentFormLinks(els.formEl);
+  }
+}
+
 async function renderGameDetail() {
   const headerEl = document.getElementById("game-header");
   const stickyEl = document.getElementById("game-sticky");
@@ -2264,18 +2500,7 @@ async function renderGameDetail() {
     // to be detached and --detail-sticky-top holding its stale height.
     observeGameSticky();
 
-    if (lineupsEl) {
-      lineupsEl.innerHTML = renderLineupsHtml(
-        gameDetail.lineups, gameDetail.header?.lineup_status, away, home, date.slice(0, 4), gameDetail.header
-      );
-      wireExpandableRows(lineupsEl);
-    }
-    if (statsEl) statsEl.innerHTML = renderTeamStatsHtml(gameDetail.team_stats, away, home);
-    if (spEl) spEl.innerHTML = renderSpDetailHtml(gameDetail.sp_detail, away, home);
-    if (formEl) {
-      formEl.innerHTML = renderRecentFormHtml(gameDetail.recent_form, away, home);
-      upgradeRecentFormLinks(formEl);
-    }
+    renderDetailSections(gameDetail, { away, home, seasonYear: date.slice(0, 4), els: { lineupsEl, statsEl, spEl, formEl } });
   } catch (e) {
     if (emptyEl) {
       emptyEl.style.display = "";
@@ -2519,6 +2744,34 @@ function _accThinToMax(arr, max) {
   return out.filter((v, i) => i === 0 || v !== out[i - 1]);
 }
 
+/* Drops interior x-axis ticks whose label box would intersect a neighbour's,
+   always keeping the first and last. A label is estimated at 0.62em per
+   character (IBM Plex Mono's advance is about 0.6em) plus a 6px gap, anchored
+   start / end / middle exactly as accuracyChartSvg draws it; an interior tick
+   survives only if it clears both the previously kept tick and the last one
+   (on a ~two-month axis a month-start tick can sit days from the last date). */
+function _accDropOverlappingTicks(tickDates, xOf, tickFontPx) {
+  if (tickDates.length <= 2) return tickDates;
+  const last = tickDates.length - 1;
+  const box = (d, i) => {
+    const w = fmtShortDate(d).length * tickFontPx * 0.62 + 6;
+    const x0 = i === 0 ? xOf(d) : i === last ? xOf(d) - w : xOf(d) - w / 2;
+    return [x0, x0 + w];
+  };
+  const hits = (a, b) => a[0] < b[1] && b[0] < a[1];
+  const lastBox = box(tickDates[last], last);
+  let prevBox = box(tickDates[0], 0);
+  const out = [tickDates[0]];
+  for (let i = 1; i < last; i++) {
+    const b = box(tickDates[i], i);
+    if (hits(b, prevBox) || hits(b, lastBox)) continue;
+    out.push(tickDates[i]);
+    prevBox = b;
+  }
+  out.push(tickDates[last]);
+  return out;
+}
+
 function _accReadoutText(pt) {
   const dayPct = Math.round(pt.dayAcc * 100);
   const cumPct = (pt.cumAcc * 100).toFixed(1);
@@ -2618,7 +2871,7 @@ function accuracyChartSvg(series, bucket = "wide") {
     if (!seen.has(d)) { seen.add(d); candidateDates.push(d); }
   }
   candidateDates.sort();
-  const tickDates = _accThinToMax(candidateDates, tickMax);
+  const tickDates = _accDropOverlappingTicks(_accThinToMax(candidateDates, tickMax), xOf, font.tick);
   const xTicksHtml = tickDates
     .map((d, i) => {
       const anchor = i === 0 ? "start" : i === tickDates.length - 1 ? "end" : "middle";
