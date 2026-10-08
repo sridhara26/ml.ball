@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-08",
+  "generated_at_utc": "2026-10-08T14:16:13.189989+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "CHW",
+      "away": "CLE",
+      "dh_game_number": 0,
+      "prob_home_win": 0.49603763222694397,
+      "seed_std": 0.015030513400891841,
+      "home_sp": "Hagen Smith",
+      "away_sp": "Parker Messick",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 4,
+      "series_of": 5
+    }
+  ]
+}
