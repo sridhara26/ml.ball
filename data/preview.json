@@ -1,6 +1,34 @@
 {
-  "date": "2026-10-09",
-  "generated_at_utc": "2026-10-08T14:16:22.234773+00:00",
-  "n_games": 0,
-  "games": []
+  "date": "2026-10-10",
+  "generated_at_utc": "2026-10-09T13:59:40.386232+00:00",
+  "n_games": 1,
+  "games": [
+    {
+      "away": "CHW",
+      "home": "CLE",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-10-11T00:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "Progressive Field",
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 5,
+      "series_of": 5,
+      "away_record": {
+        "wins": 2,
+        "losses": 2
+      },
+      "home_record": {
+        "wins": 2,
+        "losses": 2
+      },
+      "away_sp": null,
+      "home_sp": null,
+      "sp_status": {
+        "home": "tbd",
+        "away": "tbd"
+      }
+    }
+  ]
 }
