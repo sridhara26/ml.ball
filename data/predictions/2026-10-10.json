@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-10",
+  "generated_at_utc": "2026-10-10T14:16:00.999657+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "CLE",
+      "away": "CHW",
+      "dh_game_number": 0,
+      "prob_home_win": 0.536260986328125,
+      "seed_std": 0.014941603898678437,
+      "home_sp": "Gavin Williams",
+      "away_sp": "Sean Burke",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "D",
+      "series_description": "AL Division Series",
+      "series_game": 5,
+      "series_of": 5
+    }
+  ]
+}
