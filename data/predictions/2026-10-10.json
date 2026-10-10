@@ -20,6 +20,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-10-10T23:13:38.109253+00:00"
+      },
       "game_type": "D",
       "series_description": "AL Division Series",
       "series_game": 5,
