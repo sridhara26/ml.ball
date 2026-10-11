@@ -20,6 +20,10 @@
         "away": "announced"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-10-11T23:13:15.267737+00:00"
+      },
       "game_type": "L",
       "series_description": "NL Championship Series",
       "series_game": 1,
