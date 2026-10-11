@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-11",
+  "generated_at_utc": "2026-10-11T14:09:55.391160+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "MIL",
+      "away": "LAD",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5031304597854614,
+      "seed_std": 0.014612991119375964,
+      "home_sp": "Jacob Misiorowski",
+      "away_sp": "Tarik Skubal",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "L",
+      "series_description": "NL Championship Series",
+      "series_game": 1,
+      "series_of": 7
+    }
+  ]
+}
