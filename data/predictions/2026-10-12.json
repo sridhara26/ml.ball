@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-12",
+  "generated_at_utc": "2026-10-12T14:10:46.190929+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "MIL",
+      "away": "LAD",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5259271323680877,
+      "seed_std": 0.013479998373606323,
+      "home_sp": "Logan Henderson",
+      "away_sp": "Yoshinobu Yamamoto",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "L",
+      "series_description": "NL Championship Series",
+      "series_game": 2,
+      "series_of": 7
+    },
+    {
+      "home": "TBR",
+      "away": "CLE",
+      "dh_game_number": 0,
+      "prob_home_win": 0.548801577091217,
+      "seed_std": 0.016270164660079404,
+      "home_sp": "Drew Rasmussen",
+      "away_sp": "Foster Griffin",
+      "sp_status": {
+        "home": "confirmed",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": false,
+      "game_type": "L",
+      "series_description": "AL Championship Series",
+      "series_game": 1,
+      "series_of": 7
+    }
+  ]
+}
