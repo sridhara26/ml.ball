@@ -49,8 +49,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-12T20:13:15.274315+00:00"
+        "home_won": false,
+        "home_score": 3,
+        "away_score": 7,
+        "graded_at_utc": "2026-10-13T03:12:15.233449+00:00"
       },
       "game_type": "L",
       "series_description": "AL Championship Series",
