@@ -1,14 +1,14 @@
 {
   "date": "2026-10-13",
-  "generated_at_utc": "2026-10-13T14:11:37.479153+00:00",
+  "generated_at_utc": "2026-10-13T23:10:21.468752+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "TBR",
       "away": "CLE",
       "dh_game_number": 0,
-      "prob_home_win": 0.5264946341514587,
-      "seed_std": 0.01846083300415971,
+      "prob_home_win": 0.5270023584365845,
+      "seed_std": 0.018122989338659506,
       "home_sp": "Freddy Peralta",
       "away_sp": "Parker Messick",
       "sp_status": {
@@ -16,14 +16,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-13T14:13:15.248932+00:00"
-      },
       "game_type": "L",
       "series_description": "AL Championship Series",
       "series_game": 2,
