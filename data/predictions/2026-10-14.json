@@ -1,14 +1,14 @@
 {
   "date": "2026-10-14",
-  "generated_at_utc": "2026-10-14T14:20:15.540136+00:00",
+  "generated_at_utc": "2026-10-14T23:11:03.076247+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "LAD",
       "away": "MIL",
       "dh_game_number": 0,
-      "prob_home_win": 0.5520490884780884,
-      "seed_std": 0.020627670946552837,
+      "prob_home_win": 0.5260804742574692,
+      "seed_std": 0.017805458943328478,
       "home_sp": "Blake Snell",
       "away_sp": "Robert Gasser",
       "sp_status": {
@@ -16,14 +16,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-14T14:44:15.401557+00:00"
-      },
       "game_type": "L",
       "series_description": "NL Championship Series",
       "series_game": 3,
