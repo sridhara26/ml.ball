@@ -1,19 +1,57 @@
 {
-  "date": "2026-10-14",
-  "generated_at_utc": "2026-10-13T14:11:46.505532+00:00",
-  "n_games": 1,
+  "date": "2026-10-15",
+  "generated_at_utc": "2026-10-14T14:20:25.957836+00:00",
+  "n_games": 2,
   "games": [
+    {
+      "away": "TBR",
+      "home": "CLE",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-10-15T22:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "Progressive Field",
+      "game_type": "L",
+      "series_description": "AL Championship Series",
+      "series_game": 3,
+      "series_of": 7,
+      "away_record": {
+        "wins": 1,
+        "losses": 1
+      },
+      "home_record": {
+        "wins": 1,
+        "losses": 1
+      },
+      "away_sp": {
+        "name": "Griffin Jax",
+        "season": {
+          "starts": 23,
+          "ip": 103.3,
+          "era": 2.87,
+          "k9": 9.23,
+          "bb9": 2.44,
+          "hr9": 1.05,
+          "days_rest": 19
+        }
+      },
+      "home_sp": null,
+      "sp_status": {
+        "home": "tbd",
+        "away": "confirmed"
+      }
+    },
     {
       "away": "MIL",
       "home": "LAD",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-15T00:00:00Z",
+      "first_pitch_utc": "2026-10-16T01:00:00Z",
       "start_time_tbd": false,
-      "day_night": "day",
+      "day_night": "night",
       "venue": "UNIQLO Field at Dodger Stadium",
       "game_type": "L",
       "series_description": "NL Championship Series",
-      "series_game": 3,
+      "series_game": 4,
       "series_of": 7,
       "away_record": {
         "wins": 2,
@@ -23,22 +61,11 @@
         "wins": 0,
         "losses": 2
       },
-      "away_sp": {
-        "name": "Robert Gasser",
-        "season": {
-          "starts": 20,
-          "ip": 104.0,
-          "era": 3.98,
-          "k9": 8.39,
-          "bb9": 2.86,
-          "hr9": 1.3,
-          "days_rest": 19
-        }
-      },
+      "away_sp": null,
       "home_sp": null,
       "sp_status": {
         "home": "tbd",
-        "away": "confirmed"
+        "away": "tbd"
       }
     }
   ]
