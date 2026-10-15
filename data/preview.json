@@ -1,19 +1,19 @@
 {
-  "date": "2026-10-15",
-  "generated_at_utc": "2026-10-14T14:20:25.957836+00:00",
+  "date": "2026-10-16",
+  "generated_at_utc": "2026-10-15T14:12:04.860684+00:00",
   "n_games": 2,
   "games": [
     {
       "away": "TBR",
       "home": "CLE",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-15T22:00:00Z",
+      "first_pitch_utc": "2026-10-16T22:00:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Progressive Field",
       "game_type": "L",
       "series_description": "AL Championship Series",
-      "series_game": 3,
+      "series_game": 4,
       "series_of": 7,
       "away_record": {
         "wins": 1,
@@ -23,43 +23,32 @@
         "wins": 1,
         "losses": 1
       },
-      "away_sp": {
-        "name": "Griffin Jax",
-        "season": {
-          "starts": 23,
-          "ip": 103.3,
-          "era": 2.87,
-          "k9": 9.23,
-          "bb9": 2.44,
-          "hr9": 1.05,
-          "days_rest": 19
-        }
-      },
+      "away_sp": null,
       "home_sp": null,
       "sp_status": {
         "home": "tbd",
-        "away": "confirmed"
+        "away": "tbd"
       }
     },
     {
       "away": "MIL",
       "home": "LAD",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-16T01:00:00Z",
+      "first_pitch_utc": "2026-10-17T01:00:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "UNIQLO Field at Dodger Stadium",
       "game_type": "L",
       "series_description": "NL Championship Series",
-      "series_game": 4,
+      "series_game": 5,
       "series_of": 7,
       "away_record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 0
       },
       "home_record": {
         "wins": 0,
-        "losses": 2
+        "losses": 3
       },
       "away_sp": null,
       "home_sp": null,
