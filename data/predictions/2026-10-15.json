@@ -1,14 +1,14 @@
 {
   "date": "2026-10-15",
-  "generated_at_utc": "2026-10-15T14:11:54.793783+00:00",
+  "generated_at_utc": "2026-10-15T16:12:01.600234+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "CLE",
       "away": "TBR",
       "dh_game_number": 0,
-      "prob_home_win": 0.48813925981521605,
-      "seed_std": 0.018190485847624373,
+      "prob_home_win": 0.5000581830739975,
+      "seed_std": 0.014304895827684891,
       "home_sp": "Gavin Williams",
       "away_sp": "Griffin Jax",
       "sp_status": {
@@ -16,14 +16,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-15T14:14:12.757112+00:00"
-      },
       "game_type": "L",
       "series_description": "AL Championship Series",
       "series_game": 3,
@@ -33,8 +29,8 @@
       "home": "LAD",
       "away": "MIL",
       "dh_game_number": 0,
-      "prob_home_win": 0.5610426485538482,
-      "seed_std": 0.02332513354078888,
+      "prob_home_win": 0.5610449612140656,
+      "seed_std": 0.023323961158396238,
       "home_sp": "Tyler Glasnow",
       "away_sp": null,
       "sp_status": {
@@ -46,10 +42,6 @@
         "away": "projected_last_game"
       },
       "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-15T14:14:12.757112+00:00"
-      },
       "game_type": "L",
       "series_description": "NL Championship Series",
       "series_game": 4,
