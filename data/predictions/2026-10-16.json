@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-16",
+  "generated_at_utc": "2026-10-16T14:23:00.327111+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "CLE",
+      "away": "TBR",
+      "dh_game_number": 0,
+      "prob_home_win": 0.48963949978351595,
+      "seed_std": 0.01607218242134612,
+      "home_sp": null,
+      "away_sp": "Nick Martinez",
+      "sp_status": {
+        "home": "tbd",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true,
+      "game_type": "L",
+      "series_description": "AL Championship Series",
+      "series_game": 4,
+      "series_of": 7
+    }
+  ]
+}

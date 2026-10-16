@@ -1,54 +1,27 @@
 {
-  "date": "2026-10-16",
-  "generated_at_utc": "2026-10-15T14:12:04.860684+00:00",
-  "n_games": 2,
+  "date": "2026-10-17",
+  "generated_at_utc": "2026-10-16T14:23:11.813819+00:00",
+  "n_games": 1,
   "games": [
     {
       "away": "TBR",
       "home": "CLE",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-16T22:00:00Z",
+      "first_pitch_utc": "2026-10-18T00:00:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Progressive Field",
       "game_type": "L",
       "series_description": "AL Championship Series",
-      "series_game": 4,
-      "series_of": 7,
-      "away_record": {
-        "wins": 1,
-        "losses": 1
-      },
-      "home_record": {
-        "wins": 1,
-        "losses": 1
-      },
-      "away_sp": null,
-      "home_sp": null,
-      "sp_status": {
-        "home": "tbd",
-        "away": "tbd"
-      }
-    },
-    {
-      "away": "MIL",
-      "home": "LAD",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-17T01:00:00Z",
-      "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "UNIQLO Field at Dodger Stadium",
-      "game_type": "L",
-      "series_description": "NL Championship Series",
       "series_game": 5,
       "series_of": 7,
       "away_record": {
-        "wins": 3,
-        "losses": 0
+        "wins": 1,
+        "losses": 2
       },
       "home_record": {
-        "wins": 0,
-        "losses": 3
+        "wins": 2,
+        "losses": 1
       },
       "away_sp": null,
       "home_sp": null,
