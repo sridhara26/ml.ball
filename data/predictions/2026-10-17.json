@@ -1,14 +1,14 @@
 {
   "date": "2026-10-17",
-  "generated_at_utc": "2026-10-17T14:15:49.533263+00:00",
+  "generated_at_utc": "2026-10-17T23:21:01.996348+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "CLE",
       "away": "TBR",
       "dh_game_number": 0,
-      "prob_home_win": 0.49816629886627195,
-      "seed_std": 0.01348336892213004,
+      "prob_home_win": 0.5019600093364716,
+      "seed_std": 0.016861599166476768,
       "home_sp": "Shawn Armstrong",
       "away_sp": "Nick Martinez",
       "sp_status": {
@@ -16,14 +16,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-17T14:42:48.807508+00:00"
-      },
       "game_type": "L",
       "series_description": "AL Championship Series",
       "series_game": 4,
