@@ -1,13 +1,13 @@
 {
-  "date": "2026-10-17",
-  "generated_at_utc": "2026-10-16T14:23:11.813819+00:00",
+  "date": "2026-10-18",
+  "generated_at_utc": "2026-10-17T14:15:58.852453+00:00",
   "n_games": 1,
   "games": [
     {
       "away": "TBR",
       "home": "CLE",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-18T00:00:00Z",
+      "first_pitch_utc": "2026-10-18T21:08:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Progressive Field",
