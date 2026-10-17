@@ -21,8 +21,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-16T23:13:51.228620+00:00"
+        "status": "postponed",
+        "reason": "Rain",
+        "reschedule_utc": null,
+        "checked_at_utc": "2026-10-17T01:12:03.094686+00:00"
       },
       "game_type": "L",
       "series_description": "AL Championship Series",
