@@ -1,27 +1,27 @@
 {
-  "date": "2026-10-18",
-  "generated_at_utc": "2026-10-17T14:15:58.852453+00:00",
+  "date": "2026-10-19",
+  "generated_at_utc": "2026-10-18T14:08:25.993278+00:00",
   "n_games": 1,
   "games": [
     {
-      "away": "TBR",
-      "home": "CLE",
+      "away": "CLE",
+      "home": "TBR",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-18T21:08:00Z",
+      "first_pitch_utc": "2026-10-20T00:08:00Z",
       "start_time_tbd": false,
       "day_night": "night",
-      "venue": "Progressive Field",
+      "venue": "Tropicana Field",
       "game_type": "L",
       "series_description": "AL Championship Series",
-      "series_game": 5,
+      "series_game": 6,
       "series_of": 7,
       "away_record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 2
       },
       "home_record": {
         "wins": 2,
-        "losses": 1
+        "losses": 2
       },
       "away_sp": null,
       "home_sp": null,
