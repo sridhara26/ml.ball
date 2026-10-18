@@ -1,14 +1,14 @@
 {
   "date": "2026-10-18",
-  "generated_at_utc": "2026-10-18T14:08:16.912878+00:00",
+  "generated_at_utc": "2026-10-18T20:20:31.728941+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "CLE",
       "away": "TBR",
       "dh_game_number": 0,
-      "prob_home_win": 0.5008926540613174,
-      "seed_std": 0.015434320710647667,
+      "prob_home_win": 0.5036355495452881,
+      "seed_std": 0.01498488186188753,
       "home_sp": "Parker Messick",
       "away_sp": "Drew Rasmussen",
       "sp_status": {
@@ -16,14 +16,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-18T14:12:06.779272+00:00"
-      },
       "game_type": "L",
       "series_description": "AL Championship Series",
       "series_game": 5,
