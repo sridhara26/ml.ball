@@ -1,29 +1,25 @@
 {
   "date": "2026-10-19",
-  "generated_at_utc": "2026-10-19T14:12:22.984645+00:00",
+  "generated_at_utc": "2026-10-19T23:20:14.104873+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "TBR",
       "away": "CLE",
       "dh_game_number": 0,
-      "prob_home_win": 0.5419479608535767,
-      "seed_std": 0.017482072731286515,
+      "prob_home_win": 0.5328547477722168,
+      "seed_std": 0.019132519451908983,
       "home_sp": "Freddy Peralta",
-      "away_sp": null,
+      "away_sp": "Shawn Armstrong",
       "sp_status": {
         "home": "confirmed",
-        "away": "tbd"
+        "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-19T14:42:05.262420+00:00"
-      },
+      "low_confidence": false,
       "game_type": "L",
       "series_description": "AL Championship Series",
       "series_game": 6,
