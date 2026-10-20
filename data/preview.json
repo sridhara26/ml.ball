@@ -1,34 +1,6 @@
 {
-  "date": "2026-10-20",
-  "generated_at_utc": "2026-10-19T14:12:32.095485+00:00",
-  "n_games": 1,
-  "games": [
-    {
-      "away": "CLE",
-      "home": "TBR",
-      "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-21T00:08:00Z",
-      "start_time_tbd": false,
-      "day_night": "night",
-      "venue": "Tropicana Field",
-      "game_type": "L",
-      "series_description": "AL Championship Series",
-      "series_game": 7,
-      "series_of": 7,
-      "away_record": {
-        "wins": 2,
-        "losses": 3
-      },
-      "home_record": {
-        "wins": 3,
-        "losses": 2
-      },
-      "away_sp": null,
-      "home_sp": null,
-      "sp_status": {
-        "home": "tbd",
-        "away": "tbd"
-      }
-    }
-  ]
+  "date": "2026-10-21",
+  "generated_at_utc": "2026-10-20T14:00:42.195269+00:00",
+  "n_games": 0,
+  "games": []
 }
