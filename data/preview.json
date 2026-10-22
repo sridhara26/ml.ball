@@ -1,6 +1,45 @@
 {
-  "date": "2026-10-22",
-  "generated_at_utc": "2026-10-21T16:02:52.863362+00:00",
-  "n_games": 0,
-  "games": []
+  "date": "2026-10-23",
+  "generated_at_utc": "2026-10-22T14:01:16.160258+00:00",
+  "n_games": 1,
+  "games": [
+    {
+      "away": "TBR",
+      "home": "MIL",
+      "dh_game_number": 0,
+      "first_pitch_utc": "2026-10-24T00:00:00Z",
+      "start_time_tbd": false,
+      "day_night": "night",
+      "venue": "American Family Field",
+      "game_type": "W",
+      "series_description": "World Series",
+      "series_game": 1,
+      "series_of": 7,
+      "away_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "home_record": {
+        "wins": 0,
+        "losses": 0
+      },
+      "away_sp": null,
+      "home_sp": {
+        "name": "Jacob Misiorowski",
+        "season": {
+          "starts": 30,
+          "ip": 174.7,
+          "era": 1.8,
+          "k9": 12.98,
+          "bb9": 2.27,
+          "hr9": 0.72,
+          "days_rest": 26
+        }
+      },
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      }
+    }
+  ]
 }
