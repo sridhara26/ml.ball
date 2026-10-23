@@ -1,14 +1,14 @@
 {
   "date": "2026-10-23",
-  "generated_at_utc": "2026-10-23T16:13:59.742786+00:00",
+  "generated_at_utc": "2026-10-23T23:10:38.459600+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "MIL",
       "away": "TBR",
       "dh_game_number": 0,
-      "prob_home_win": 0.5234603673219681,
-      "seed_std": 0.01310378999856505,
+      "prob_home_win": 0.5237770080566406,
+      "seed_std": 0.01280374100487404,
       "home_sp": "Jacob Misiorowski",
       "away_sp": "Nick Martinez",
       "sp_status": {
@@ -16,14 +16,10 @@
         "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
       "low_confidence": false,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-23T16:43:32.009440+00:00"
-      },
       "game_type": "W",
       "series_description": "World Series",
       "series_game": 1,
