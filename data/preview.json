@@ -1,19 +1,19 @@
 {
-  "date": "2026-10-23",
-  "generated_at_utc": "2026-10-22T14:01:16.160258+00:00",
+  "date": "2026-10-24",
+  "generated_at_utc": "2026-10-23T16:14:08.736267+00:00",
   "n_games": 1,
   "games": [
     {
       "away": "TBR",
       "home": "MIL",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-24T00:00:00Z",
+      "first_pitch_utc": "2026-10-25T00:00:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "American Family Field",
       "game_type": "W",
       "series_description": "World Series",
-      "series_game": 1,
+      "series_game": 2,
       "series_of": 7,
       "away_record": {
         "wins": 0,
@@ -23,22 +23,33 @@
         "wins": 0,
         "losses": 0
       },
-      "away_sp": null,
-      "home_sp": {
-        "name": "Jacob Misiorowski",
+      "away_sp": {
+        "name": "Drew Rasmussen",
         "season": {
           "starts": 30,
-          "ip": 174.7,
-          "era": 1.8,
-          "k9": 12.98,
-          "bb9": 2.27,
-          "hr9": 0.72,
-          "days_rest": 26
+          "ip": 172.0,
+          "era": 2.67,
+          "k9": 9.1,
+          "bb9": 1.67,
+          "hr9": 0.73,
+          "days_rest": 32
+        }
+      },
+      "home_sp": {
+        "name": "Logan Henderson",
+        "season": {
+          "starts": 18,
+          "ip": 98.3,
+          "era": 2.47,
+          "k9": 10.07,
+          "bb9": 1.74,
+          "hr9": 1.28,
+          "days_rest": 31
         }
       },
       "sp_status": {
         "home": "confirmed",
-        "away": "tbd"
+        "away": "confirmed"
       }
     }
   ]
