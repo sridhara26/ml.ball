@@ -21,8 +21,10 @@
       },
       "low_confidence": false,
       "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-24T23:12:32.022773+00:00"
+        "home_won": true,
+        "home_score": 5,
+        "away_score": 4,
+        "graded_at_utc": "2026-10-25T04:41:06.004980+00:00"
       },
       "game_type": "W",
       "series_description": "World Series",
