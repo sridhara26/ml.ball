@@ -20,6 +20,10 @@
         "away": "projected_last_game"
       },
       "low_confidence": false,
+      "result": {
+        "status": "no_result",
+        "checked_at_utc": "2026-10-26T14:13:05.636927+00:00"
+      },
       "game_type": "W",
       "series_description": "World Series",
       "series_game": 3,
