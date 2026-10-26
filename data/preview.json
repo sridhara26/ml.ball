@@ -1,19 +1,19 @@
 {
-  "date": "2026-10-26",
-  "generated_at_utc": "2026-10-25T14:02:58.002247+00:00",
+  "date": "2026-10-27",
+  "generated_at_utc": "2026-10-26T14:09:40.339626+00:00",
   "n_games": 1,
   "games": [
     {
       "away": "MIL",
       "home": "TBR",
       "dh_game_number": 0,
-      "first_pitch_utc": "2026-10-27T00:00:00Z",
+      "first_pitch_utc": "2026-10-28T00:00:00Z",
       "start_time_tbd": false,
       "day_night": "night",
       "venue": "Tropicana Field",
       "game_type": "W",
       "series_description": "World Series",
-      "series_game": 3,
+      "series_game": 4,
       "series_of": 7,
       "away_record": {
         "wins": 2,
@@ -23,33 +23,11 @@
         "wins": 0,
         "losses": 2
       },
-      "away_sp": {
-        "name": "Robert Gasser",
-        "season": {
-          "starts": 20,
-          "ip": 104.0,
-          "era": 3.98,
-          "k9": 8.39,
-          "bb9": 2.86,
-          "hr9": 1.3,
-          "days_rest": 31
-        }
-      },
-      "home_sp": {
-        "name": "Freddy Peralta",
-        "season": {
-          "starts": 32,
-          "ip": 169.0,
-          "era": 4.42,
-          "k9": 8.31,
-          "bb9": 3.36,
-          "hr9": 1.22,
-          "days_rest": 31
-        }
-      },
+      "away_sp": null,
+      "home_sp": null,
       "sp_status": {
-        "home": "confirmed",
-        "away": "confirmed"
+        "home": "tbd",
+        "away": "tbd"
       }
     }
   ]
