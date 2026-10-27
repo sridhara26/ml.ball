@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-27",
+  "generated_at_utc": "2026-10-27T14:16:54.515584+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "TBR",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.5126797080039978,
+      "seed_std": 0.0167173378062598,
+      "home_sp": "Griffin Jax",
+      "away_sp": null,
+      "sp_status": {
+        "home": "confirmed",
+        "away": "tbd"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true,
+      "game_type": "W",
+      "series_description": "World Series",
+      "series_game": 4,
+      "series_of": 7
+    }
+  ]
+}
