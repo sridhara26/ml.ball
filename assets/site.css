@@ -760,37 +760,33 @@ footer a { color: var(--muted); }
 .row-seg { width: 100%; margin: 0 0 10px; }
 .row-seg .seg-tab { flex: 1 1 0; padding: 4px 4px; text-align: center; white-space: nowrap; }
 
-/* Team stats pinned bar: shares .compare-row's column template (label | away |
-   home), so its team codes sit over the values below. The season | postseason
-   switch (postseason games only) is in the label cell. Pinned like the lineup
-   thead: same top (just under the win-prob bar, or under the nav while that
-   bar is tucked) and a z-index below .game-sticky's 5. It sticks inside
+/* Team stats pinned bar (postseason games only): the section heading with the
+   season | postseason switch pushed to its right, on one line. Pinned like the
+   lineup thead: same top (just under the win-prob bar, or under the nav while
+   that bar is tucked) and a z-index below .game-sticky's 5. It sticks inside
    #team-stats only, so it scrolls away with the section. Opaque, and the -8px
    shadow paints the 8px gap above the pin point the way .slate-section-label
    does. */
-.compare-row.compare-codes.stats-scope-bar {
+.stats-scope-bar {
   position: sticky;
   top: var(--detail-sticky-top, var(--sticky-top));
   z-index: 4;
+  display: flex;
   align-items: center;
+  gap: 10px;
   margin: 0 0 8px;
   padding: 4px 0 3px;
   background: var(--paper);
   box-shadow: 0 -8px 0 var(--paper);
 }
-/* the switch shrinks with its cell instead of overflowing it (tabs clip with an
+.stats-scope-bar h2 { flex: none; margin: 0; line-height: 1.2; white-space: nowrap; }
+/* the switch shrinks with the bar instead of overflowing it (tabs clip with an
    ellipsis as a last resort); the narrow-screen padding keeps them whole down
    to 320px */
-.stats-scope-bar .compare-label { min-width: 0; }
+.stats-scope-bar .seg { min-width: 0; margin-left: auto; }
 .stats-scope-bar .seg-tab { text-transform: none; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 344px) {
   .stats-scope-bar .seg-tab { padding: 4px 4px; letter-spacing: 0; }
-}
-/* the bar spans the section, so on a wide screen the groups stack in one
-   column of the same width instead of the two-column grid */
-@media (min-width: 900px) {
-  #team-stats .compare-cols { grid-template-columns: 1fr; max-width: 620px; }
-  #team-stats .stats-scope-bar { max-width: 620px; }
 }
 
 .game-meta { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
@@ -1096,7 +1092,7 @@ footer a { color: var(--muted); }
 
 .compare-cols { display: grid; grid-template-columns: 1fr; }
 @media (min-width: 900px) {
-  .compare-cols { grid-template-columns: 1fr 1fr; gap: 0 44px; }
+  .compare-cols { grid-template-columns: 1fr 1fr; gap: 0 44px; align-items: start; }
 }
 .compare-group { margin-bottom: 22px; }
 .compare-group h3 {
@@ -1104,8 +1100,6 @@ footer a { color: var(--muted); }
   font-size: 13.5px;
   font-weight: 600;
   margin: 0;
-  padding: 10px 0 6px;
-  border-bottom: 1px solid var(--rule-strong);
   color: var(--ink);
 }
 .compare-row {
@@ -1118,23 +1112,29 @@ footer a { color: var(--muted); }
   font-size: 13.5px;
   font-variant-numeric: tabular-nums;
 }
-.compare-row.compare-codes {
-  font-family: var(--font-mono);
+/* A group's heading row is a .compare-row (same column template at every
+   width), so the team codes in its value cells sit exactly over the values
+   below; the title (h3) is in the label cell. The negative right margin
+   cancels the letter-spacing the last glyph of a code carries. */
+.compare-row.compare-head {
+  padding: 10px 0 6px;
+  border-bottom-color: var(--rule-strong);
+}
+.compare-head .compare-val {
+  margin-right: -0.11em;
   font-size: 10px;
+  font-weight: 500;
   letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--faint);
-  font-weight: 500;
-  padding: 4px 0 7px;
 }
-.compare-row.compare-codes .compare-val { color: var(--faint); font-family: var(--font-mono); font-weight: 500; }
 .compare-label { font-size: 13px; color: var(--muted); }
 .compare-val { font-family: var(--font-mono); text-align: right; color: var(--ink); }
 .compare-val.better { color: var(--accent); font-weight: 600; }
 
 .form-chip {
   display: grid;
-  grid-template-columns: 64px 1fr 60px 28px;
+  grid-template-columns: 64px 1ch 1fr 58px 60px 28px;
   align-items: center;
   gap: 8px;
   padding: 5px 0;
@@ -1142,9 +1142,15 @@ footer a { color: var(--muted); }
   font-size: 13px;
 }
 .form-chip .fc-date { color: var(--faint); font-family: var(--font-mono); font-size: 12px; white-space: nowrap; }
+.form-chip .fc-at { color: var(--faint); font-family: var(--font-mono); font-size: 12px; text-align: right; }
 .form-chip .fc-opp { color: var(--muted); }
 .form-chip .fc-score { font-family: var(--font-mono); }
 .form-chip .flag { justify-self: start; }
+/* the postseason tag has its own fixed column (empty on a regular-season
+   game), so every tag is the same box whatever its text ("PS", "LCS G7") and
+   starts at the same x whatever the opponent. */
+.form-chip .fc-ps { min-width: 0; }
+.form-chip .fc-ps .ps-tag { display: flex; justify-content: center; width: 100%; margin-left: 0; }
 
 /* upgradeRecentFormLinks (app.js) swaps a plain <div class="form-chip"> for
    an <a class="form-chip"> once its past game resolves to exactly one
@@ -1214,7 +1220,15 @@ a.form-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: -2
   .compare-group h3 { font-size: 13.5px; }
   .compare-row { grid-template-columns: 1fr 60px 60px; gap: 6px; font-size: 12.5px; }
 
-  .form-chip { grid-template-columns: 52px 1fr 46px 24px; gap: 6px; font-size: 12px; }
+  .form-chip { grid-template-columns: 52px 1ch 1fr 52px 46px 24px; gap: 6px; font-size: 12px; }
+  .form-chip .fc-ps .ps-tag { padding-left: 3px; padding-right: 3px; }
+  /* at 320px the panel's own 18px side padding plus the columns above leave
+     the opponent cell ~43px; this trims both so it keeps ~70px (the longest
+     tag, "LCS G7", needs ~47px, a date ~44px) */
+  @media (max-width: 340px) {
+    .form-col { padding-left: 12px; padding-right: 12px; }
+    .form-chip { grid-template-columns: 46px 1ch 1fr 50px 42px 22px; gap: 5px; }
+  }
 }
 
 /* ---------- accuracy history panel ---------- */

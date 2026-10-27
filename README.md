@@ -7,7 +7,7 @@ scores and the cumulative record is published alongside.
 
 - `index.html` — the day's win probabilities + all-time graded record
 - `game.html` — per-game detail (`?date=YYYY-MM-DD&g=AWAY-HOME-DH`): lineups,
-  team stats, starting-pitcher detail, and recent form for one game
+  starting-pitcher detail, team stats, and recent games for one game
 - `data/predictions/YYYY-MM-DD.json` — one frozen file per slate;
   `data/latest.json` points at the newest one
 - `data/details/YYYY-MM-DD.json` — optional richer per-game payload backing

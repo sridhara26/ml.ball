@@ -1977,22 +1977,23 @@ function renderTeamStatsHtml(stats, awayCode, homeCode, post = null, seasonYear 
   const src = inPost ? (post.team_stats && typeof post.team_stats === "object" ? post.team_stats : null) : stats;
   const away = escapeHtml(awayCode);
   const home = escapeHtml(homeCode);
-  // The pinned bar (site.css) sits under the heading and shares the rows'
-  // column template: the section's own season | postseason switch (when the
-  // game has a postseason block) over the label column, the team codes over
-  // the two sides.
-  const bar = `<div class="compare-row compare-codes stats-scope-bar"><div class="compare-label">${post ? segHtml("stats-seg", "Team stats scope", scope, seasonYear) : ""}</div><div class="compare-val away">${away}</div><div class="compare-val home">${home}</div></div>`;
-  const head = `<h2>Team stats</h2>${post || src ? bar : ""}`;
+  // A game with a postseason block pins the heading and the section's
+  // season | postseason switch as one bar (site.css); any other game has the
+  // plain heading. The team codes are not here: each group's heading row
+  // carries its own over the value columns.
+  const head = post
+    ? `<div class="stats-scope-bar"><h2>Team stats</h2>${segHtml("stats-seg", "Team stats scope", scope, seasonYear)}</div>`
+    : `<h2>Team stats</h2>`;
   if (!src) return `${head}<p class="stale-note">Team stats unavailable.</p>`;
   const groups = [
-    ["Form", src.form, (f) => recordRowHtml(f) + statRows([...FORM_ROWS, ...(inPost ? [] : FORM_GAMES_ROWS)], f)],
     ["Batting", src.batting, (b) => statRows(BATTING_ROWS, b)],
     ["Pitching", src.pitching, (p) => statRows(PITCHING_ROWS, p)],
+    ["Form", src.form, (f) => recordRowHtml(f) + statRows([...FORM_ROWS, ...(inPost ? [] : FORM_GAMES_ROWS)], f)],
     ["Head-to-head", src.head_to_head, (h) => seriesRowHtml(inPost ? "This series" : "Season series", h) + statRows(H2H_RUNS_ROWS, h)],
   ];
   const body = groups
     .filter(([, obj]) => obj)
-    .map(([title, obj, rowsFn]) => `<div class="compare-group"><h3>${title}</h3>${rowsFn(obj)}</div>`)
+    .map(([title, obj, rowsFn]) => `<div class="compare-group"><div class="compare-row compare-head"><h3>${title}</h3><div class="compare-val away">${away}</div><div class="compare-val home">${home}</div></div>${rowsFn(obj)}</div>`)
     .join("");
   if (!body) return `${head}<p class="stale-note">Team stats unavailable.</p>`;
   return `${head}<div class="compare-cols">${body}</div>`;
@@ -2139,7 +2140,7 @@ function renderSpDetailHtml(spDetail, awayCode, homeCode, post = null) {
    matchup and disambiguate doubleheader candidates — read back via
    el.dataset, never re-parsed out of the visible text. */
 function formChipHtml(entry, code) {
-  const oppLabel = (entry.at_home ? "" : "@") + escapeHtml(entry.opp ?? "");
+  const atLabel = entry.at_home ? "" : "@";
   const score = `${fmtOrDash(entry.rf, fmt0)}–${fmtOrDash(entry.ra, fmt0)}`;
   const cls = entry.won === true ? "result-win" : entry.won === false ? "result-loss" : "";
   const text = entry.won === true ? "W" : entry.won === false ? "L" : "-";
@@ -2149,10 +2150,12 @@ function formChipHtml(entry, code) {
   const atHomeAttr = entry.at_home ? "1" : "0";
   const rfAttr = isFiniteNum(entry.rf) ? String(entry.rf) : "";
   const raAttr = isFiniteNum(entry.ra) ? String(entry.ra) : "";
-  const psTag = entry._ps ? ` ${psTagHtml(entry)}` : "";
+  const psTag = entry._ps ? psTagHtml(entry) : "";
   return `<div class="form-chip" data-fc-date="${dateAttr}" data-fc-team="${teamAttr}" data-fc-opp="${oppAttr}" data-fc-at-home="${atHomeAttr}" data-fc-rf="${rfAttr}" data-fc-ra="${raAttr}">
     <span class="fc-date" title="${escapeHtml(entry.date ?? "")}">${escapeHtml(fmtShortDate(entry.date))}</span>
-    <span class="fc-opp">${oppLabel}${psTag}</span>
+    <span class="fc-at">${atLabel}</span>
+    <span class="fc-opp">${escapeHtml(entry.opp ?? "")}</span>
+    <span class="fc-ps">${psTag}</span>
     <span class="fc-score">${score}</span>
     <span class="flag ${cls}">${text}</span>
   </div>`;
@@ -2244,7 +2247,7 @@ function resolveFormChipLink(chip, dayDataByDate) {
   return `game.html?date=${encodeURIComponent(date)}&g=${encodeURIComponent(key)}`;
 }
 
-/* Progressive-enhancement upgrade pass for the "Recent form" chips: runs
+/* Progressive-enhancement upgrade pass for the "Recent games" chips: runs
    AFTER renderRecentFormHtml has already painted plain <div class="form-chip">
    rows (so it never slows/blocks the initial render), and swaps a chip for
    an <a class="form-chip"> only when its past game resolves to exactly one
@@ -2292,10 +2295,12 @@ async function upgradeRecentFormLinks(containerEl) {
   }
 }
 
+/* "Recent games" (formerly "Recent form"; the function, class and data names
+   keep the old name). */
 function renderRecentFormHtml(recentForm, awayCode, homeCode, post = null) {
-  if (!recentForm) return `<h2>Recent form</h2><p class="stale-note">Recent form unavailable.</p>`;
+  if (!recentForm) return `<h2>Recent games</h2><p class="stale-note">Recent games unavailable.</p>`;
   const psFor = (side) => (post ? (post.recent_form?.[side] ?? []) : null);
-  return `<h2>Recent form</h2>
+  return `<h2>Recent games</h2>
     <div class="detail-grid">
       ${formColumnHtml(awayCode, recentForm.away, psFor("away"))}
       ${formColumnHtml(homeCode, recentForm.home, psFor("home"))}
@@ -2381,8 +2386,8 @@ function wireBackLink(el) {
 let _detailCtx = null;
 let _detailEligible = false;
 
-/* The four sections below the header (lineups, team stats, starting pitchers,
-   recent form). When the game has a postseason block the sections merge it in
+/* The four sections below the header (lineups, starting pitchers, team stats,
+   recent games). When the game has a postseason block the sections merge it in
    (stat lines, column pairs, merged lists); if that render throws, the
    sections are rendered again without the block, so a malformed block never
    takes the regular stats down with it. ctx = { away, home, seasonYear,
@@ -2519,7 +2524,7 @@ async function renderGameDetail() {
 let _detailRefreshToken = 0;
 
 /* Refreshes only the header + sticky bar (win prob / result flag) — never
-   lineups/team-stats/SP-detail/recent-form, so an expanded lineup row stays
+   lineups/SP-detail/team-stats/recent-form, so an expanded lineup row stays
    expanded across a background refresh. Stops polling once the game is
    graded (isGraded), since a graded result never changes again. */
 async function refreshGameResult() {
