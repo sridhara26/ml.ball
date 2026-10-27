@@ -1,29 +1,25 @@
 {
   "date": "2026-10-27",
-  "generated_at_utc": "2026-10-27T14:16:54.515584+00:00",
+  "generated_at_utc": "2026-10-27T23:15:07.629109+00:00",
   "model_version": "exp118-fb001",
   "games": [
     {
       "home": "TBR",
       "away": "MIL",
       "dh_game_number": 0,
-      "prob_home_win": 0.5126797080039978,
-      "seed_std": 0.0167173378062598,
+      "prob_home_win": 0.514110666513443,
+      "seed_std": 0.017461151644846688,
       "home_sp": "Griffin Jax",
-      "away_sp": null,
+      "away_sp": "Dustin May",
       "sp_status": {
         "home": "confirmed",
-        "away": "tbd"
+        "away": "confirmed"
       },
       "lineup_status": {
-        "home": "projected_last_game",
-        "away": "projected_last_game"
+        "home": "announced",
+        "away": "announced"
       },
-      "low_confidence": true,
-      "result": {
-        "status": "no_result",
-        "checked_at_utc": "2026-10-27T14:43:43.259408+00:00"
-      },
+      "low_confidence": false,
       "game_type": "W",
       "series_description": "World Series",
       "series_game": 4,
