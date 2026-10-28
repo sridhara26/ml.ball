@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-28",
+  "generated_at_utc": "2026-10-28T14:16:45.364455+00:00",
+  "model_version": "exp118-fb001",
+  "games": [
+    {
+      "home": "TBR",
+      "away": "MIL",
+      "dh_game_number": 0,
+      "prob_home_win": 0.4945158064365387,
+      "seed_std": 0.01903701949986206,
+      "home_sp": null,
+      "away_sp": "Jacob Misiorowski",
+      "sp_status": {
+        "home": "tbd",
+        "away": "confirmed"
+      },
+      "lineup_status": {
+        "home": "projected_last_game",
+        "away": "projected_last_game"
+      },
+      "low_confidence": true,
+      "game_type": "W",
+      "series_description": "World Series",
+      "series_game": 5,
+      "series_of": 7
+    }
+  ]
+}
